@@ -7,7 +7,7 @@ TABLE OF CONTENTS
 
 SECTION 1: ARCHITECTURE FOUNDATIONS (1.01–1.08)
 1.01 Pure Rust Substrate
-1.02 CDS Deliberation Engine (Vitali Cognitive Architecture)
+1.02 CDS Deliberation Engine (Cognitive Deliberation Architecture)
 1.03 OAD Knowledge Hypergraph (SurrealDB)
 1.04 ITC Ledger Architecture (Event-Sourced, Non-Transferable)
 1.05 ITC Access Value Calculation
@@ -84,13 +84,13 @@ REJECTED ALTERNATIVES: C and C++ require manual memory management. Developers ma
 
 SPECIFICATION CONSEQUENCE: All five subsystems (CDS, OAD, ITC, COS, FRS) target stable Rust. Build scripts validate Rust edition and MSRV on every compilation. Foreign-function interfaces require explicit audit and isolation boundaries. No dynamically linked Rust crates from untrusted sources enter the production build.
 
------ 1.02 CDS Deliberation Engine (Vitali Cognitive Architecture) -----
+----- 1.02 CDS Deliberation Engine (Cognitive Deliberation Architecture) -----
 
-DECISION: The CDS implements the Vitali Cognitive Architecture for deliberative decision-making. All governance choices flow through the CDS before execution.
+DECISION: The CDS implements the Cognitive Deliberation Architecture for deliberative decision-making. All governance choices flow through the CDS before execution.
 
-RATIONALE: Collective decisions require structured deliberation. The Vitali Cognitive Architecture provides a formal model for how a system reasons about competing claims, constraints, and values. It maps cleanly onto Rust type systems. It supports explainable outputs that members can audit. It handles contradiction gracefully. That makes it the correct tool for community governance at scale.
+RATIONALE: Collective decisions require structured deliberation. The Cognitive Deliberation Architecture provides a formal model for how a system reasons about competing claims, constraints, and values. It maps cleanly onto Rust type systems. It supports explainable outputs that members can audit. It handles contradiction gracefully. That makes it the correct tool for community governance at scale.
 
-REJECTED ALTERNATIVES: Large language model agents lack determinism and auditability. Rule-based systems scale poorly as rule counts grow.投票 mechanisms (DAOs, quadrics) reduce complex deliberation to counting. They discard the reasoning structure that makes collective decisions defensible. The Vitali model preserves that structure.
+REJECTED ALTERNATIVES: Large language model agents lack determinism and auditability. Rule-based systems scale poorly as rule counts grow.投票 mechanisms (DAOs, quadrics) reduce complex deliberation to counting. They discard the reasoning structure that makes collective decisions defensible. The cognitive deliberation model preserves that structure.
 
 SPECIFICATION CONSEQUENCE: CDS exposes a typed deliberation API. Inputs arrive as structured claims. Outputs carry reasoning traces. The deliberation state machine persists across sessions. All CDS decisions route through the ITC ledger for immutable recording. No external system bypasses the CDS for governance actions.
 
