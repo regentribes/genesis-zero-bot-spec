@@ -19,1024 +19,375 @@ addenda: 40
 
 ---
 
-ISPEC-001 is the canonical technical specification for the Integral system. This document defines all architecture decisions, integration patterns, operational requirements, dark factory constraints, and governance rules. No subsystem deployment proceeds without this document as its foundation. Read every addendum. Implement every decision. Accept no deviation without formal amendment.
-
 ## Table of Contents
-
-
-**Architecture Foundations** (refs 1.01–1.08)
-
-  - [1.01 Pure Rust Substrate](#pure-rust-substrate)
-
-  - [1.02 CDS Deliberation Engine (Cognitive Deliberation Architecture](#cds-deliberation-engine-cognitive-deliberation-architecture)
-
-  - [1.03 OAD Knowledge Hypergraph (SurrealDB](#oad-knowledge-hypergraph-surrealdb)
-
-  - [1.04 ITC Ledger Architecture (Event-Sourced, Non-Transferable](#itc-ledger-architecture-eventsourced-nontransferable)
-
-  - [1.05 ITC Access Value Calculation](#itc-access-value-calculation)
-
-  - [1.06 COS Production Planning (Saga Pattern](#cos-production-planning-saga-pattern)
-
-  - [1.07 FRS Node Health Monitoring (RED/USE Methods](#frs-node-health-monitoring-reduse-methods)
-
-  - [1.08 API Gateway (Axum, JWT, Rate Limiting](#api-gateway-axum-jwt-rate-limiting)
-
-
-
-**Integration and Security** (refs 2.01–2.08)
-
-  - [2.01 X402 Autonomous Economic Agents](#x402-autonomous-economic-agents)
-
-  - [2.02 UNTP Verifiable Credentials](#untp-verifiable-credentials)
-
-  - [2.03 CQRS for ITC Ledger and OAD Design](#cqrs-for-itc-ledger-and-oad-design)
-
-  - [2.04 Hexagonal Architecture Per Subsystem](#hexagonal-architecture-per-subsystem)
-
-  - [2.05 OAD Module 6 Formal Specification (Rust Types](#oad-module-6-formal-specification-rust-types)
-
-  - [2.06 OAD Module 7 Circular Resource Loop Detection](#oad-module-7-circular-resource-loop-detection)
-
-  - [2.07 Syntegrity Scaling (Virtual Icosahedron](#syntegrity-scaling-virtual-icosahedron)
-
-  - [2.08 Federation with Bilateral Coordination Envelopes](#federation-with-bilateral-coordination-envelopes)
-
-
-
-**Operations and Reliability** (refs 3.01–3.08)
-
-  - [3.01 Formal Verification Scope (Protocol Only](#formal-verification-scope-protocol-only)
-
-  - [3.02 Observability Stack (Prometheus/Grafana/Loki/Jaeger](#observability-stack-prometheusgrafanalokijaeger)
-
-  - [3.03 Event-Driven Integration (Typed Event Bus, NATS](#eventdriven-integration-typed-event-bus-nats)
-
-  - [3.04 Deployment and Orchestration (Kubernetes, ArgoCD](#deployment-and-orchestration-kubernetes-argocd)
-
-  - [3.05 Zero Trust Security (Passkeys, mTLS, RBAC/ABAC](#zero-trust-security-passkeys-mtls-rbacabac)
-
-  - [3.06 Phase 1 MVP (CDS 1-4 + OAD 1-3, SQLite](#phase-1-mvp-cds-14-oad-13-sqlite)
-
-  - [3.07 Post-Scarcity Pathway (Commons Utility Index](#postscarcity-pathway-commons-utility-index)
-
-  - [3.08 DevOps Overlay (Proxmox/k3s/Ansible/Nexus/CI](#devops-overlay-proxmoxk3sansiblenexusci)
-
-
-
-**Dark Factory Requirements** (refs 4.01–4.14)
-
-  - [4.01 Sealed Edge Node Specification](#sealed-edge-node-specification)
-
-  - [4.02 ITC Proof Log on Flash (Append-Only SHA-256 Chain](#itc-proof-log-on-flash-appendonly-sha256-chain)
-
-  - [4.03 NoUS OS for CDS Deliberation](#nous-os-for-cds-deliberation)
-
-  - [4.04 Bootstrap Toolchain Verification](#bootstrap-toolchain-verification)
-
-  - [4.05 Time-Triggered Architecture for COS Production](#timetriggered-architecture-for-cos-production)
-
-  - [4.06 Formal Verification Gate (Kani + TLA+](#formal-verification-gate-kani-tla)
-
-  - [4.07 Simple File Server for Artifacts (Ed25519 Signed Manifests](#simple-file-server-for-artifacts-ed25519-signed-manifests)
-
-  - [4.08 Shell Script CI on Sovereign Infrastructure](#shell-script-ci-on-sovereign-infrastructure)
-
-  - [4.09 Embedded MMAP Database for Edge Nodes](#embedded-mmap-database-for-edge-nodes)
-
-  - [4.10 Hardware-Enforced Network Isolation](#hardwareenforced-network-isolation)
-
-  - [4.11 Atomic Configuration Swap with Hardware Watchdog](#atomic-configuration-swap-with-hardware-watchdog)
-
-  - [4.12 Zero-Copy Telemetry (Shared Memory + USB Serial](#zerocopy-telemetry-shared-memory-usb-serial)
-
-  - [4.13 FMEA Required for All Subsystems](#fmea-required-for-all-subsystems)
-
-  - [4.14 Zero Third-Party Network Services in Production](#zero-thirdparty-network-services-in-production)
-
-
-
-**N+1 Constraint and Governance** (refs 5.01–5.16)
-
-  - [5.01 ITC Ledger: Only Source of Truth](#itc-ledger-only-source-of-truth)
-
-  - [5.02 CDS Deliberation: Only Source of Authority](#cds-deliberation-only-source-of-authority)
-
-  - [5.03 OAD Design: Only Source of Technical Feasibility](#oad-design-only-source-of-technical-feasibility)
-
-  - [5.04 COS Production: Only Source of Value Delivery](#cos-production-only-source-of-value-delivery)
-
-  - [5.05 FRS Monitoring: Only Source of Monitoring Truth](#frs-monitoring-only-source-of-monitoring-truth)
-
-  - [5.06 Closed Loop Topology: Only Acceptable Architecture](#closed-loop-topology-only-acceptable-architecture)
-
-  - [5.07 Bootstrap Rule (One Laptop, One Binary](#bootstrap-rule-one-laptop-one-binary)
-
-  - [5.08 A7 Matrix as Completeness Constraint](#a7-matrix-as-completeness-constraint)
-
-  - [5.09 Specification Terminates Here](#specification-terminates-here)
-
-  - [5.10 Member: Only Fundamental Unit](#member-only-fundamental-unit)
-
-  - [5.11 Threat Model](#threat-model)
-
-  - [5.12 Economic Collapse Prevention](#economic-collapse-prevention)
-
-  - [5.13 Formal Verification Requirements](#formal-verification-requirements)
-
-  - [5.14 Evolution and Upgrade Protocol](#evolution-and-upgrade-protocol)
-
-  - [5.15 Minimal Test Scenarios](#minimal-test-scenarios)
-
-  - [5.16 Bootstrap Sequence](#bootstrap-sequence)
-
 
 ### Sections
 
-- [Section 1 ARCHITECTURE FOUNDATIONS](#architecture-foundations)
+**ARCHITECTURE FOUNDATIONS**
 
-- [1.01 Pure Rust Substrate](#pure-rust-substrate)
+**INTEGRATION AND SECURITY**
 
-- [1.02 CDS Deliberation Engine (Cognitive Deliberation Architecture](#cds-deliberation-engine-cognitive-deliberation-architecture)
+**OPERATIONS AND RELIABILITY**
 
-- [1.03 OAD Knowledge Hypergraph (SurrealDB](#oad-knowledge-hypergraph-surrealdb)
+**DARK FACTORY REQUIREMENTS**
 
-- [1.04 ITC Ledger Architecture (Event-Sourced, Non-Transferable](#itc-ledger-architecture-event-sourced-non-transferable)
+**N+1 CONSTRAINT AND GOVERNANCE**
 
-- [1.05 ITC Access Value Calculation](#itc-access-value-calculation)
 
-- [1.06 COS Production Planning (Saga Pattern](#cos-production-planning-saga-pattern)
-
-- [1.07 FRS Node Health Monitoring (RED/USE Methods](#frs-node-health-monitoring-red-use-methods)
-
-- [1.08 API Gateway (Axum, JWT, Rate Limiting](#api-gateway-axum-jwt-rate-limiting)
-
-- [Section 2 INTEGRATION AND SECURITY](#integration-and-security)
-
-- [2.01 X402 Autonomous Economic Agents](#x402-autonomous-economic-agents)
-
-- [2.02 UNTP Verifiable Credentials](#untp-verifiable-credentials)
-
-- [2.03 CQRS for ITC Ledger and OAD Design](#cqrs-for-itc-ledger-and-oad-design)
-
-- [2.04 Hexagonal Architecture Per Subsystem](#hexagonal-architecture-per-subsystem)
-
-- [2.05 OAD Module 6 Formal Specification (Rust Types](#oad-module-6-formal-specification-rust-types)
-
-- [2.06 OAD Module 7 Circular Resource Loop Detection](#oad-module-7-circular-resource-loop-detection)
-
-- [2.07 Syntegrity Scaling (Virtual Icosahedron](#syntegrity-scaling-virtual-icosahedron)
-
-- [2.08 Federation with Bilateral Coordination Envelopes](#federation-with-bilateral-coordination-envelopes)
-
-- [Section 3 OPERATIONS AND RELIABILITY](#operations-and-reliability)
-
-- [3.01 Formal Verification Scope (Protocol Only](#formal-verification-scope-protocol-only)
-
-- [3.02 Observability Stack (Prometheus/Grafana/Loki/Jaeger](#observability-stack-prometheus-grafana-loki-jaeger)
-
-- [3.03 Event-Driven Integration (Typed Event Bus, NATS](#event-driven-integration-typed-event-bus-nats)
-
-- [3.04 Deployment and Orchestration (Kubernetes, ArgoCD](#deployment-and-orchestration-kubernetes-argocd)
-
-- [3.05 Zero Trust Security (Passkeys, mTLS, RBAC/ABAC](#zero-trust-security-passkeys-mtls-rbac-abac)
-
-- [3.06 Phase 1 MVP (CDS 1-4 + OAD 1-3, SQLite](#phase-1-mvp-cds-1-4-oad-1-3-sqlite)
-
-- [3.07 Post-Scarcity Pathway (Commons Utility Index](#post-scarcity-pathway-commons-utility-index)
-
-- [3.08 DevOps Overlay (Proxmox/k3s/Ansible/Nexus/CI](#devops-overlay-proxmox-k3s-ansible-nexus-ci)
-
-- [Section 4 DARK FACTORY REQUIREMENTS](#dark-factory-requirements)
-
-- [4.01 Sealed Edge Node Specification](#sealed-edge-node-specification)
-
-- [4.02 ITC Proof Log on Flash (Append-Only SHA-256 Chain](#itc-proof-log-on-flash-append-only-sha-256-chain)
-
-- [4.03 NoUS OS for CDS Deliberation](#nous-os-for-cds-deliberation)
-
-- [4.04 Bootstrap Toolchain Verification](#bootstrap-toolchain-verification)
-
-- [4.05 Time-Triggered Architecture for COS Production](#time-triggered-architecture-for-cos-production)
-
-- [4.06 Formal Verification Gate (Kani + TLA+](#formal-verification-gate-kani-tla)
-
-- [4.07 Simple File Server for Artifacts (Ed25519 Signed Manifests](#simple-file-server-for-artifacts-ed25519-signed-manifests)
-
-- [4.08 Shell Script CI on Sovereign Infrastructure](#shell-script-ci-on-sovereign-infrastructure)
-
-- [4.09 Embedded MMAP Database for Edge Nodes](#embedded-mmap-database-for-edge-nodes)
-
-- [4.10 Hardware-Enforced Network Isolation](#hardware-enforced-network-isolation)
-
-- [4.11 Atomic Configuration Swap with Hardware Watchdog](#atomic-configuration-swap-with-hardware-watchdog)
-
-- [4.12 Zero-Copy Telemetry (Shared Memory + USB Serial](#zero-copy-telemetry-shared-memory-usb-serial)
-
-- [4.13 FMEA Required for All Subsystems](#fmea-required-for-all-subsystems)
-
-- [4.14 Zero Third-Party Network Services in Production](#zero-third-party-network-services-in-production)
-
-- [Section 5 N+1 CONSTRAINT AND GOVERNANCE](#n-1-constraint-and-governance)
-
-- [5.01 ITC Ledger: Only Source of Truth](#itc-ledger-only-source-of-truth)
-
-- [5.02 CDS Deliberation: Only Source of Authority](#cds-deliberation-only-source-of-authority)
-
-- [5.03 OAD Design: Only Source of Technical Feasibility](#oad-design-only-source-of-technical-feasibility)
-
-- [5.04 COS Production: Only Source of Value Delivery](#cos-production-only-source-of-value-delivery)
-
-- [5.05 FRS Monitoring: Only Source of Monitoring Truth](#frs-monitoring-only-source-of-monitoring-truth)
-
-- [5.06 Closed Loop Topology: Only Acceptable Architecture](#closed-loop-topology-only-acceptable-architecture)
-
-- [5.07 Bootstrap Rule (One Laptop, One Binary](#bootstrap-rule-one-laptop-one-binary)
-
-- [5.08 A7 Matrix as Completeness Constraint](#a7-matrix-as-completeness-constraint)
-
-- [5.09 Specification Terminates Here](#specification-terminates-here)
-
-- [5.10 Member: Only Fundamental Unit](#member-only-fundamental-unit)
-
-- [5.11 Threat Model](#threat-model)
-
-- [5.12 Economic Collapse Prevention](#economic-collapse-prevention)
-
-- [5.13 Formal Verification Requirements](#formal-verification-requirements)
-
-- [5.14 Evolution and Upgrade Protocol](#evolution-and-upgrade-protocol)
-
-- [5.15 Minimal Test Scenarios](#minimal-test-scenarios)
-
-- [5.16 Bootstrap Sequence](#bootstrap-sequence)
+### Subsections
 
 
 ---
 
+# INTEGRAL SYSTEM SPECIFICATION
+Subtitle: ISPEC-001 | Revision 1.0 | 2026-05-05 | DRAFT
+ISPEC-001 is the canonical technical specification for the Integral system. This document defines all architecture decisions, integration patterns, operational requirements, dark factory constraints, and governance rules. No subsystem deployment proceeds without this document as its foundation. Read every addendum. Implement every decision. Accept no deviation without formal amendment.
+TABLE OF CONTENTS
 
----
+## 1  ARCHITECTURE FOUNDATIONS
 
+1.01 Pure Rust Substrate
+1.02 CDS Deliberation Engine (Cognitive Deliberation Architecture)
+1.03 OAD Knowledge Hypergraph (SurrealDB)
+1.04 ITC Ledger Architecture (Event-Sourced, Non-Transferable)
+1.05 ITC Access Value Calculation
+1.06 COS Production Planning (Saga Pattern)
+1.07 FRS Node Health Monitoring (RED/USE Methods)
+1.08 API Gateway (Axum, JWT, Rate Limiting)
 
----
+## 2  INTEGRATION AND SECURITY
 
----
-## 1  Architecture Foundations
-### 1.01  Pure Rust Substrate
+2.01 X402 Autonomous Economic Agents
+2.02 UNTP Verifiable Credentials
+2.03 CQRS for ITC Ledger and OAD Design
+2.04 Hexagonal Architecture Per Subsystem
+2.05 OAD Module 6 Formal Specification (Rust Types)
+2.06 OAD Module 7 Circular Resource Loop Detection
+2.07 Syntegrity Scaling (Virtual Icosahedron)
+2.08 Federation with Bilateral Coordination Envelopes
 
+## 3  OPERATIONS AND RELIABILITY
 
+3.01 Formal Verification Scope (Protocol Only)
+3.02 Observability Stack (Prometheus/Grafana/Loki/Jaeger)
+3.03 Event-Driven Integration (Typed Event Bus, NATS)
+3.04 Deployment and Orchestration (Kubernetes, ArgoCD)
+3.05 Zero Trust Security (Passkeys, mTLS, RBAC/ABAC)
+3.06 Phase 1 MVP (CDS 1-4 + OAD 1-3, SQLite)
+3.07 Post-Scarcity Pathway (Commons Utility Index)
+3.08 DevOps Overlay (Proxmox/k3s/Ansible/Nexus/CI)
+
+## 4  DARK FACTORY REQUIREMENTS
+
+4.01 Sealed Edge Node Specification
+4.02 ITC Proof Log on Flash (Append-Only SHA-256 Chain)
+4.03 NoUS OS for CDS Deliberation
+4.04 Bootstrap Toolchain Verification
+4.05 Time-Triggered Architecture for COS Production
+4.06 Formal Verification Gate (Kani + TLA+)
+4.07 Simple File Server for Artifacts (Ed25519 Signed Manifests)
+4.08 Shell Script CI on Sovereign Infrastructure
+4.09 Embedded MMAP Database for Edge Nodes
+4.10 Hardware-Enforced Network Isolation
+4.11 Atomic Configuration Swap with Hardware Watchdog
+4.12 Zero-Copy Telemetry (Shared Memory + USB Serial)
+4.13 FMEA Required for All Subsystems
+4.14 Zero Third-Party Network Services in Production
+
+## 5  N+1 CONSTRAINT AND GOVERNANCE
+
+5.01 ITC Ledger: Only Source of Truth
+5.02 CDS Deliberation: Only Source of Authority
+5.03 OAD Design: Only Source of Technical Feasibility
+5.04 COS Production: Only Source of Value Delivery
+5.05 FRS Monitoring: Only Source of Monitoring Truth
+5.06 Closed Loop Topology: Only Acceptable Architecture
+5.07 Bootstrap Rule (One Laptop, One Binary)
+5.08 A7 Matrix as Completeness Constraint
+5.09 Specification Terminates Here
+5.10 Member: Only Fundamental Unit
+5.11 Threat Model
+5.12 Economic Collapse Prevention
+5.13 Formal Verification Requirements
+5.14 Evolution and Upgrade Protocol
+5.15 Minimal Test Scenarios
+5.16 Bootstrap Sequence
+## SECTION 1: ARCHITECTURE FOUNDATIONS
+### 1.01 Pure Rust Substrate
 **DECISION:** Every runtime component in the Integral system compiles to Rust. No garbage-collected language runs in any production subsystem.
-
-
 **RATIONALE:** Memory safety bugs cause catastrophic failures in distributed economic systems. Rust eliminates entire classes of bugs at compile time. The Integral system manages resources, credentials, and value flows. These demand provable memory safety. Rust delivers that guarantee with zero runtime overhead. No alternative language offers this combination for bare-metal and server contexts alike.
-
-
 **REJECTED ALTERNATIVES:** C and C++ require manual memory management. Developers make errors. Those errors become security vulnerabilities. Go and Java use garbage collection. GC pauses cause latency spikes that break time-triggered production cycles. Python and JavaScript lack type safety at the systems level. The safety case for economic infrastructure demands Rust.
-
-
 **SPECIFICATION CONSEQUENCE:** All five subsystems (CDS, OAD, ITC, COS, FRS) target stable Rust. Build scripts validate Rust edition and MSRV on every compilation. Foreign-function interfaces require explicit audit and isolation boundaries. No dynamically linked Rust crates from untrusted sources enter the production build.
-### 1.02  CDS Deliberation Engine (Cognitive Deliberation Architecture)
-
-
+### 1.02 CDS Deliberation Engine (Cognitive Deliberation Architecture)
 **DECISION:** The CDS implements the Cognitive Deliberation Architecture for deliberative decision-making. All governance choices flow through the CDS before execution.
-
-
 **RATIONALE:** Collective decisions require structured deliberation. The Cognitive Deliberation Architecture provides a formal model for how a system reasons about competing claims, constraints, and values. It maps cleanly onto Rust type systems. It supports explainable outputs that members can audit. It handles contradiction gracefully. That makes it the correct tool for community governance at scale.
-
-
 **REJECTED ALTERNATIVES:** Large language model agents lack determinism and auditability. Rule-based systems scale poorly as rule counts grow.voting mechanisms (DAOs, quadrics) reduce complex deliberation to counting. They discard the reasoning structure that makes collective decisions defensible. The cognitive deliberation model preserves that structure.
-
-
 **SPECIFICATION CONSEQUENCE:** CDS exposes a typed deliberation API. Inputs arrive as structured claims. Outputs carry reasoning traces. The deliberation state machine persists across sessions. All CDS decisions route through the ITC ledger for immutable recording. No external system bypasses the CDS for governance actions.
-### 1.03  OAD Knowledge Hypergraph (SurrealDB)
-
-
+### 1.03 OAD Knowledge Hypergraph (SurrealDB)
 **DECISION:** The OAD stores all knowledge artifacts in a SurrealDB hypergraph. Every node, edge, and annotation lives in SurrealDB with full versioning and temporal queries.
-
-
 **RATIONALE:** Knowledge in a regenerative community spans technical specs, ecological relationships, social histories, and governance precedents. A flat relational store cannot represent this richness. A pure document store loses relationship structure. A hypergraph captures both. SurrealDB delivers hypergraph semantics with a familiar query language, embedded deployment, and strong consistency. That combination fits the OAD requirement exactly.
-
-
 **REJECTED ALTERNATIVES:** PostgreSQL lacks hypergraph capabilities without extensions. Neo4j requires separate infrastructure and operational overhead. Elasticsearch prioritizes search over relational integrity. MongoDB sacrifices relationships for flexibility. Each alternative either demands external services or loses the hypergraph model the OAD requires.
-
-
 **SPECIFICATION CONSEQUENCE:** OAD modules interact exclusively through SurrealDB. No in-memory caching of authoritative knowledge state. SurrealDB runs embedded in the CDS process for low-latency queries. Cross-module knowledge joins execute inside SurrealDB rather than through application-layer joins. Schema migrations carry full backward compatibility guarantees.
-### 1.04  ITC Ledger Architecture (Event-Sourced, Non-Transferable)
-
-
-
+### 1.04 ITC Ledger Architecture (Event-Sourced, Non-Transferable)
 **DECISION:** The ITC ledger implements event sourcing. Every state change produces an immutable append-only event. The ledger never mutates or deletes records. Access credits never transfer between members.
-
-
 **RATIONALE:** Economic infrastructure demands perfect auditability. Event sourcing provides a complete historical record of every state transition. Immutable events mean no dispute about what happened or when. Non-transferability of access credits prevents accumulation of economic power. It ensures every member holds equal standing regardless of activity history. That property is foundational to community governance.
-
-
 **REJECTED ALTERNATIVES:** Balance-sheet ledgers allow hidden adjustments. Double-entry accounting obscures intent. Transferable credits create winner-take-all dynamics that corrupt community governance. Snapshot-based state stores lose the causal chain between events. Each rejected alternative violates the auditability or equality requirement the ITC ledger demands.
-
-
 **SPECIFICATION CONSEQUENCE:** All ITC event types carry monotonically increasing sequence numbers. Event schemas are versioned and forward-compatible. Projections recompute from event replay only. No side channels modify ITC state. The ledger API exposes only append and query operations. No update or delete operation exists.
-### 1.05  ITC Access Value Calculation
-
-
+### 1.05 ITC Access Value Calculation
 **DECISION:** The system calculates member access value from a deterministic formula applied toITC event streams. No human assigns or adjusts access values.
-
-
 **RATIONALE:** Automated value calculation removes administrative power from the equation. People who control access allocations accumulate power. That accumulation corrupts governance regardless of intent. A transparent formula anyone can inspect and verify provides the same guarantees as the ledger itself. Members trust the system because the system treats everyone by the same rules.
-
-
 **REJECTED ALTERNATIVES:** Admin-assigned access levels create single points of control. Peer nomination systems invite cartel behavior. Reputation-weighted systems inherit bias from the data used to build them. Each alternative concentrates power or embeds hidden assumptions. The deterministic formula avoids both failure modes.
-
-
 **SPECIFICATION CONSEQUENCE:** The access value formula lives in versioned source code. Changes require CDS deliberation and ITC event recording. The formula inputs come exclusively from on-chain ITC events. No oracle or external data feed influences access value. Members query their own access value at any time through the FRS monitoring interface.
-### 1.06  COS Production Planning (Saga Pattern)
-
-
+### 1.06 COS Production Planning (Saga Pattern)
 **DECISION:** The COS uses the saga pattern for all multi-step production workflows. Each saga step compensates on failure. Compensating actions publish ITC events.
-
-
 **RATIONALE:** Production planning spans multiple subsystems and external resources. Networks fail. Hardware stops. People become unavailable. A production system must handle those failures gracefully. The saga pattern provides explicit compensation for every step. When a step fails, prior steps roll back in reverse order. Compensation events record in the ITC ledger so the rollback is visible and auditable.
-
-
 **REJECTED ALTERNATIVES:** Two-phase commit requires distributed locks. Locked resources become unavailable during failure recovery. Choreography without orchestration obscures which saga owns failure recovery. Best-effort retry with no compensation loses idempotency guarantees. Each alternative fails to handle distributed failure gracefully in a way that preserves auditability.
-
-
 **SPECIFICATION CONSEQUENCE:** Every COS saga class defines compensating event types. Saga orchestrators run in dedicated threads with timeout supervision. Failed sagas publish compensation events before returning errors. The COS dashboard displays active and completed saga states. Long-running sagas checkpoint progress in the ITC ledger at configurable intervals.
-### 1.07  FRS Node Health Monitoring (RED/USE Methods)
-
-
+### 1.07 FRS Node Health Monitoring (RED/USE Methods)
 **DECISION:** The FRS monitors every node using the RED method for services and the USE method for resources. All metrics route to the observability stack.
-
-
 **RATIONALE:** Engineers need consistent monitoring contracts. RED (Requests, Errors, Duration) works for service-oriented components. USE (Utilization, Saturation, Errors) works for hardware resources. These two methods cover every monitoring scenario without overlap. Consistent application means every engineer knows exactly what to look for when something fails.
-
-
 **REJECTED ALTERNATIVES:** Custom monitoring dashboards per subsystem create cognitive overhead. Generic health checks (up/down) miss performance degradation. Latency-only metrics hide error spikes. The Four Golden Signals overlap with RED but lack resource-level granularity. The RED/USE combination is the minimal complete monitoring vocabulary.
-
-
 **SPECIFICATION CONSEQUENCE:** FRS instruments every service endpoint for rate, errors, and duration. FRS instruments every compute resource for utilization, saturation, and errors. The Axum API gateway exposes a /metrics endpoint in Prometheus format. All FRS data flows through the event bus to Prometheus, Grafana, and Loki. Alerting rules fire from Grafana based on USE thresholds.
-### 1.08  API Gateway (Axum, JWT, Rate Limiting)
-
-
+### 1.08 API Gateway (Axum, JWT, Rate Limiting)
 **DECISION:** All external and internal API traffic routes through a single Axum-based gateway. The gateway enforces JWT authentication, RBAC authorization, and per-client rate limiting.
-
-
 **RATIONALE:** Centralizing cross-cutting concerns (auth, authorization, rate limits) in one place eliminates scattered enforcement. Each microservice implementing its own JWT parsing introduces inconsistency. A single gateway provides one place to audit, one place to patch, and one place to tune rate limits. Axum delivers compile-time guarantees about route handling with minimal runtime overhead.
-
-
 **REJECTED ALTERNATIVES:** Sidecar proxies (Istio, Envoy) add operational complexity and memory overhead. Per-service JWT middleware fragments auth logic. API gateways as managed services (Kong, AWS) create infrastructure dependencies that violate dark factory constraints. An Axum-based gateway in Rust runs natively on every node without external dependencies.
-
-
 **SPECIFICATION CONSEQUENCE:** The gateway binary deploys alongside each subsystem binary. It runs in the same process group with a Unix socket to the subsystem. The gateway validates JWTs against the ITC ledger public key. RBAC policies load from OAD configuration documents. Rate limit counters persist in a shared Redis or local in-memory store depending on deployment context.
-
-
-
----
-
-
----
-
----
-## 2  Integration and Security
-### 2.01  X402 Autonomous Economic Agents
-
-
+## SECTION 2: INTEGRATION AND SECURITY
+### 2.01 X402 Autonomous Economic Agents
 **DECISION:** All autonomous agent economic interactions use the X402 protocol. No agent makes payment or receives payment outside this protocol.
-
-
 **RATIONALE:** Autonomous agents need a standard way to negotiate, execute, and prove payment for services. X402 defines that protocol. It specifies how agents declare capabilities, request work, negotiate terms, and prove payment. Using X402 means every agent interaction follows the same rules. That makes the economic layer auditable and interoperable.
-
-
 **REJECTED ALTERNATIVES:** Custom payment protocols fragment the economic layer. REST + webhook payment flows lack atomicity guarantees. Payment channels (Lightning, USDC) solve transfer but not capability negotiation. Each alternative either creates fragmentation or lacks the negotiation layer that X402 provides.
-
-
 **SPECIFICATION CONSEQUENCE:** Every agent implementation includes an X402 client. The ITC ledger records X402 payment events. Agents authenticate with UNTP credentials (see 2.02). The gateway routes X402 requests to the correct agent based on capability declarations stored in OAD. No agent accepts payment outside the X402 envelope.
-### 2.02  UNTP Verifiable Credentials
-
-
+### 2.02 UNTP Verifiable Credentials
 **DECISION:** All member and agent identities use UNTP verifiable credentials. The system issues, presents, and verifies credentials according to the UNTP specification.
-
-
 **RATIONALE:** Members need credentials that work across subsystems without repeating identity proof. UNTP provides a self-sovereign credential model. Members control their own credentials. The system verifies credentials without central authority. That model matches the privacy and autonomy values of the Integral system.
-
-
 **REJECTED ALTERNATIVES:** OAuth/OIDC federated identity creates dependency on identity providers. Self-signed certificates require complex trust chain management. Government-issued IDs introduce single-authority dependency. Each alternative either centralizes identity or creates interoperability barriers the Integral system cannot accept.
-
-
 **SPECIFICATION CONSEQUENCE:** UNTP credential schemas live in OAD. The CDS issues credentials through the deliberation process. The ITC ledger records credential issuance and revocation as events. Agents present credentials in X402 interactions. The FRS monitors credential expiry rates and presents alerts before mass expiration events.
-### 2.03  CQRS for ITC Ledger and OAD Design
-
-
+### 2.03 CQRS for ITC Ledger and OAD Design
 **DECISION:** Both ITC and OAD implement Command Query Responsibility Segregation (CQRS). Commands write to event stores. Queries read from materialized projections.
-
-
 **RATIONALE:** The ITC ledger accumulates events indefinitely. Queries against a flat event stream degrade as event count grows. CQRS separates write complexity from read complexity. Commands produce events. Queries read from optimized projections updated asynchronously from the event stream. This separation also allows different consistency models for writes versus reads.
-
-
 **REJECTED ALTERNATIVES:** Pure event sourcing with no CQRS forces all reads through event replay. That approach fails at scale. Separate read/write databases without CQRS semantics lose the causal ordering that event sourcing provides. Synchronous dual-write adds latency to every operation. CQRS with async projection updates is the only pattern that preserves both properties.
-
-
 **SPECIFICATION CONSEQUENCE:** ITC commands publish to the event store. ITC projections update from a dedicated projection worker. OAD commands update SurrealDB event records. OAD queries read from SurrealDB graph projections. Command-side projections run synchronously for consistency. Query-side projections run asynchronously with configurable lag bounds.
-### 2.04  Hexagonal Architecture Per Subsystem
-
-
+### 2.04 Hexagonal Architecture Per Subsystem
 **DECISION:** Each subsystem adopts hexagonal architecture. Ports define how it interacts with the outside world. Adapters implement those ports. Core domain logic has no external dependencies.
-
-
 **RATIONALE:** Subsystems must evolve independently. When OAD changes its storage layer, CDS should not break. When ITC changes its consensus model, COS should not care. Hexagonal architecture enforces this separation. Core domain logic sits in the center with no imports from infrastructure. Adapters live at the edges. Ports define the contracts between them.
-
-
 **REJECTED ALTERNATIVES:** Layered architecture creates reverse dependency pressure that eventually forces infrastructure concerns into core logic. Microservices with shared libraries create coupling that defeats independent deployment. Plugin architectures introduce indirection without structural constraint. Hexagonal architecture provides the strongest guarantee that core logic stays pure.
-
-
 **SPECIFICATION CONSEQUENCE:** Each subsystem repo has a core crate with no dependencies beyond the standard library and type-focused crates. Adapter crates (database, network, filesystem) depend on core, not vice versa. Port traits live in the core crate. Adapter implementations satisfy those traits. Integration tests verify adapters against port contracts.
-### 2.05  OAD Module 6 Formal Specification (Rust Types)
-
-
+### 2.05 OAD Module 6 Formal Specification (Rust Types)
 **DECISION:** OAD Module 6 defines knowledge graph traversal and inference rules as formal Rust types. The type system enforces correctness properties that the specification requires.
-
-
 **RATIONALE:** Knowledge graph queries must be correct. Incorrect traversal leads to wrong answers. Wrong answers corrupt deliberation. Formal specification in Rust types makes correctness properties verifiable by the compiler. Inference rules become functions with typed inputs and outputs. Errors surface at compile time, not at query time.
-
-
 **REJECTED ALTERNATIVES:** DSL-based query languages introduce a second language that requires its own parser and type checker. Dynamic query builders lose compile-time guarantees. Stored procedures in a separate database language create boundary violations in the hexagonal model. Typed Rust functions provide the strongest correctness guarantees within the existing codebase.
-
-
 **SPECIFICATION CONSEQUENCE:** Module 6 exports typed traversal functions from the core crate. Every traversal carries a result type the compiler verifies. The OAD test suite includes property-based tests for traversal correctness. SurrealDB queries execute through generated type-safe wrappers. Schema changes in SurrealDB trigger recompilation failures when type consistency breaks.
-### 2.06  OAD Module 7 Circular Resource Loop Detection
-
-
+### 2.06 OAD Module 7 Circular Resource Loop Detection
 **DECISION:** OAD Module 7 detects circular resource loops in the knowledge hypergraph. The system flags any resource relationship that forms a closed cycle of ownership or dependency.
-
-
 **RATIONALE:** Regenerative communities manage circular flows of water, nutrients, energy, and materials. Accidental closed loops in these flows cause system failure. Detecting them in the knowledge graph before they appear in physical systems prevents damage. The knowledge graph models real-world flows. Detecting loops in the model catches problems before they reach the physical layer.
-
-
 **REJECTED ALTERNATIVES:** Manual review of resource flows requires expert knowledge that community members may lack. Heuristic detection produces false negatives when loops are non-obvious. Simulation-based detection runs too slowly for real-time graph updates. Graph algorithm detection (Tarjan SCC) runs in linear time and catches all cycles.
-
-
 **SPECIFICATION CONSEQUENCE:** Module 7 runs Tarjan's algorithm on every resource relationship graph update. Detected cycles publish OAD events. Members receive notifications when new cycles form. The CDS deliberation engine receives cycle events as inputs for resolution workflows. All historic cycle detections remain searchable in the OAD hypergraph.
-### 2.07  Syntegrity Scaling (Virtual Icosahedron)
-
-
+### 2.07 Syntegrity Scaling (Virtual Icosahedron)
 **DECISION:** The system scales node membership using the Syntegrity model with a virtual icosahedron topology. Nodes group into 12 pentagonal clusters. Each cluster elects one coordinator.
-
-
 **RATIONALE:** Distributed systems need governance structures that scale past a single group. Unconstrained full-mesh communication breaks down at scale. Pure hierarchies create single points of failure. The icosahedral Syntegrity model provides a well-studied middle ground. Twelve clusters distribute power. Inter-cluster links are minimal and explicit. The structure scales from small groups to hundreds of nodes.
-
-
 **REJECTED ALTERNATIVES:** Hash-based consistent hashing creates opaque groupings with no governance logic. Random peer sampling introduces churn that disrupts relationship formation. Static cluster assignment loses flexibility as membership changes. Syntegrity provides explicit structure without imposing arbitrary hierarchies.
-
-
 **SPECIFICATION CONSEQUENCE:** Syntegrity topology configuration lives in OAD as a graph document. Cluster assignments update through CDS deliberation. Coordinator elections use the ITC ledger for ranked voting. Cross-cluster messages route through coordinator nodes. The FRS monitors inter-cluster latency and flags topology drift.
-### 2.08  Federation with Bilateral Coordination Envelopes
-
-
+### 2.08 Federation with Bilateral Coordination Envelopes
 **DECISION:** Federation between Integral instances uses bilateral coordination envelopes. Each pair of federated instances negotiates its own protocol within shared envelope constraints.
-
-
 **RATIONALE:** Different communities have different needs. A rigid global protocol prevents local adaptation. Bilateral envelopes allow pairs to share context and coordinate without forcing full protocol alignment. Each pair agrees on shared vocabulary for the data they exchange. They respect envelope constraints for credential format, event encoding, and trust verification. Within those constraints they adapt freely.
-
-
 **REJECTED ALTERNATIVES:** Full federation with a single protocol creates lock-in. Complete isolation prevents valuable cross-community collaboration. Hub-and-spoke federation centralizes trust in the hub node. Bilateral envelopes provide exactly the right flexibility without sacrificing interoperability.
-
-
 **SPECIFICATION CONSEQUENCE:** Federated pairs publish coordination envelope metadata to OAD. Envelope negotiation executes through the CDS deliberation engine. Each envelope specifies which OAD knowledge types cross the federation boundary. The ITC ledger records cross-boundary events. The FRS monitors federation health by tracking envelope latency and error rates.
-
-
-
----
-
-
----
-
----
-## 3  Operations and Reliability
-### 3.01  Formal Verification Scope (Protocol Only)
-
-
+## SECTION 3: OPERATIONS AND RELIABILITY
+### 3.01 Formal Verification Scope (Protocol Only)
 **DECISION:** Formal verification applies to protocol specifications only. Implementation correctness falls to testing, not theorem proving.
-
-
 **RATIONALE:** Proving every line of implementation correct requires orders of magnitude more effort than writing it. The return on that investment is marginal. Protocol specifications, by contrast, define the contract between components. Verifying that contract prevents entire categories of integration bugs. A formally verified protocol running against a well-tested implementation outperforms a verified protocol running against a broken one.
-
-
 **REJECTED ALTERNATIVES:** Full implementation verification is not cost-effective at current tooling maturity. Model checking all possible execution paths in implementation code exhausts available compute. End-to-end simulation-based verification misses edge cases that formal methods catch. The protocol-only scope is the minimal investment that produces maximal safety benefit.
-
-
 **SPECIFICATION CONSEQUENCE:** All protocol specifications (OAD schema protocols, ITC event schemas, X402 message types, UNTP credential schemas) undergo TLA+ specification and model checking. Kani verifies Rust code that implements protocol message handling. Implementations additionally require standard integration and property-based test suites. Verification coverage reports publish to the OAD as artifacts.
-### 3.02  Observability Stack (Prometheus/Grafana/Loki/Jaeger)
-
-
+### 3.02 Observability Stack (Prometheus/Grafana/Loki/Jaeger)
 **DECISION:** All five subsystems emit metrics, logs, and traces to the standard observability stack. The stack consists of Prometheus for metrics, Grafana for visualization and alerting, Loki for log aggregation, and Jaeger for distributed tracing.
-
-
 **RATIONALE:** Operations teams need one place to go when systems misbehave. Metrics show what is degraded. Logs show why. Traces show where in the request path the problem originated. These three signals together answer most incident questions without requiring logins to production machines. The proposed stack provides all three signals in an integrated, open-source solution that runs entirely on sovereign infrastructure.
-
-
 **REJECTED ALTERNATIVES:** Managed observability services (Datadog, New Relic) create third-party dependencies that violate dark factory constraints. Cloud-native observability (CloudWatch, GCP Operations) locks the system to specific cloud providers. OpenTelemetry without a backend leaves data stranded. The selected stack runs on-premises, requires no external connectivity, and supports all three signal types.
-
-
 **SPECIFICATION CONSEQUENCE:** Every subsystem exposes a /metrics endpoint in Prometheus format. Every subsystem emits structured JSON logs to stdout. The log aggregation pipeline ships logs to Loki. The Axum gateway propagates Jaeger trace context in HTTP headers. Grafana dashboards exist for each subsystem. Alerting rules trigger PagerDuty-style escalation based on USE and RED metrics thresholds.
-### 3.03  Event-Driven Integration (Typed Event Bus, NATS)
-
-
-
+### 3.03 Event-Driven Integration (Typed Event Bus, NATS)
 **DECISION:** All subsystem-to-subsystem communication uses a typed event bus implemented on NATS. Event types carry schema versions. Schema changes require backward compatibility or version bumping.
-
-
 **RATIONALE:** Loose coupling between subsystems allows independent evolution. Shared-memory calls or RPC frameworks create temporal coupling. Components must be running simultaneously to communicate. Event bus semantics decouple in time. Producers and consumers share no knowledge of each other. NATS delivers this decoupling with minimal latency and strong delivery guarantees.
-
-
 **REJECTED ALTERNATIVES:** Message queues (RabbitMQ, SQS) add broker complexity without typed schema support. gRPC streams create bidirectional coupling. REST webhooks introduce polling and polling delay. Kafka requires JVM-based infrastructure and operational expertise the dark factory team lacks. NATS runs in a single Rust binary, supports schema-typed JetStream persistence, and has minimal operational footprint.
-
-
 **SPECIFICATION CONSEQUENCE:** All inter-subsystem events define schema types in a shared schema registry. Event producers validate against the schema before publishing. Event consumers use generated type bindings from the schema registry. Schema evolution follows backward-compatible append-only rules. Breaking changes bump the major version and require CDS deliberation before deployment.
-### 3.04  Deployment and Orchestration (Kubernetes, ArgoCD)
-
-
+### 3.04 Deployment and Orchestration (Kubernetes, ArgoCD)
 **DECISION:** Production deployments target Kubernetes orchestrated by ArgoCD. Git serves as the single source of truth for desired state. ArgoCD continuously reconciles actual state with desired state.
-
-
 **RATIONALE:** Kubernetes abstracts the underlying hardware into a declarative API. That abstraction enables the same deployment to run on developer laptops, edge nodes, and cloud hardware. ArgoCD adds GitOps discipline. Every config change passes through git review. Rollback is a git revert. The deployment history lives in git. ArgoCD enforces that history as an audit log.
-
-
 **REJECTED ALTERNATIVES:** Docker Compose lacks cross-host networking and scaling primitives. Nomad lacks the ecosystem maturity and Helm chart library that Kubernetes provides. Cloud-specific deployment managers (ECS, Cloud Run) lock the system to a single provider. Kubernetes with ArgoCD provides the right balance of abstraction, ecosystem, and GitOps discipline.
-
-
 **SPECIFICATION CONSEQUENCE:** Each subsystem ships as a container image built by the CI pipeline. Helm charts for each subsystem live in the fleet repository. ArgoCD Application objects define target namespaces and clusters. The CDS deliberates on deployment approvals through a workflow that modifies the fleet repository. ArgoCD sync status surfaces in the FRS dashboard.
-### 3.05  Zero Trust Security (Passkeys, mTLS, RBAC/ABAC)
-
-
+### 3.05 Zero Trust Security (Passkeys, mTLS, RBAC/ABAC)
 **DECISION:** All network communication uses mutual TLS (mTLS). All user authentication uses passkeys. Authorization combines role-based access control (RBAC) with attribute-based access control (ABAC).
-
-
 **RATIONALE:** Network perimeter security assumes attackers stay outside the network. Zero Trust assumes attackers are already inside. mTLS encrypts all traffic and verifies both endpoints regardless of network location. Passkeys eliminate password-based phishing vectors. RBAC provides coarse authorization. ABAC adds fine-grained context (time of access, location, device health) to authorization decisions.
-
-
 **REJECTED ALTERNATIVES:** VPN-based perimeter security creates single points of failure and management overhead. Password-based authentication is the leading cause of credential compromise. RBAC-only authorization cannot express context-dependent policies. ABAC-only authorization lacks the clear role hierarchies that RBAC provides. The combination addresses all three layers.
-
-
 **SPECIFICATION CONSEQUENCE:** Every node holds a unique X.509 certificate issued by the local CA. The OAD stores certificate metadata. The CDS deliberates on certificate issuance policies. The API gateway enforces RBAC role checks on every request. ABAC policies evaluate additional attributes at request time. FRS monitors certificate expiry and revocation status.
-### 3.06  Phase 1 MVP (CDS 1-4 + OAD 1-3, SQLite)
-
-
-
+### 3.06 Phase 1 MVP (CDS 1-4 + OAD 1-3, SQLite)
 **DECISION:** Phase 1 MVP implements CDS deliberation capabilities 1 through 4 and OAD knowledge modules 1 through 3. Storage uses SQLite in embedded mode. No external database services.
-
-
 **RATIONALE:** The MVP must deliver working deliberation and knowledge management quickly. Full SurrealDB deployment requires operational investment that delays value delivery. SQLite provides a zero-administration storage layer that runs on developer laptops, edge nodes, and servers alike. It supports the SQL query surface that Phase 1 OAD needs. It eliminates the external service dependency for the first deployment wave.
-
-
 **REJECTED ALTERNATIVES:** PostgreSQL adds a service to operate. SurrealDB embedded requires licensing and setup that exceeds MVP scope. MongoDB or Elasticsearch require separate infrastructure. SQLite with embedded mode delivers the fastest path to a working system with acceptable performance for MVP-scale workloads.
-
-
 **SPECIFICATION CONSEQUENCE:** CDS stores deliberation state in SQLite. OAD stores knowledge artifacts in SQLite using the graph extension. The MVP deploys as a single binary with SQLite on local storage. The FRS instruments SQLite read/write latency. MVP users receive the complete SQLite-backed system as the shippable unit.
-### 3.07  Post-Scarcity Pathway (Commons Utility Index)
-
-
-
+### 3.07 Post-Scarcity Pathway (Commons Utility Index)
 **DECISION:** The system tracks and publishes a Commons Utility Index (CUI) that measures how effectively community resources meet member needs across water, energy, food, shelter, health, learning, and social connection.
-
-
 **RATIONALE:** Regenerative communities aim to move beyond scarcity. Measuring that progress requires a metric. GDP per capita measures economic activity, not wellbeing. The CUI measures whether people actually have what they need. Publishing it publicly creates accountability. Members can see whether the community is genuinely improving or simply generating more throughput.
-
-
 **REJECTED ALTERNATIVES:** Dashboard-only metrics with no public index hide performance from members. Externally-computed indices introduce bias and dependency. Subjective wellbeing surveys are unreliable and infrequent. The CUI combines objective resource flow data with need-fulfillment metrics calculated by the system itself.
-
-
 **SPECIFICATION CONSEQUENCE:** The CUI calculation runs as a scheduled COS workflow. Inputs come from OAD resource flow documents and ITC ledger activity. The CUI publishes as a time-series in the observability stack. Changes in the CUI trigger CDS deliberation when thresholds breach. Historical CUI values are immutable records in the ITC ledger.
-### 3.08  DevOps Overlay (Proxmox/k3s/Ansible/Nexus/CI)
-
-
+### 3.08 DevOps Overlay (Proxmox/k3s/Ansible/Nexus/CI)
 **DECISION:** The DevOps overlay provisions and manages all production infrastructure using Proxmox for virtualization, k3s for Kubernetes, Ansible for configuration management, Nexus for artifact storage, and a dedicated CI pipeline.
-
-
 **RATIONALE:** Infrastructure must be reproducible from definition. Proxmox provides bare-metal virtualization that does not depend on cloud providers. k3s delivers Kubernetes with a fraction of the operational overhead. Ansible codifies configuration as version-controlled playbooks. Nexus hosts all build artifacts (container images, Helm charts, Rust binaries). CI automates the build, test, and promotion pipeline.
-
-
 **REJECTED ALTERNATIVES:** Cloud-managed infrastructure ties the system to provider pricing and availability. Manual server configuration creates snowflake servers that cannot be reproduced. Docker Hub and GitHub Container Registry introduce third-party artifact dependencies. The selected stack runs entirely on owned or rented bare-metal hardware without external service dependency.
-
-
 **SPECIFICATION CONSEQUENCE:** All infrastructure manifests live in the fleet repository. Ansible playbooks provision Proxmox VMs and configure k3s nodes. Nexus runs as an internal service on the DevOps overlay network. The CI pipeline builds binaries and publishes to Nexus. ArgoCD pulls from Nexus for production deployments.
-
-
-
----
-
-
----
-
----
-## 4  Dark Factory Requirements
-### 4.01  Sealed Edge Node Specification
-
-
+## SECTION 4: DARK FACTORY REQUIREMENTS
+### 4.01 Sealed Edge Node Specification
 **DECISION:** All edge nodes ship as sealed units. No field repair or modification. Failed units return to the factory for inspection and refurbishment. Software updates arrive through authenticated remote channels.
-
-
 **RATIONALE:** Field-modified hardware creates configuration drift. Drift creates the snowflake server problem at scale. Sealed units guarantee identical hardware state across all deployed nodes. Refurbishment at the factory maintains tamper evidence and configuration integrity. Remote updates ensure software stays current without physical access to nodes.
-
-
 **REJECTED ALTERNATIVES:** Field service requires trained technicians at each deployment site. That requirement scales poorly. Modular design with replaceable components introduces variation between units. Open chassis designs invite tampering that breaks mTLS certificate trust chains. Sealed design enforces uniformity that field repair cannot guarantee.
-
-
 **SPECIFICATION CONSEQUENCE:** Edge node hardware specifications define a fixed Bill of Materials. Every unit ships with an identical ROM bootloader. The bootstrap toolchain verifies the ROM hash before accepting a new binary. Hardware tampering evidence lives in the ITC proof log. Nodes that fail tamper checks shut down and publish alert events before returning to the factory.
-### 4.02  ITC Proof Log on Flash (Append-Only SHA-256 Chain)
-
-
-
+### 4.02 ITC Proof Log on Flash (Append-Only SHA-256 Chain)
 **DECISION:** Each edge node maintains a local ITC proof log stored on internal flash. The log uses an append-only SHA-256 hash chain. Log entries are immutable once written. The chain provides cryptographic proof of event ordering.
-
-
 **RATIONALE:** Edge nodes operate with intermittent or absent network connectivity. They cannot submit every event to the central ITC ledger in real time. The local proof log bridges that gap. When connectivity returns, the node replays its local proof log entries to the central ledger in order. The SHA-256 chain guarantees that no entries were inserted, deleted, or reordered during the offline period.
-
-
 **REJECTED ALTERNATIVES:** Plain flash storage without hash chaining allows silent data corruption. SD card storage has wear-levelling that can relocate blocks and break sequential integrity guarantees. Cloud backup introduces external service dependency. The SHA-256 chain with internal flash provides offline proof integrity without external dependencies.
-
-
 **SPECIFICATION CONSEQUENCE:** The proof log writes entries to raw NAND flash using a log-structured filesystem. Each entry carries the SHA-256 hash of the previous entry. On reconnect, the node proves chain continuity to the central ledger. Entries submitted to the central ledger are merkleized into the global ITC event tree. The FRS monitors flash wear and proofs-per-sync metrics.
-### 4.03  NoUS OS for CDS Deliberation
-
-
+### 4.03 NoUS OS for CDS Deliberation
 **DECISION:** The CDS deliberates exclusively on the NoUS operating system. NoUS is a minimal, capability-based OS designed for single-purpose deliberation nodes. No general-purpose operating system runs on deliberation nodes.
-
-
 **RATIONALE:** General-purpose operating systems carry attack surfaces measured in millions of lines of code. Linux, Windows, and macOS are not auditable by any single team. NoUS eliminates the attack surface. It provides only the capabilities the CDS needs: network communication, cryptographic operations, and event logging. The result is auditable in days, not years.
-
-
 **REJECTED ALTERNATIVES:** Linux on deliberation nodes carries the entire kernel attack surface. seL4 provides formal verification but lacks the Rust ecosystem that NoUS builds on. Bare-metal Rust on deliberation nodes requires reimplementing too much infrastructure. NoUS provides the right balance of auditable minimalism and practical tooling.
-
-
 **SPECIFICATION CONSEQUENCE:** NoUS images build from a curated minimal rootfs. Only the CDS binary and its runtime dependencies ship in the NoUS image. System calls are limited to a whitelist. NoUS runs on x86_64 and ARM64. The build pipeline signs NoUS images with the factory key. Edge nodes verify NoUS signatures before boot.
-### 4.04  Bootstrap Toolchain Verification
-
-
+### 4.04 Bootstrap Toolchain Verification
 **DECISION:** Every binary that boots on any Integral node verifies against a toolchain manifest signed by the factory key. Verification happens in the ROM bootloader before execution begins.
-
-
 **RATIONALE:** The supply chain is a primary attack vector. An attacker who compromises the build pipeline can inject malicious code into every deployed node. Verifying binary signatures at boot prevents execution of compromised code. The factory key lives in ROM and never leaves the hardware. No software update can replace it. The bootstrap trust chain starts there.
-
-
 **REJECTED ALTERNATIVES:** Signed package repositories (apt, rpm) protect packages during transit but not at boot. HSM-based verification requires external hardware that the dark factory cannot guarantee. Hash-pinned binaries require manual update coordination across all nodes. ROM-based factory key verification provides the strongest supply chain protection available at acceptable cost.
-
-
 **SPECIFICATION CONSEQUENCE:** The factory signing key lives in mask ROM on every edge node. The toolchain manifest lists every binary, its version, and its SHA-256 hash. The ROM bootloader verifies every binary against the manifest before executing it. Manifest mismatches halt boot and publish an ITC alert event. The FRS tracks boot verification success rates across the fleet.
-### 4.05  Time-Triggered Architecture for COS Production
-
-
-
+### 4.05 Time-Triggered Architecture for COS Production
 **DECISION:** COS production cycles use time-triggered architecture. Production steps execute on precise schedules. Schedules are deterministic. Nodes synchronize time using PTP or GPS Disciplined Clocks.
-
-
 **RATIONALE:** Production planning demands predictability. Network-induced timing jitter breaks production schedules that depend on coordinated resource availability. Time-triggered architecture removes the network from timing decisions. Every node knows exactly when its production step begins. GPS Disciplined Clocks provide nanosecond-level synchronization across the production floor. PTP provides sub-microsecond synchronization for nodes without GPS.
-
-
 **REJECTED ALTERNATIVES:** Event-triggered production schedules depend on message delivery timing. If the network is slow or congested, production steps misfire. NTP synchronization provides millisecond accuracy at best. That precision is insufficient for high-frequency production cycles. GPS Disciplined Clocks deliver the accuracy the COS requires.
-
-
 **SPECIFICATION CONSEQUENCE:** Every production node runs a GPS Disciplined Clock or PTP daemon. The COS scheduler computes production schedules in UTC. Production steps begin within 100 microseconds of the scheduled time. The FRS monitors clock offset between nodes. Schedule deviations above the threshold publish ITC events and trigger CDS deliberation.
-### 4.06  Formal Verification Gate (Kani + TLA+)
-
-
+### 4.06 Formal Verification Gate (Kani + TLA+)
 **DECISION:** Every subsystem release passes a formal verification gate before deployment. The gate runs Kani for Rust safety proofs and TLA+ for protocol model checking. No subsystem deploys without passing the gate.
-
-
 **RATIONALE:** Formal methods catch bugs that testing misses. Kani proves memory safety properties for Rust code that testing cannot cover exhaustively. TLA+ finds protocol-level deadlocks, livelocks, and violation of invariant properties. The combination catches the two most dangerous categories of bugs: memory corruption and protocol violation. The gate ensures every release meets these standards.
-
-
 **REJECTED ALTERNATIVES:** Testing-only verification gates miss property violations that only formal methods catch. Advisory-only formal verification (no gate) means teams skip it when deadlines arrive. Partial formal verification (protocol only) misses implementation-level memory safety violations that Kani catches. The full gate with Kani and TLA+ provides the strongest practical verification available.
-
-
 **SPECIFICATION CONSEQUENCE:** The CI pipeline invokes Kani on every Rust crate in the subsystem. Crate Kani failures block the build. The CI pipeline runs TLA+ model checking on every protocol specification in the subsystem. TLA+ violations block the build. Verification reports publish to the OAD as compliance artifacts. FRS monitors gate pass rates as a quality metric.
-### 4.07  Simple File Server for Artifacts (Ed25519 Signed Manifests)
-
-
+### 4.07 Simple File Server for Artifacts (Ed25519 Signed Manifests)
 **DECISION:** The artifact distribution system uses a simple file server. Artifacts are downloadable files. Manifests listing artifact files carry Ed25519 signatures from the factory key. Clients verify signatures before accepting artifacts.
-
-
 **RATIONALE:** Artifact distribution must be simple, auditable, and tamper-resistant. A simple HTTP file server with signed manifests delivers all three. Ed25519 signatures are fast to verify and resistant to cryptographic attack. The manifest includes file hashes and version numbers. Clients detect tampering by comparing file hashes against the manifest. No complex distribution infrastructure required.
-
-
 **REJECTED ALTERNATIVES:** Content-addressed storage systems (IPFS) add complexity and third-party dependencies. Package managers with GPG signatures carry a legacy of configuration complexity. Docker registry infrastructure requires a JVM-based service that exceeds dark factory scope. Simple HTTP with Ed25519 manifests provides the required guarantees with minimal infrastructure.
-
-
 **SPECIFICATION CONSEQUENCE:** The factory runs a lightweight HTTP server for artifact distribution. Every artifact publish generates a new signed manifest. The manifest lists artifact paths, SHA-256 hashes, and Ed25519 signature. Edge nodes fetch artifacts and verify signatures before installation. The FRS monitors artifact fetch latency and signature verification failure rates.
-### 4.08  Shell Script CI on Sovereign Infrastructure
-
-
+### 4.08 Shell Script CI on Sovereign Infrastructure
 **DECISION:** The CI pipeline runs shell scripts on runner nodes under complete Integral control. No third-party CI services. Pipeline definitions live in the fleet repository. Runners provision on the Proxmox overlay.
-
-
 **RATIONALE:** Third-party CI services create single points of failure and dependency. Travis CI, GitHub Actions, and CircleCI have experienced outages. Outages block all shipping. Self-hosted CI on sovereign infrastructure eliminates the external dependency. Shell script pipelines are auditable by any engineer without specialized CI tool knowledge. The combination of shell scripts and self-hosted runners is the darkest factory CI approach.
-
-
 **REJECTED ALTERNATIVES:** Managed CI services (GitHub Actions, CircleCI) introduce external dependencies and limited auditability. DSL-based pipelines (Jenkinsfile, GitLab CI) require tool-specific knowledge and create lock-in. Self-hosted CI with no shell script access limits the flexibility engineers need for complex build scenarios. Shell scripts on sovereign runners provide maximum flexibility with minimum dependency.
-
-
 **SPECIFICATION CONSEQUENCE:** The fleet repository contains pipeline shell scripts for build, test, verification gate, and publish. Runners provision on k3s nodes using a dedicated runner daemon. Pipeline runs execute in isolated containers with no network access to external services. Artifact outputs publish to the internal Nexus instance. The FRS monitors runner availability and pipeline queue depth.
-### 4.09  Embedded MMAP Database for Edge Nodes
-
-
+### 4.09 Embedded MMAP Database for Edge Nodes
 **DECISION:** Edge nodes use an embedded memory-mapped database for local state. The database uses a log-structured merge tree (LSM) with mmap for zero-copy reads. All writes are sequential.
-
-
 **RATIONALE:** Edge nodes have constrained resources. They cannot run full database servers. They need durable storage that survives power loss without corruption. Memory-mapped files let the operating system handle page faults without application-level buffering. The LSM structure keeps writes sequential, which is optimal for flash storage endurance. Zero-copy reads avoid memory copies that waste constrained RAM.
-
-
 **REJECTED ALTERNATIVES:** SQLite on edge nodes requires synchronous writes that wear flash prematurely. RocksDB requires JVM dependencies. Full SQL servers require memory and compute that edge nodes lack. The embedded LSM mmap database provides the durability, performance, and resource efficiency edge nodes require.
-
-
 **SPECIFICATION CONSEQUENCE:** The edge database lives in /var/integral/db on the internal flash. The database opens with mmap and fsync on every write batch. Crash recovery replays the WAL. The FRS instruments db write latency, read latency, and flash wear. Edge nodes self-repair from central ledger state if local db corruption is detected.
-### 4.10  Hardware-Enforced Network Isolation
-
-
-
+### 4.10 Hardware-Enforced Network Isolation
 **DECISION:** Edge nodes implement hardware-enforced network isolation. A dedicated hardware switch or VLAN separates production traffic from management traffic. No traffic crosses the isolation boundary without going through the API gateway.
-
-
 **RATIONALE:** Software firewalls are configurable and can be misconfigured or compromised. Hardware enforcement provides a physical guarantee that software cannot override. The production network carries time-critical COS traffic. The management network carries configuration and update traffic. Mixing them creates attack vectors. Hardware isolation prevents that mixing.
-
-
 **REJECTED ALTERNATIVES:** VLAN-only isolation depends on switch configuration that software can alter. IPTables-based isolation is software with the full kernel attack surface. AWS PrivateLink-style isolation requires cloud infrastructure that edge nodes cannot assume. Hardware-enforced isolation via a managed switch ASIC provides the strongest enforcement guarantee.
-
-
 **SPECIFICATION CONSEQUENCE:** Edge node hardware includes a managed switch ASIC. The ASIC runs its own firmware independent of the main CPU. The main CPU has no access to switch configuration registers. Configuration lives in the ROM bootloader. The FRS monitors switch port status, VLAN assignments, and dropped frames. Anomalies publish ITC events immediately.
-### 4.11  Atomic Configuration Swap with Hardware Watchdog
-
-
+### 4.11 Atomic Configuration Swap with Hardware Watchdog
 **DECISION:** Configuration updates on edge nodes apply atomically. The system writes new configuration to a pending location. On reboot, the hardware watchdog verifies the new configuration checksum before committing. If verification fails, the node reverts to the previous configuration.
-
-
 **RATIONALE:** Partial configuration writes leave nodes in inconsistent states. An inconsistent node in a production network causes cascading failures. Atomic swap ensures the node runs only a fully verified configuration. The hardware watchdog provides the enforcement that software alone cannot guarantee. If the watchdog fails to verify within the timeout, it halts boot and triggers factory refurbishment.
-
-
 **REJECTED ALTERNATIVES:** Hot-reload of configuration files causes inconsistency windows during which some components have old config and others have new config. Rollback mechanisms without hardware watchdog depend on software that may itself be corrupted. Atomic configuration swap with hardware watchdog provides the only guarantee that corrupted configuration never executes.
-
-
 **SPECIFICATION CONSEQUENCE:** Configuration lives in two slots: committed and pending. The pending slot receives new configuration from the artifact server. The hardware watchdog reads the pending slot checksum on boot. On checksum success, the watchdog copies pending to committed. On checksum failure, the watchdog boots from committed. The FRS tracks configuration slot states across the fleet.
-### 4.12  Zero-Copy Telemetry (Shared Memory + USB Serial)
-
-
-
+### 4.12 Zero-Copy Telemetry (Shared Memory + USB Serial)
 **DECISION:** Telemetry from edge nodes uses shared memory for intra-node transport and USB serial for inter-node transport where applicable. The system avoids TCP/UDP for telemetry to eliminate stack overhead.
-
-
 **RATIONALE:** Telemetry data flows from sensor to processing without transformation. Copying data through the kernel network stack wastes CPU cycles and memory bandwidth. Shared memory transfers data between processes without kernel involvement. USB serial provides a direct wire for point-to-point telemetry between adjacent nodes. Both approaches eliminate the overhead of the full TCP/IP stack.
-
-
 **REJECTED ALTERNATIVES:** MQTT-based telemetry introduces a broker and network stack overhead that exceeds the latency budget for high-frequency telemetry. Raw socket telemetry requires kernel involvement on both sender and receiver. UDP multicast telemetry requires network infrastructure that edge nodes may not have. Shared memory with USB serial provides the fastest path from sensor to storage.
-
-
 **SPECIFICATION CONSEQUENCE:** Telemetry processes map shared memory regions. Producer processes write telemetry frames directly to the shared region. Consumer processes read from the region. The FRS instruments shared memory utilization and consumer lag. For inter-node telemetry, USB serial carries framed telemetry bytes at 12 Mbps minimum. The FRS monitors USB serial frame error rates.
-### 4.13  FMEA Required for All Subsystems
-
-
+### 4.13 FMEA Required for All Subsystems
 **DECISION:** Every subsystem ships with a Failure Mode and Effects Analysis (FMEA) document. The document identifies failure modes, their effects, detection mechanisms, and compensating controls. The FMEA updates before every major release.
-
-
 **RATIONALE:** Complex systems fail in ways engineers do not anticipate. FMEA forces structured analysis of what can go wrong before it goes wrong. It also creates institutional memory of failure modes across the engineering team. Updating the FMEA before major releases ensures the analysis stays current as the system evolves. The document lives in OAD as a versioned artifact.
-
-
 **REJECTED ALTERNATIVES:** Ad hoc failure analysis depends on engineer experience and produces inconsistent results. Post-incident reviews capture failure modes only after they cause damage. Industry-standard FMEA templates miss Integral-specific failure modes. The disciplined FMEA process with mandatory updates before release produces the most complete failure analysis.
-
-
 **SPECIFICATION CONSEQUENCE:** Each subsystem repository includes an FMEA document in the root. The FMEA uses a standard severity, occurrence, and detection scoring matrix. CDS deliberates on FMEA items with high severity scores. The FRS instruments detection mechanisms for every identified failure mode. The CI pipeline fails if the FMEA has not been updated in the current release cycle.
-### 4.14  Zero Third-Party Network Services in Production
-
-
-
+### 4.14 Zero Third-Party Network Services in Production
 **DECISION:** Production deployments use no third-party network services. All DNS, NTP, CDN, and compute services are local or co-located on the same sovereign infrastructure. No traffic crosses the factory perimeter to an external service provider.
-
-
 **RATIONALE:** Third-party network services create external dependencies that can fail independently of the system. Cloud provider outages take down every system that depends on them. DNS providers have been targeted in supply chain attacks. CDN services expose traffic patterns to third parties. The dark factory requires complete sovereignty. Every service must fail or succeed with the fleet, not with an external provider.
-
-
 **REJECTED ALTERNATIVES:** Public DNS (8.8.8.8, 1.1.1.1) introduces a single point of failure that resolves independently of the local network. Cloud NTP services (AWS Time Sync) depend on cloud availability. CDN services (Cloudflare, Fastly) expose traffic and add latency. Co-located services on the same Proxmox infrastructure fail together with the rest of the fleet.
-
-
 **SPECIFICATION CONSEQUENCE:** A local DNS resolver runs on the DevOps overlay. A local NTP server synchronized to GPS Disciplined Clocks serves all nodes. All artifact and update fetches resolve to internal addresses. The FRS monitors external DNS resolution failures (there should be none in production) and flags any production traffic leaving the factory perimeter.
-
-
-
----
-
-
----
-
----
-## 5  N+1 Constraint and Governance
-### 5.01  ITC Ledger: Only Source of Truth
-
-
+## SECTION 5: N+1 CONSTRAINT AND GOVERNANCE
+### 5.01 ITC Ledger: Only Source of Truth
 **DECISION:** The ITC ledger is the only source of truth for economic state. No other system, record, or statement constitutes authoritative economic record. Every fact about member accounts, access credits, and value flows comes from the ITC ledger alone.
-
-
 **RATIONALE:** Truth fragmentation creates conflict. If one system says a member has 100 credits and another says 99, the system cannot resolve the disagreement without a single authority. The ITC ledger is the agreed-upon arbiter. Every subsystem that needs economic truth queries the ledger. No shadow records, no cache inconsistencies, no human override. The ledger owns truth.
-
-
 **REJECTED ALTERNATIVES:** Multiple authoritative sources require reconciliation logic that itself requires an authority to resolve disputes. Human override of ledger records introduces error and fraud vectors. Cached ledger state in other systems becomes stale and eventually wrong. The single ledger as sole authority eliminates reconciliation complexity and creates a clean audit chain.
-
-
 **SPECIFICATION CONSEQUENCE:** No subsystem maintains parallel economic records. The CDS queries ITC for all account state. The COS queries ITC for all credit availability before production commitments. The FRS reads ITC for monitoring dashboard data. If the ITC ledger is unreachable, read-only queries return errors rather than stale cached data. No write operation bypasses ITC.
-### 5.02  CDS Deliberation: Only Source of Authority
-
-
+### 5.02 CDS Deliberation: Only Source of Authority
 **DECISION:** The CDS deliberation engine is the only source of authority for governance decisions. No governance decision is valid without CDS deliberation. No system, person, or process issues governance decisions outside the CDS.
-
-
 **RATIONALE:** Authority must be unambiguous. If two systems can issue conflicting governance directives, the community cannot function coherently. CDS deliberation produces authoritative outputs through a defined process. That process is transparent and auditable. It prevents ad hoc governance that benefits whoever speaks loudest. The deliberation engine ensures consistent application of governance rules regardless of who participates.
-
-
 **REJECTED ALTERNATIVES:** Direct member votes without deliberation produce outcomes without reasoning. Admin override of deliberation outcomes corrupts the governance process. Multi-source authority creates ambiguity that members exploit. CDS deliberation as the sole authority prevents all three failure modes.
-
-
 **SPECIFICATION CONSEQUENCE:** All governance actions (resource allocation, policy changes, membership decisions) route through the CDS deliberation API. The CDS publishes deliberation outcomes as ITC events. No subsystem executes governance actions without a corresponding CDS deliberation event. The FRS monitors deliberation throughput and flags governance actions that arrive without corresponding deliberation records.
-### 5.03  OAD Design: Only Source of Technical Feasibility
-
-
+### 5.03 OAD Design: Only Source of Technical Feasibility
 **DECISION:** The OAD is the only source of truth for technical feasibility assessments. No project, feature, or change proceeds without an OAD design record confirming feasibility. The OAD records technical constraints, dependencies, and risk assessments.
-
-
 **RATIONALE:** Without an authoritative feasibility record, projects proceed on optimistic assumptions that later collapse. OAD feasibility assessments draw on the full knowledge graph including prior implementations, failure records, and dependency analysis. The assessment provides evidence, not opinion. Members can verify the assessment independently. That transparency prevents the "we thought it was feasible" failure pattern.
-
-
 **REJECTED ALTERNATIVES:** Feasibility review by individual engineers depends on personal expertise that may be wrong or incomplete. Manager sign-off introduces bias toward approval. Community vote on feasibility conflates preference with technical reality. OAD design records with community verification provide the strongest feasibility foundation.
-
-
 **SPECIFICATION CONSEQUENCE:** Every project initiation creates an OAD design record. The record references related OAD modules and prior implementations. The CDS deliberates on feasibility assessments before committing resources. The FRS tracks project outcomes against OAD feasibility predictions and flags systematic over-optimism.
-### 5.04  COS Production: Only Source of Value Delivery
-
-
+### 5.04 COS Production: Only Source of Value Delivery
 **DECISION:** The COS production system is the only source of truth for value delivery. Production records in COS constitute authoritative evidence of value delivered to members. No other system, report, or statement supersedes COS production records.
-
-
 **RATIONALE:** Claims about value delivery must be verifiable. The COS tracks production steps, completion states, and delivery confirmations. Those records are the factual record of what the community produced. If the COS says a delivery completed, it completed. This prevents the common failure of multiple conflicting reports about what the community delivered.
-
-
 **REJECTED ALTERNATIVES:** Manual production reporting introduces human error and fraud. Third-party audits are point-in-time checks that do not prevent ongoing misreporting. Member self-reporting of value received lacks verification. COS production records with ITC event logging provide the only auditable, real-time, authoritative record of value delivery.
-
-
 **SPECIFICATION CONSEQUENCE:** COS saga completions publish ITC events. Member delivery confirmations route through COS. The CDS receives COS production summaries for deliberation on value distribution. The CUI calculation (see 3.07) consumes COS production data as its primary input. The FRS monitors COS production throughput and delivery confirmation rates.
-### 5.05  FRS Monitoring: Only Source of Monitoring Truth
-
-
+### 5.05 FRS Monitoring: Only Source of Monitoring Truth
 **DECISION:** The FRS is the only authoritative source of system monitoring truth. No subsystem monitoring dashboard, manual report, or external monitoring tool constitutes operational truth for the Integral fleet.
-
-
 **RATIONALE:** Monitoring truth must be authoritative during incidents. If two monitoring sources disagree about whether a node is healthy, the team cannot act decisively. FRS aggregates all RED and USE metrics, correlates them with ITC events, and produces a unified health signal. That signal is the single source teams rely on during incidents. Everyone looking at the same source coordinates faster.
-
-
 **REJECTED ALTERNATIVES:** Multiple monitoring dashboards create confusion during incidents. External monitoring tools (pingdom, UptimeRobot) report only external-facing availability and miss internal state. Manual incident reports are retrospective and incomplete. FRS as the single authoritative monitoring source eliminates conflicting signals during critical operations.
-
-
 **SPECIFICATION CONSEQUENCE:** FRS runs as a dedicated service on every node. All other subsystems expose metrics to FRS through the event bus. The FRS aggregates metrics into fleet-level health signals. The Grafana dashboards show only FRS data, not subsystem-local dashboards. Incident on-call escalates from FRS alerts only.
-### 5.06  Closed Loop Topology: Only Acceptable Architecture
-
-
+### 5.06 Closed Loop Topology: Only Acceptable Architecture
 **DECISION:** All subsystems connect in closed feedback loops. Output from any subsystem flows as input to relevant subsystems. The system has no open-ended chains where output flows to nothing or input comes from nothing.
-
-
 **RATIONALE:** Open chains create dead ends. Data produced but not consumed is waste. Data consumed but not produced is magic. Closed loops ensure every action the system takes produces feedback that informs the next action. The CDS acts on FRS monitoring data. COS consumes OAD feasibility assessments. ITC events flow into FRS for health correlation. Every loop closes.
-
-
 **REJECTED ALTERNATIVES:** Pipeline architectures with no feedback loops cannot correct errors. Hub-and-spoke architectures concentrate data flow in one place that becomes a single point of failure. Mesh architectures without loop closure produce unpredictable data flow that makes debugging impossible. Closed loop topology is the minimal architecture that guarantees feedback.
-
-
 **SPECIFICATION CONSEQUENCE:** System architecture documentation includes loop diagrams for every subsystem connection. The CI pipeline includes a loop verification step that parses architecture docs and confirms all connections close. The CDS deliberates on any new connection proposed between subsystems. The FRS monitors data flow rates on every loop and flags loops where one side goes silent.
-### 5.07  Bootstrap Rule (One Laptop, One Binary)
-
-
+### 5.07 Bootstrap Rule (One Laptop, One Binary)
 **DECISION:** Each member bootstraps their participation with a single binary. The binary contains the full client. No installation scripts, no dependency resolution, no external package management. The binary runs and connects.
-
-
 **RATIONALE:** Barrier to entry kills community adoption. If joining the community requires installing Rust, configuring npm, running Docker, and following a README, most people will not bother. One binary that just runs removes that barrier entirely. It also constrains the attack surface of client machines. A single binary with no external dependencies cannot be hijacked by supply chain attacks on build tooling.
-
-
 **REJECTED ALTERNATIVES:** Package managers introduce external dependency risk. Installation scripts require shell access and error-prone setups. Source-based bootstraps require toolchain installation that varies by OS. One binary works on every laptop with a single download and a double-click.
-
-
 **SPECIFICATION CONSEQUENCE:** The client binary ships as a single downloadable file. The factory signs the binary with the factory key. The binary includes the NoUS-compatible runtime (where applicable) or a statically linked Linux/macOS/Windows binary. The bootstrap sequence verifies the binary signature before connecting. The FRS monitors bootstrap success rates by OS version.
-### 5.08  A7 Matrix as Completeness Constraint
-
-
+### 5.08 A7 Matrix as Completeness Constraint
 **DECISION:** The A7 Matrix defines the completeness criteria for the Integral system. No feature, module, or subsystem is complete until it satisfies all seven axes of the A7 Matrix. The seven axes are: Safety, Security, Reliability, Performance, Maintainability, Observability, Governance.
-
-
 **RATIONALE:** Engineering teams declare victory too early. A feature that works but is not secure is not complete. A feature that is secure but has no monitoring is not complete. The A7 Matrix makes "complete" an objective term. All seven axes must meet defined thresholds. The matrix provides a shared definition that prevents premature shipping and accumulated technical debt.
-
-
 **REJECTED ALTERNATIVES:** Shipping when the feature "works" creates security and maintenance debt. Checklists with subjective thresholds invite negotiation and gaming. The A7 Matrix with objective thresholds for each axis makes completeness measurable. Teams cannot declare completeness without meeting all seven.
-
-
 **SPECIFICATION CONSEQUENCE:** Every subsystem release includes an A7 compliance report. The report scores each axis against defined thresholds. The CDS deliberates on releases where any axis scores below threshold. The FRS instruments metrics that feed each axis score. The compliance report lives in OAD as a versioned artifact and is required for production deployment.
-### 5.09  Specification Terminates Here
-
-
+### 5.09 Specification Terminates Here
 **DECISION:** ISPEC-001 is the terminal specification for the Integral system. No other specification, standard, or document overrides, supersedes, or augments ISPEC-001 unless it formally amends ISPEC-001 through the CDS deliberation process.
-
-
 **RATIONALE:** Conflicting specifications create decision paralysis. Engineers reading multiple documents with different directives cannot act. ISPEC-001 terminates the chain of specification authority. Everything the system needs is in this document. If something is missing, the remedy is a formal amendment, not a new document. This terminates infinite specification proliferation.
-
-
 **REJECTED ALTERNATIVES:** Multi-document specification suites create interpretation conflicts that require meta-specification to resolve. External standard adoption (ISO, IEEE) introduces external authority that conflicts with sovereign infrastructure requirements. Living documents that change without amendment undermine the stability that specifications provide. ISPEC-001 as a terminal document provides the stability the system requires.
-
-
 **SPECIFICATION CONSEQUENCE:** The CDS deliberation engine references ISPEC-001 for all architecture decisions. No implementation proceeds without alignment with ISPEC-001. Ambiguity in ISPEC-001 triggers amendment, not creative interpretation. The amendment process follows the same CDS deliberation path as governance decisions. Amended sections carry revision history in the document header.
-### 5.10  Member: Only Fundamental Unit
-
-
+### 5.10 Member: Only Fundamental Unit
 **DECISION:** The member is the only fundamental unit of the Integral system. All value flows, governance rights, and system access attach to members. No group, organization, or entity other than the member holds fundamental rights in the system.
-
-
 **RATIONALE:** Delegation obscures accountability. If organizations hold rights, the people inside those organizations become invisible to the system. Their incentives diverge from community goals. Making the member the only fundamental unit keeps every right anchored to a human being. Governance decisions reflect human preferences, not institutional abstractions.
-
-
 **REJECTED ALTERNATIVES:** Corporate entities as fundamental units concentrate governance power in legal structures that outlive the humans who built them. Collective rights without individual anchoring create ambiguity about who bears responsibility. Organizational hierarchies that hold rights independently of members create power structures that are hard to dissolve when they fail. Member fundamental status prevents all three.
-
-
 **SPECIFICATION CONSEQUENCE:** ITC ledger entries record member identities. UNTP credentials issue to individual members. CDS deliberation participants are members. COS production delivers value to members. No organizational entity holds ITC credits independently of members. Member records are the only top-level identity records in the system. The FRS monitors the ratio of individual to organizational accounts (which should be 100 percent individual).
-### 5.11  Threat Model
-
-
+### 5.11 Threat Model
 **DECISION:** The system maintains a living threat model document in the OAD. The threat model identifies threat actors, attack surfaces, attack vectors, and mitigation measures for every subsystem. The CDS reviews the threat model quarterly.
-
-
 **RATIONALE:** Security without a threat model is anecdote. A threat model forces explicit identification of who might attack, what they might target, and how they might succeed. The model provides the basis for every security investment decision. Without it, teams spend on features that feel secure rather than those that counter actual threats. Quarterly CDS review ensures the model evolves with the threat landscape.
-
-
 **REJECTED ALTERNATIVES:** One-time threat models become stale immediately after creation. Ad hoc security decisions without threat models respond to fear rather than evidence. Industry standard threat models miss Integral-specific scenarios. A living threat model maintained by CDS deliberation and updated in OAD stays current and relevant.
-
-
 **SPECIFICATION CONSEQUENCE:** The threat model document lives in OAD. It follows a standard structure: threat actors, attack surfaces, attack vectors, mitigations, residual risks. The FRS instruments monitoring for every identified attack vector. New attack vectors discovered through incidents trigger immediate CDS deliberation and threat model updates. The CI pipeline requires a current threat model for every subsystem release.
-### 5.12  Economic Collapse Prevention
-
-
+### 5.12 Economic Collapse Prevention
 **DECISION:** The system implements economic collapse prevention mechanisms. These include debt caps per member, velocity limits on credit transfers, reserve requirements for COS production commitments, and automatic circuit breakers when the CUI drops below threshold.
-
-
 **RATIONALE:** Economic systems fail through cascading debt, hyperinflation, and collapse. Regenerative communities are not immune to these failure modes. Prevention mechanisms interrupt collapse cascades early. Debt caps prevent accumulation that precedes most economic collapses. Velocity limits prevent sudden credit drainage. Reserve requirements ensure commitments are funded. Circuit breakers pause production when the CUI signals systemic stress.
-
-
 **REJECTED ALTERNATIVES:** No economic guardrails invites the exact collapse the mechanisms prevent. Central bank style interest rate adjustments are too slow for digital credit systems. Automatic bailouts create moral hazard. The prevention mechanisms are calibrated to interrupt collapse without interrupting normal operation.
-
-
 **SPECIFICATION CONSEQUENCE:** The ITC ledger enforces debt caps at the protocol level. Transactions that would exceed a member's debt cap fail with an error event. Velocity limits apply per rolling time window. COS cannot commit production resources exceeding the reserve ratio. CUI circuit breakers trigger CDS deliberation and temporary production pauses. All prevention mechanisms are themselves ITC events and therefore auditable.
-### 5.13  Formal Verification Requirements
-
-
+### 5.13 Formal Verification Requirements
 **DECISION:** Formal verification is mandatory for all protocol specifications and for safety-critical implementation components. The verification scope includes memory safety, protocol correctness, and invariant preservation. Kani covers Rust safety proofs. TLA+ covers protocol model checking.
-
-
 **RATIONALE:** Safety-critical systems require proof, not hope. The Integral system manages economic value and governance authority. Bugs in these systems cause real harm. Formal verification catches bugs that testing cannot find. It provides mathematical evidence that the system behaves correctly. That evidence is auditable and repeatable.
-
-
 **REJECTED ALTERNATIVES:** Testing-only verification misses edge cases that formal methods catch. Advisory-only formal verification lacks enforcement. Partial formal verification misses categories of bugs. Mandatory formal verification with enforcement at the CI gate provides the most complete verification available.
-
-
 **SPECIFICATION CONSEQUENCE:** All protocol specifications include TLA+ models. All protocol message handling code includes Kani proofs. The CI gate fails if Kani or TLA+ checks fail. Verification reports publish to the OAD. The CDS deliberates on formal verification waivers for non-safety-critical components. No safety-critical component receives a waiver.
-### 5.14  Evolution and Upgrade Protocol
-
-
+### 5.14 Evolution and Upgrade Protocol
 **DECISION:** The system evolves through a formal upgrade protocol. Proposals originate in OAD as design records. CDS deliberates on proposals. Approved changes proceed through the verification gate. Approved changes deploy via the ArgoCD pipeline. Rollback is always available through git revert.
-
-
 **RATIONALE:** Uncontrolled evolution creates accumulation of undocumented changes. Controlled evolution through a formal protocol ensures every change has a rationale, an approval, and an audit trail. The protocol also ensures rollback is always available. Any change that causes problems can be reverted without permanent damage. That safety net enables bold changes that the community might otherwise avoid.
-
-
 **REJECTED ALTERNATIVES:** Ad hoc upgrades create snowflake nodes and inconsistent fleet states. Managed upgrades without rollback capability lock in failures permanently. Long release cycles delay valuable improvements. The formal upgrade protocol with continuous deployment via ArgoCD and instant rollback via git revert provides both velocity and safety.
-
-
 **SPECIFICATION CONSEQUENCE:** All system changes follow the protocol. Emergency fixes follow the same protocol with compressed deliberation timeframes. The FRS instruments upgrade success rates and rollback frequency. Rollback frequency above threshold triggers CDS deliberation on upgrade process quality. All upgrades are ITC events and therefore auditable.
-### 5.15  Minimal Test Scenarios
-
-
+### 5.15 Minimal Test Scenarios
 **DECISION:** Each subsystem ships with a minimal test suite that must pass before deployment. The suite covers happy path, error path, and boundary conditions. The suite executes in under 10 minutes. It runs on every commit. It cannot be skipped.
-
-
 **RATIONALE:** Tests that take too long do not run. Tests that require infrastructure do not run. Minimal test suites run fast enough that engineers run them continuously. Fast feedback means bugs surface immediately, not in a distant CI queue. The 10-minute cap forces discipline about what belongs in the suite. Only the most important scenarios survive that constraint.
-
-
 **REJECTED ALTERNATIVES:** Large test suites take too long and create pressure to skip them. Integration test suites require running infrastructure that is not always available. Manual test procedures require human execution and produce inconsistent results. The minimal suite with the 10-minute cap provides the fastest feedback at the highest reliability.
-
-
 **SPECIFICATION CONSEQUENCE:** Each subsystem defines a minimal test suite in the repository root. The CI pipeline runs the suite on every commit. The suite must pass for the build to proceed. Test coverage below defined thresholds fails the build. The FRS monitors test pass rates, flakiness rates, and execution times. Persistent flakiness triggers CDS deliberation on test quality.
-### 5.16  Bootstrap Sequence
-
-
+### 5.16 Bootstrap Sequence
 **DECISION:** Every new member boots through a defined bootstrap sequence. The sequence installs the client binary, verifies the factory signature, establishes UNTP credentials through CDS deliberation, connects to the local fleet, and activates ITC ledger participation.
-
-
 **RATIONALE:** A defined bootstrap sequence prevents inconsistent member states. Some members bootstrap correctly and participate fully. Others bootstrap partially and fall into degraded states that are hard to diagnose. The bootstrap sequence guarantees that every member who completes it has an identical baseline configuration. The sequence also ensures the CDS knows about every member before they participate in governance.
-
-
 **REJECTED ALTERNATIVES:** Ad hoc bootstrap procedures produce inconsistent member states that require manual remediation. Managed bootstrap services create single points of failure. Self-service without deliberation on credential issuance allows bad actors to join without community oversight. The defined bootstrap sequence provides consistency, oversight, and verification.
-
-
 **SPECIFICATION CONSEQUENCE:** The bootstrap sequence is a single shell script or executable that runs end-to-end. The sequence logs every step to the ITC ledger. Failed steps block progression and publish ITC events. The FRS monitors bootstrap completion rates. The CDS deliberates on bootstrap failures that occur above a defined threshold rate.
-
-================================================================================
 INTEGRAL SPECIFICATION ISPEC-001 REV 1.0 COMPLETE. 5 SECTIONS. 40 ADDENDA. READY FOR IMPLEMENTATION REVIEW.
-================================================================================
 
 ---
 
