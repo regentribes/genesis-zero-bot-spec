@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "skills": {
+    "cicd-pipeline": {
+      "version": "1.0.0",
+      "installedAt": 1777892909089
+    },
+    "sbom-generator": {
+      "version": "1.0.1",
+      "installedAt": 1777892910966
+    },
+    "secrets-management": {
+      "version": "1.0.0",
+      "installedAt": 1777892913028
+    },
+    "rust": {
+      "version": "1.0.1",
+      "installedAt": 1777892926159
+    },
+    "iot": {
+      "version": "1.0.0",
+      "installedAt": 1777892927978
+    },
+    "formal-provers": {
+      "version": "1.0.8",
+      "installedAt": 1777892929841
+    },
+    "nix-mode": {
+      "version": "1.0.0",
+      "installedAt": 1777892931724
+    },
+    "kubectl-skill": {
+      "version": "1.0.0",
+      "installedAt": 1777892952112
+    },
+    "github-api": {
+      "version": "1.0.4",
+      "installedAt": 1777892953507
+    },
+    "software-architect": {
+      "version": "1.0.0",
+      "installedAt": 1777892955371
+    },
+    "kubernetes-devops": {
+      "version": "1.0.0",
+      "installedAt": 1777892988973
+    },
+    "k8s-incident-response-playbook": {
+      "version": "1.0.0",
+      "installedAt": 1777892991008
+    },
+    "toolweb-kubernetes-hardening": {
+      "version": "1.0.0",
+      "installedAt": 1777892999792
+    },
+    "k8s-security-review": {
+      "version": "1.0.0",
+      "installedAt": 1777893001829
+    },
+    "kubernetes-encyclopedia": {
+      "version": "1.0.0",
+      "installedAt": 1777893004140
+    },
+    "recursive-knowledge-miner": {
+      "version": "1.0.0",
+      "installedAt": 1777893031540
+    },
+    "knowledge-graph": {
+      "version": "1.0.0",
+      "installedAt": 1777893033570
+    },
+    "rust-patterns": {
+      "version": "1.0.0",
+      "installedAt": 1777893035553
+    },
+    "cargo-toml-validator": {
+      "version": "1.0.1",
+      "installedAt": 1777893037750
+    }
+  }
+}

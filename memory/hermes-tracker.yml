@@ -1,0 +1,19 @@
+# Hermes Agent Protocol Support Tracker
+# Tracked issues: #342 (MCP server), #514 (A2A)
+
+issues:
+  - number: 342
+    title: "Hermes Agent as MCP Server"
+    repo: NousResearch/hermes-agent
+    url: "https://github.com/NousResearch/hermes-agent/issues/342"
+    state: open
+    last_checked: "2026-05-06"
+    notification_sent: false
+
+  - number: 514
+    title: "A2A Protocol Support"
+    repo: NousResearch/hermes-agent
+    url: "https://github.com/NousResearch/hermes-agent/issues/514"
+    state: open
+    last_checked: "2026-05-06"
+    notification_sent: false
