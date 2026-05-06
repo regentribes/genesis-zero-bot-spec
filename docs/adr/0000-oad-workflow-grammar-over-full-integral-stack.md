@@ -1,6 +1,6 @@
 ---
 title: OAD Workflow Grammar Over Full Integral Stack
-number: 053
+number: 0000
 status: accepted
 date: 2026-05-06
 authors: Genesis (RegenTribes)
