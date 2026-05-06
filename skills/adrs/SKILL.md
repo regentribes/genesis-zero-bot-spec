@@ -48,9 +48,9 @@ tags:
 ## Options Considered
 | Option | Description | Verdict |
 |--------|-------------|---------|
-| A | ... | ✅ adopted |
-| B | ... | ❌ rejected |
-| C | ... | ⚠️ deferred |
+| A | ... | adopted |
+| B | ... | rejected |
+| C | ... | deferred |
 
 ## Analysis
 [Why this decision over alternatives. Be thorough — surface conflicts, edge conditions, blocking constraints.]
@@ -94,6 +94,106 @@ RegenTribes ADRs: `~/.openclaw/workspace-genesis/docs/adr/`
 
 ADR naming convention: `NNNN-title-slug.md` (zero-padded 4-digit number).
 
+### ADR ↔ Wiki Vault Bridge
+
+The ADRs live in **GitHub** (`docs/adr/`). The wiki vault lives in **Radicle** (`~/.openclaw/wiki/main/`). They are kept in sync via a dual-write pattern.
+
+**When filing a new ADR, also create wiki pages:**
+
+```bash
+# 1. Write ADR to GitHub
+docs/adr/000X-title.md
+
+# 2. Write source page to wiki vault
+~/.openclaw/wiki/main/sources/adr-000X-{slug}.md
+
+# 3. Write concept page to wiki vault
+~/.openclaw/wiki/main/concepts/adr-000X-{slug}.md
+
+# 4. Compile + lint wiki
+openclaw wiki compile && openclaw wiki lint
+
+# 5. Commit & push both repos
+git add docs/adr/ && git commit -m "ADR 000X: title"
+git push origin main
+
+cd ~/.openclaw/wiki/main
+git add . && git commit -m "ADR 000X: title"
+git push rad main
+```
+
+**GitHub Actions (future automation):** Radicle push requires SSH key setup. Until then, manual dual-write.
+
+**Public URL on iris node:**
+- Wiki vault RID: `rad:zYhRVEu5Zh85vcwvmxkZHJNQxn6X`
+- View: https://radicle.xyz/nodes/radicle.xyz/trees/rad:zYhRVEu5Zh85vcwvmxkZHJNQxn6X
+
+**adrs CLI is NOT integrated with the wiki vault.** They are separate tools:
+- `adrs` CLI → ADR files in `docs/adr/` (GitHub repo)
+- `memory-wiki` → compiled knowledge graph in `~/.openclaw/wiki/main/` (Radicle repo)
+- ADRs are source documents in the wiki, not wiki-managed entities
+
+### Per-ADR Wiki Schema
+
+Each ADR gets two wiki pages:
+
+**Source page** (`sources/adr-000X-{slug}.md`):
+```yaml
+---
+id: source.adr-000X-{slug}
+pageType: source
+title: ADR 000X — Title
+date: YYYY-MM-DD
+authors: Genesis
+sourceType: architecture-decision-record
+entityType: source
+confidence: 1.0
+updatedAt: YYYY-MM-DD
+tags:
+  - adr
+  - architecture
+provenance:
+  - source: source.github-regen-tribes
+    path: docs/adr/000X-title-slug.md
+    lines: "1-999"
+    weight: 1.0
+---
+```
+
+**Concept page** (`concepts/adr-000X-{slug}.md`):
+```yaml
+---
+id: concept.adr-000X-{slug}
+pageType: concept
+entityType: concept
+title: ADR 000X — Title
+status: accepted
+date: YYYY-MM-DD
+authors: Genesis
+domain: information
+level: system
+confidence: 1.0
+updatedAt: YYYY-MM-DD
+tags:
+  - adr
+  - architecture
+sourceIds:
+  - source.adr-000X-{slug}
+claims:
+  - id: claim.adr-000X.decision
+    text: "<key claim from ADR>"
+    status: supported
+    confidence: 1.0
+    evidence:
+      - kind: source-doc
+        sourceId: source.adr-000X-{slug}
+        privacyTier: public
+relatedConcepts:
+  - concept/karpathy-llm-wiki
+  - concept/memory-wiki
+---
+```
+
 ## Common Workflows
 
 ### 1. Evaluate Options and File an ADR
@@ -105,6 +205,7 @@ When a request involves choosing between technical approaches:
 3. Drive conflicts to extremes — surface edge conditions, failure modes
 4. Write ADR in MADR format with all options, analysis, and consequences
 5. Commit to `docs/adr/` and push to origin
+6. Dual-write source + concept pages to wiki vault and push to Radicle
 
 ### 2. Tradeoff Analysis Pattern
 
@@ -131,9 +232,9 @@ Use the `References` section to link related ADRs. Use `Supersedes` / `Supersede
 
 ```bash
 cd ~/.openclaw/workspace-genesis/skills/adrs
-./adrs list                          # List all ADRs
+./adrs list                          # List all ADRs (requires .adr-dir)
 ./adrs search "keyword"             # Search ADR content
-./adrs new "Title" --format madr    # Create new ADR (interactive)
+./adrs new "Title" --format madr    # Create new ADR (interactive, TTY required)
 ```
 
 For automated ADR creation: write the Markdown file directly to `docs/adr/`.
@@ -141,13 +242,13 @@ For automated ADR creation: write the Markdown file directly to `docs/adr/`.
 ## Skill Usage Examples
 
 **"Evaluate Bonfires.ai vs llm_wiki vs memory-wiki"**
-→ File ADR 0001 on agent knowledge systems. Structure: context → 3 options → analysis → consequences → decision.
+→ File ADR 0001 on agent knowledge systems. Structure: context → 3 options → analysis → consequences → decision. Then dual-write wiki pages.
 
 **"Should we adopt the full OAD or just the workflow grammar?"**
-→ File ADR 0000 on OAD phase-gated adoption. Structure: context → blocking constraints → phase plan.
+→ File ADR 0000 on OAD phase-gated adoption. Structure: context → blocking constraints → phase plan. Then dual-write wiki pages.
 
 **"We need to decide on our sync strategy for offline operation"**
-→ File ADR. Structure: context → options (Syncthing, Radiant, custom) → analysis → consequences.
+→ File ADR. Structure: context → options (Syncthing, Radicle, custom) → analysis → consequences. Then dual-write wiki pages.
 
 ## Constraints
 
@@ -156,9 +257,11 @@ For automated ADR creation: write the Markdown file directly to `docs/adr/`.
 - All ADRs must be committed and pushed to origin for persistence
 - Use MADR 4.0.0 format for machine-readable metadata
 - Zero-padded 4-digit numbers: 0000, 0001, 0002, etc.
+- Every ADR requires dual-write: GitHub + Radicle wiki vault
 
 ## References
 
+- Wiki vault RID: `rad:zYhRVEu5Zh85vcwvmxkZHJNQxn6X`
 - MADR format: adr.github.io/madr/
 - adrs CLI: github.com/joshrotenberg/adrs
 - Original Nygard ADR article: thinkrelevance.com/blog/documenting-architecture-decisions
