@@ -1,0 +1,8 @@
+# rumdl configuration for ADR documents
+# Disables rules that conflict with technical ADR format (long lines, tables, code)
+
+[global]
+disable = ["MD013", "MD032", "MD031", "MD040", "MD034", "MD025"]
+
+# Line length - set high since ADR tables/code/URLs need room
+line-length = 400

@@ -15,23 +15,37 @@ tags:
   - tradeoff
 ---
 
-# Agent Knowledge Systems — Bonfires.ai and llm_wiki Rejected
+## Agent Knowledge Systems — Bonfires.ai and llm_wiki Rejected
 
-## Context
+### Context
 
-Two knowledge system tools were evaluated as LLM wiki solutions for agent-resident knowledge management:
+Two knowledge system tools were evaluated as LLM wiki solutions for agent-resident knowledge management.
 
-**Bonfires.ai** — hosted knowledge coordination platform. Transforms conversations (Telegram, Discord, forums) + documents into AI-accessible knowledge graphs. Provides real-time ingestion, knowledge graph visualization, and agent hooks.
+**Bonfires.ai** is a hosted knowledge coordination platform.
+It transforms conversations (Telegram, Discord, forums) and documents into AI-accessible knowledge graphs.
+It provides real-time ingestion, knowledge graph visualization, and agent hooks.
 
-**llm_wiki** (nashsu/github.com/nashsu/llm_wiki) — desktop application implementing Karpathy's LLM Wiki pattern. Builds persistent wiki from documents using graph relevance, vector search (LanceDB), Louvain community detection, and Deep Research. Runs as Electron desktop app.
+**llm_wiki** (nashsu/github.com/nashsu/llm_wiki) is a desktop application.
+It implements Karpathy LLM Wiki pattern.
+It builds persistent wiki from documents using:
 
-Requirement: P2P/offline-resilient operation for total internet blackout scenario, with future migration path to embedded database + reasoning system (SurrealDB, Hyperon).
+- graph relevance
+- vector search (LanceDB)
+- Louvain community detection
+- Deep Research
 
-## Decision
+It runs as an Electron desktop app.
 
-Reject both Bonfires.ai and llm_wiki. Adopt OpenClaw's bundled `memory-wiki` plugin as Phase 1 solution, with Syncthing for P2P sync.
+Requirement: P2P/offline-resilient operation for total internet blackout scenario.
+Future migration path: embedded database plus reasoning system (SurrealDB, Hyperon).
 
-## Options Considered
+### Decision
+
+Reject both Bonfires.ai and llm_wiki.
+Adopt OpenClaw bundled `memory-wiki` plugin as Phase 1 solution.
+Add Syncthing for P2P sync.
+
+### Options Considered
 
 | Option | Description | Verdict |
 |--------|-------------|---------|
@@ -40,44 +54,78 @@ Reject both Bonfires.ai and llm_wiki. Adopt OpenClaw's bundled `memory-wiki` plu
 | **C** | memory-wiki plugin (OpenClaw bundled) | ✅ Adopt — agent-native, configurable, Obsidian-compatible |
 | **D** | Custom built on SurrealDB | ⚠️ Phase 3 — requires more development |
 
-## Analysis
+### Analysis
 
-### Bonfires.ai — Why Rejected
+#### Bonfires.ai — Why Rejected
 
-**Failure modes:**
+Failure mode 1: **Subscription barrier**
+Monthly cost is incompatible with budget-constrained community operation.
 
-1. **Subscription barrier**: Monthly cost is incompatible with budget-constrained community operation.
-2. **No offline P2P mode**: Bonfires.ai is server-hosted. Assumes live internet. During total blackout, goes completely dark — same as any centralized service.
-3. **Proprietary knowledge graph**: Ingested knowledge stays in Bonfires' infrastructure. Cannot replicate or export for P2P sync across nodes.
-4. **Integration gap**: Bonfires.ai is closer to what `genesis-brain` (SurrealDB semantic graph) already does — real-time conversation → knowledge graph. The overlap means adopting Bonfires.ai would create duplicate infrastructure.
+Failure mode 2: **No offline P2P mode**
+Bonfires.ai is server-hosted.
+It assumes live internet.
+During total blackout, it goes completely dark.
+This is the same as any centralized service.
 
-**What Bonfires.ai does well:**
+Failure mode 3: **Proprietary knowledge graph**
+Ingested knowledge stays in Bonfires infrastructure.
+It cannot be replicated or exported for P2P sync across nodes.
+
+Failure mode 4: **Integration gap**
+Bonfires.ai is closer to what `genesis-brain` (SurrealDB semantic graph) already does.
+The overlap means adopting Bonfires.ai would create duplicate infrastructure.
+
+What Bonfires.ai does well:
+
 - Real-time multi-channel conversation ingestion
 - Knowledge graph visualization
 - Agent hook API
 
-**Verdict**: Not suitable for offline-first, self-hosted, P2P-resilient requirement.
+Verdict: Not suitable for offline-first, self-hosted, P2P-resilient requirement.
 
-### llm_wiki — Why Rejected
+#### llm_wiki — Why Rejected
 
-**Failure modes:**
+Failure mode 1: **Desktop-only architecture**
+Electron app.
+No server mode.
+No headless operation.
+No API.
+Cannot be wired to an agent.
+Not designed for headless server environments.
 
-1. **Desktop-only architecture**: Electron app. No server mode, no headless operation, no API. Cannot be wired to an agent. Not designed for headless server environments.
-2. **Requires manual app running**: The app must be open and running to serve wiki queries. Goes dark when the app is closed.
-3. **No P2P sync mechanism**: Single-user desktop app. No sync, no collaboration, no mesh resilience.
-4. **Karpathy LLM Wiki pattern is the right idea, wrong implementation for agents**: The underlying methodology (incremental wiki, two-step ingest, wikilinks, source traceability) is excellent. The implementation is not designed for agent integration.
+Failure mode 2: **Requires manual app running**
+The app must be open and running to serve wiki queries.
+It goes dark when the app is closed.
 
-**What llm_wiki does well:**
+Failure mode 3: **No P2P sync mechanism**
+Single-user desktop app.
+No sync.
+No collaboration.
+No mesh resilience.
+
+Failure mode 4: **Right idea, wrong implementation for agents**
+The underlying methodology is excellent:
+
+- Incremental wiki
+- Two-step ingest
+- Wikilinks
+- Source traceability
+
+The implementation is not designed for agent integration.
+
+What llm_wiki does well:
+
 - Two-step chain-of-thought ingest (analysis → generation)
 - Louvain community detection on knowledge clusters
 - Four-signal relevance model (direct links, source overlap, Adamic-Adar, type affinity)
 - Obsidian-compatible output
 
-**Verdict**: Good reference implementation of the Karpathy pattern. Not deployable in this architecture.
+Verdict: Good reference implementation of the Karpathy pattern.
+Not deployable in this architecture.
 
-### memory-wiki — Why Adopted
+#### memory-wiki — Why Adopted
 
-OpenClaw's bundled `memory-wiki` plugin:
+OpenClaw bundled `memory-wiki` plugin:
 
 - Agent-native: exposed as `wiki_search`, `wiki_get`, `wiki_apply`, `wiki_lint` tools
 - Bridge mode: imports from active memory plugin (QMD, etc.)
@@ -87,7 +135,8 @@ OpenClaw's bundled `memory-wiki` plugin:
 - Dashboard reports: contradictions, low-confidence, stale pages
 - Compiled digests for agent consumption (`agent-digest.json`, `claims.jsonl`)
 
-**Phase 1 config:**
+Phase 1 config:
+
 ```json5
 {
   plugins: {
@@ -106,11 +155,11 @@ OpenClaw's bundled `memory-wiki` plugin:
 }
 ```
 
-### P2P Sync — Syncthing
+#### P2P Sync — Syncthing
 
 For internet blackout resilience, pair `memory-wiki` with Syncthing:
 
-```
+```text
 Node A (Hetzner VPS)              Node B (HP EliteBook / laptop)
 ~/.openclaw/wiki/main/    ←sync→   ~/.openclaw/wiki/main/
 ```
@@ -119,9 +168,9 @@ Node A (Hetzner VPS)              Node B (HP EliteBook / laptop)
 - Automatic conflict resolution
 - Runs on same machine as OpenClaw
 
-### Future Migration Path
+#### Future Migration Path
 
-The architecture is designed for future migration from Markdown to embedded database:
+The architecture is designed for future migration from Markdown to embedded database.
 
 | Phase | Wiki Backend | Sync |
 |-------|-------------|------|
@@ -129,31 +178,33 @@ The architecture is designed for future migration from Markdown to embedded data
 | **Phase 2** | SurrealDB (same graph schema, vector embeddings) | Syncthing + Radicle |
 | **Phase 3** | SurrealDB + Hyperon/MeTTa reasoning layer | Mesh sync |
 
-Structured claims with `sourceId`, `canonicalId`, `entityType` frontmatter are the bridge — these fields map directly to SurrealDB graph nodes.
+Structured claims with `sourceId`, `canonicalId`, `entityType` frontmatter are the bridge.
+These fields map directly to SurrealDB graph nodes.
 
-## Consequences
+### Consequences
 
-### Positive
+#### Positive
 
-- Agent-resident knowledge query without external dependency
-- Provenance-rich wiki with structured claims (not prose-only)
-- P2P sync via Syncthing for offline resilience
-- Obsidian-compatible vault for human editing
-- Migration path preserved: Markdown → SurrealDB → Hyperon
+- Agent-resident knowledge query without external dependency.
+- Provenance-rich wiki with structured claims (not prose-only).
+- P2P sync via Syncthing for offline resilience.
+- Obsidian-compatible vault for human editing.
+- Migration path preserved: Markdown → SurrealDB → Hyperon.
 
-### Negative
+#### Negative
 
-- memory-wiki vault is Markdown files — slower to query than embedded vector DB
-- Syncthing requires manual setup on each node
-- No native Louvain community detection (llm_wiki feature not ported)
+- memory-wiki vault is Markdown files.
+Slower to query than embedded vector DB.
+- Syncthing requires manual setup on each node.
+- No native Louvain community detection (llm_wiki feature not ported).
 
-### Risks
+#### Risks
 
-- Markdown vault grows large without compaction
-- Syncthing conflicts may arise with concurrent edits on both nodes
-- Phase 2 migration (SurrealDB) requires schema design work
+- Markdown vault grows large without compaction.
+- Syncthing conflicts may arise with concurrent edits on both nodes.
+- Phase 2 migration (SurrealDB) requires schema design work.
 
-## References
+### References
 
 - Bonfires.ai: bonfires.ai
 - llm_wiki: github.com/nashsu/llm_wiki (Karpathy LLM Wiki pattern)

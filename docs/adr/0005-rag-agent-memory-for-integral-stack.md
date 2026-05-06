@@ -15,23 +15,42 @@ tags:
   - user-knowledge
 ---
 
-# ADR 0005 — RAG and Agent Memory in the Integral Stack
+## ADR 0005 — RAG and Agent Memory in the Integral Stack
 
-## Context
+### Context
 
-ADR 0004 established LLM Wiki as the M10 knowledge commons layer. This ADR addresses where the other two patterns — RAG and Agent Memory — fit into the Integral architecture.
+ADR 0004 established LLM Wiki as the M10 knowledge commons layer.
+This ADR addresses where the other two patterns (RAG and Agent Memory) fit into the Integral architecture.
 
-The Integral system has three distinct knowledge problems:
+The Integral system has three distinct knowledge problems.
 
-1. **User knowledge** — Who is each member? What is their FOT trajectory? ITC ledger state? AME interaction history? (changes at conversation time)
-2. **Domain knowledge** — OAD principles, ITC ledger rules, regenerative community patterns, AME architecture (changes at ingest time)
-3. **Corpus knowledge** — deliberation records, community proposals, historical decisions, meeting notes (changes frequently, large volume)
+**Problem 1: User knowledge**
+Who is each member?
+What is their FOT trajectory?
+ITC ledger state?
+AME interaction history?
+Changes at conversation time.
+
+**Problem 2: Domain knowledge**
+OAD principles.
+ITC ledger rules.
+Regenerative community patterns.
+AME architecture.
+Changes at ingest time.
+
+**Problem 3: Corpus knowledge**
+Deliberation records.
+Community proposals.
+Historical decisions.
+Meeting notes.
+Changes frequently.
+Large volume.
 
 Each problem requires a different pattern.
 
-## Decision
+### Decision
 
-Assign RAG and Agent Memory to specific subsystems:
+Assign RAG and Agent Memory to specific subsystems.
 
 | Pattern | Subsystem | What it manages |
 |---------|-----------|----------------|
@@ -39,37 +58,51 @@ Assign RAG and Agent Memory to specific subsystems:
 | RAG | CDS deliberation records | Historical deliberations, proposals, CDS state snapshots |
 | LLM Wiki | M10 (knowledge commons) | Compiled domain synthesis, cross-referencing, regenerative patterns |
 
-**Agent Memory is NOT used for domain knowledge.** It knows the user but is blind to domain knowledge unless paired with a document layer. In the Integral stack, this means Agent Memory manages member context (who am I talking to, what's their FOT state) while LLM Wiki manages domain context (what does OAD say about this).
+**Agent Memory is NOT used for domain knowledge.**
+It knows the user.
+It is blind to domain knowledge unless paired with a document layer.
+In the Integral stack, this means:
+Agent Memory manages member context (who am I talking to, what is their FOT state).
+LLM Wiki manages domain context (what does OAD say about this).
 
-**RAG is NOT used for domain synthesis.** RAG re-derives from raw chunks on every query. For compiled synthesis (OAD principles, ITC rules), use LLM Wiki. RAG is correct for CDS deliberation records because they are high-volume, frequently updated, and require breadth-first retrieval rather than compiled synthesis.
+**RAG is NOT used for domain synthesis.**
+RAG re-derives from raw chunks on every query.
+For compiled synthesis (OAD principles, ITC rules), use LLM Wiki.
+RAG is correct for CDS deliberation records because they are high-volume, frequently updated, and require breadth-first retrieval rather than compiled synthesis.
 
-## Options Considered
+### Options Considered
 
 | Option | Assessment |
 |--------|------------|
-| Use Agent Memory for everything | Rejected — memory is sparse/noisy; domain knowledge and user knowledge are orthogonal problems |
-| Use RAG for everything | Rejected — stateless by default, re-derives synthesis on every call |
-| Use LLM Wiki for everything | Rejected — no personalization layer; wiki reads identically for every user |
-| Three-pattern assignment (adopted) | Each pattern addresses one distinct knowledge problem |
+| Use Agent Memory for everything | Rejected — sparse/noisy. Domain and user knowledge are orthogonal. |
+| Use RAG for everything | Rejected — stateless by default, re-derives synthesis on every call. |
+| Use LLM Wiki for everything | Rejected — no personalization. Reads identically for every user. |
+| Three-pattern assignment (adopted) | Each pattern addresses one distinct knowledge problem. |
 
-## Consequences
+### Consequences
 
-### Positive
-- Each pattern applied where it actually works
-- Agent Memory provides personalization without redundant domain re-synthesis
-- RAG handles large dynamic CDS corpus without polluting LLM Wiki with raw deliberation chunks
-- Clear separation: memory = who, wiki = what, RAG = evidence
+#### Positive
 
-### Negative
-- Three systems to maintain
-- Cross-system consistency requires governance (dealt with in ADR 0006)
+- Each pattern applied where it actually works.
+- Agent Memory provides personalization without redundant domain re-synthesis.
+- RAG handles large dynamic CDS corpus without polluting LLM Wiki with raw deliberation chunks.
+- Clear separation: memory = who, wiki = what, RAG = evidence.
 
-### Risks
-- Agent Memory needs careful extraction discipline (memory is noisy — only stores what was explicitly said)
-- RAG over CDS deliberation records requires careful chunking to preserve deliberation context
+#### Negative
 
-## References
+- Three systems to maintain.
+- Cross-system consistency requires governance.
+(dealt with in ADR 0006).
 
-- Visrow (2026). RAG vs. Agent Memory vs. LLM Wiki. https://medium.com/@visrow/rag-vs-agent-memory-vs-llm-wiki-a-practical-comparison-41a9a0dc4dec
+#### Risks
+
+- Agent Memory needs careful extraction discipline.
+Memory is noisy.
+Only stores what was explicitly said.
+- RAG over CDS deliberation records requires careful chunking to preserve deliberation context.
+
+### References
+
+- Visrow (2026). RAG vs. Agent Memory vs. LLM Wiki. <https://medium.com/@visrow/rag-vs-agent-memory-vs-llm-wiki-a-practical-comparison-41a9a0dc4dec>
 - ADR 0004 — LLM Wiki Pattern for Integral Knowledge Commons (M10)
 - ADR 0000 — OAD Workflow Grammar
