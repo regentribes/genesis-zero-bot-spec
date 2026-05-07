@@ -121,3 +121,20 @@ export $(grep -v "^#" ~/.openclaw/.env | xargs)
 - pip requires `--user --break-system-packages` on this Debian (PEP 668)
 - clawhub installs to default workspace (`~/.openclaw/workspace/skills/`) — must manually move to `workspace-genesis/skills/`
 - ClawHub rate limits aggressively — wait 3-5 min between installs
+
+## Quick Activation — Wiki & ADRs
+
+### Ingest into Wiki
+Send a file or link → I extract with Kreuzberg → store in SurrealDB → create sources/ + concepts/ entries → lint → push to regentribes/genesis-zero-bot-wiki
+
+### Create an ADR
+Write a decision record in `docs/adr/XXXX-name.md` (MADR format, ASD-STE100) → copy to ADRs repo docs/ → `build.py` → push to regentribes/genesis-zero-bot-adrs
+
+### Skill Locations
+- **wiki-maintainer:** `~/.openclaw/workspace-genesis/skills/wiki-maintainer/SKILL.md`
+- **semantic-graph:** `~/.openclaw/workspace-genesis/skills/semantic-graph/SKILL.md`
+- **genesis-brain:** `~/.openclaw/workspace-genesis/skills/genesis-brain/SKILL.md`
+
+### Repo URLs (always regentribes)
+- Wiki: https://github.com/regentribes/genesis-zero-bot-wiki → https://regentribes.github.io/genesis-zero-bot-wiki/
+- ADRs: https://github.com/regentribes/genesis-zero-bot-adrs → https://regentribes.github.io/genesis-zero-bot-adrs/
