@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<archimate:model xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xmlns:archimate="http://www.archimatetool.com/archimate"
+                 name="Data Science Learning Architecture"
+                 version="1.0"
+                 xmlns="http://www.archimatetool.com/archimate"
+                 target="Integral Collective / RegenTribe">
+
+  <!-- Wiki provenance:
+       Source: [[sources/0019-kdnuggets-data-science-cheatsheets|KDnuggets Data Science Cheat Sheets]]
+       Concept: [[concepts/0018-nvidia-learning-paths-2026|NVIDIA Learning Paths 2026]]
+       Spec: feature-011 (Data Science Learning Progress)
+       Synthesized from: wikivault-synthesis-2026-05-08 -->
+
+  <folder name="Motivation" type="motivation">
+    <!-- Learning Goals -->
+    <element id="goal-001" type="goal">
+      <name>Build Community Data Science Competency</name>
+      <description>Enable RegenTribe members to develop practical data science skills across SQL, ML, NLP, and Data Engineering for regenerative neighbourhood projects.</description>
+    </element>
+    <element id="goal-002" type="goal">
+      <name>Structured Learning Pathway</name>
+      <description>Provide a clear progression from foundational skills (SQL, Statistics) to applied specialization (ML for IoT, NLP for governance).</description>
+    </element>
+    <element id="cap-001" type="capability">
+      <name>Data Science Learning Capability</name>
+      <description>Ability to absorb, track, and assess data science cheat sheet completion + quiz performance + project output.</description>
+    </element>
+  </folder>
+
+  <folder name="Business" type="business">
+    <element id="role-learner" type="business-role">
+      <name>Learner</name>
+      <description>A RegenTribe community member engaging with data science learning materials.</description>
+    </element>
+    <element id="role-mentor" type="business-role">
+      <name>Mentor</name>
+      <description>Community member with demonstrated expertise who guides learners in specific categories.</description>
+    </element>
+    <element id="role-curriculum-owner" type="business-role">
+      <name>Curriculum Owner</name>
+      <description>Coordinator responsible for maintaining the cheat sheet catalog, auditing URLs, and reviewing community-wide progress.</description>
+    </element>
+    <element id="svc-learning-tracker" type="business-service">
+      <name>Learning Tracker Service</name>
+      <description>Tracks cheat sheet completion, quiz scores, mentorship pairings, and project-based assessments per member per category.</description>
+    </element>
+    <element id="svc-curriculum-delivery" type="business-service">
+      <name>Curriculum Delivery Service</name>
+      <description>Delivers structured learning materials: KDnuggets cheat sheet catalog, NVIDIA certification roadmap, assessment quizzes.</description>
+    </element>
+    <element id="proc-cheat-sheet-review" type="business-process">
+      <name>Cheat Sheet Review Process</name>
+      <documentation>Member reviews cheat sheets in a category, marks each as complete, builds familiarity with syntax and concepts.</documentation>
+    </element>
+    <element id="proc-quiz-assessment" type="business-process">
+      <name>Quiz Assessment Process</name>
+      <documentation>Member completes a timed quiz covering category concepts; scoring 70%+ marks category as assessed.</documentation>
+    </element>
+    <element id="proc-mentorship" type="business-process">
+      <name>Mentorship Pairing Process</name>
+      <documentation>Member requests mentorship → system matches by expertise → mentor and mentee establish session cadence.</documentation>
+    </element>
+    <element id="proc-project-assessment" type="business-process">
+      <name>Project-Based Assessment Process</name>
+      <documentation>Member applies category skills to a real community project (e.g., IoT pipeline, community dashboard); project artifact serves as competency evidence.</documentation>
+    </element>
+  </folder>
+
+  <folder name="Application" type="application">
+    <element id="app-kreuzberg" type="application-component">
+      <name>Kreuzberg Knowledge Capture</name>
+      <description>Ingestion pipeline for community documents: PDF analysis, text extraction, concept/relation storage in SurrealDB knowledge graph.</description>
+    </element>
+    <element id="app-cheatsheet-index" type="application-component">
+      <name>Cheat Sheet Index</name>
+      <description>Curated catalog of KDnuggets cheat sheets with category labels, canonical URLs, last-verified dates, and RegenNeighbourhood mapping notes.</description>
+    </element>
+    <element id="app-nvidia-portal" type="application-component">
+      <name>NVIDIA Certification Portal</name>
+      <description>Community-facing integration with NVIDIA DLI certification tracks aligned to cheat sheet categories.</description>
+    </element>
+    <element id="app-learning-tracker" type="application-component">
+      <name>Learning Tracker App</name>
+      <description>Gherkin-specified tracker: tracks member progress per category (cheat-sheet-complete, assessed, project-assessed), supports mentorship pairing, records quiz scores.</documentation>
+    </element>
+    <element id="app-kb-graph" type="application-component">
+      <name>Community Knowledge Graph (SurrealDB)</name>
+      <description>Semantic graph storing learned concepts, member competency records, concept relations, NARS truth values.</description>
+    </element>
+    <element id="app-iface-learning-dashboard" type="application-interface">
+      <name>Learning Dashboard Interface</name>
+      <description>Web or Telegram-based UI for curriculum owner to view community-wide progress: category completion rates, mentorship demand, peer-ready members.</description>
+    </element>
+    <element id="app-iface-member-portal" type="application-interface">
+      <name>Member Portal Interface</name>
+      <description>Member-facing UI for cheat sheet browsing, progress logging, quiz taking, mentorship request submission.</description>
+    </element>
+  </folder>
+
+  <folder name="Technology" type="technology">
+    <element id="tech-surrealdb" type="technology">
+      <name>SurrealDB (Knowledge Graph)</name>
+      <description>In-memory分布式 database with embedded vector search, used for semantic graph of concepts and member competency records.</description>
+    </element>
+    <element id="tech-hp-edge-node" type="technology">
+      <name>HP Edge Node (Raspberry Pi / Bare Metal)</name>
+      <description>Community-owned edge computing node running Nix-deployed workloads. Hosts local learning tracker instance and KB graph replica.</description>
+    </element>
+    <element id="tech-web-scraper" type="technology">
+      <name>Web Scraper Pipeline</name>
+      <description>Automated pipeline to fetch cheat sheet URLs, verify they still resolve, and flag stale links for curriculum owner review.</documentation>
+    </element>
+    <element id="tech-nix" type="technology">
+      <name>Nix Toolchain</name>
+      <description>Reproducible deployment for all learning platform components (KB graph, tracker app, scraper) on edge nodes.</description>
+    </element>
+    <element id="tech-telegram" type="technology">
+      <name>Telegram</name>
+      <description>Primary communication channel for mentorship notifications, progress alerts, and community announcements.</description>
+    </element>
+  </folder>
+
+  <folder name="Relations" type="other">
+    <!-- Business layer relationships -->
+    <element id="rel-lrn-svc" type="realization">
+      <source>role-learner</source>
+      <target>svc-learning-tracker</target>
+    </element>
+    <element id="rel-mentor-svc" type="realization">
+      <source>role-mentor</source>
+      <target>svc-learning-tracker</target>
+    </element>
+    <element id="rel-lrn-process" type="realization">
+      <source>role-learner</source>
+      <target>proc-cheat-sheet-review</target>
+    </element>
+    <element id="rel-lrn-mentorship" type="realization">
+      <source>role-learner</source>
+      <target>proc-mentorship</target>
+    </element>
+    <element id="rel-lrn-project" type="realization">
+      <source>role-learner</source>
+      <target>proc-project-assessment</target>
+    </element>
+    <element id="rel-curator-process" type="realization">
+      <source>role-curriculum-owner</source>
+      <target>proc-cheat-sheet-review</target>
+    </element>
+
+    <!-- Goal → Capability -->
+    <element id="rel-goal-cap" type="realization">
+      <source>goal-001</source>
+      <target>cap-001</target>
+    </element>
+    <element id="rel-goal-cap2" type="realization">
+      <source>goal-002</source>
+      <target>cap-001</target>
+    </element>
+
+    <!-- Capability → Service -->
+    <element id="rel-cap-svc" type="realization">
+      <source>cap-001</source>
+      <target>svc-curriculum-delivery</target>
+    </element>
+    <element id="rel-cap-svc2" type="realization">
+      <source>cap-001</source>
+      <target>svc-learning-tracker</target>
+    </element>
+
+    <!-- Application → Technology -->
+    <element id="rel-kb-tech" type="realization">
+      <source>app-kb-graph</source>
+      <target>tech-surrealdb</target>
+    </element>
+    <element id="rel-kb-edge" type="realization">
+      <source>app-kb-graph</source>
+      <target>tech-hp-edge-node</target>
+    </element>
+    <element id="rel-tracker-edge" type="realization">
+      <source>app-learning-tracker</source>
+      <target>tech-hp-edge-node</target>
+    </element>
+    <element id="rel-scraper-tech" type="realization">
+      <source>tech-web-scraper</source>
+      <target>tech-nix</target>
+    </element>
+    <element id="rel-kreuz-tech" type="realization">
+      <source>app-kreuzberg</source>
+      <target>tech-surrealdb</target>
+    </element>
+
+    <!-- Application → Business -->
+    <element id="rel-iface-lrn" type="realization">
+      <source>app-iface-member-portal</source>
+      <target>role-learner</target>
+    </element>
+    <element id="rel-iface-curator" type="realization">
+      <source>app-iface-learning-dashboard</source>
+      <target>role-curriculum-owner</target>
+    </element>
+
+    <!-- Application → Application -->
+    <element id="rel-kreuz-index" type="serving">
+      <source>app-kreuzberg</source>
+      <target>app-cheatsheet-index</target>
+    </element>
+    <element id="rel-index-portal" type="serving">
+      <source>app-cheatsheet-index</source>
+      <target>app-iface-member-portal</target>
+    </element>
+    <element id="rel-nvidia-iface" type="serving">
+      <source>app-nvidia-portal</source>
+      <target>app-iface-member-portal</target>
+    </element>
+    <element id="rel-tracker-kb" type="serving">
+      <source>app-learning-tracker</source>
+      <target>app-kb-graph</target>
+    </element>
+  </folder>
+
+  <folder name="Views" type="diagrams">
+    <element id="view-dsl" type="archimate-diagram">
+      <name>Data Science Learning Architecture View</name>
+      <elements>
+        <!-- Motivation Layer -->
+        <element xsi:type="archimate:Goal" id="goal-001" x="100" y="50"/>
+        <element xsi:type="archimate:Goal" id="goal-002" x="100" y="120"/>
+        <element xsi:type="archimate:Capability" id="cap-001" x="100" y="200"/>
+        <!-- Business Layer -->
+        <element xsi:type="archimate:BusinessRole" id="role-learner" x="300" y="50"/>
+        <element xsi:type="archimate:BusinessRole" id="role-mentor" x="300" y="130"/>
+        <element xsi:type="archimate:BusinessRole" id="role-curriculum-owner" x="300" y="210"/>
+        <element xsi:type="archimate:BusinessService" id="svc-learning-tracker" x="300" y="290"/>
+        <element xsi:type="archimate:BusinessService" id="svc-curriculum-delivery" x="300" y="370"/>
+        <!-- Application Layer -->
+        <element xsi:type="archimate:ApplicationComponent" id="app-kreuzberg" x="600" y="50"/>
+        <element xsi:type="archimate:ApplicationComponent" id="app-cheatsheet-index" x="600" y="130"/>
+        <element xsi:type="archimate:ApplicationComponent" id="app-nvidia-portal" x="600" y="210"/>
+        <element xsi:type="archimate:ApplicationComponent" id="app-learning-tracker" x="600" y="290"/>
+        <element xsi:type="archimate:ApplicationComponent" id="app-kb-graph" x="600" y="370"/>
+        <!-- Technology Layer -->
+        <element xsi:type="archimate:Technology" id="tech-surrealdb" x="900" y="50"/>
+        <element xsi:type="archimate:Technology" id="tech-hp-edge-node" x="900" y="130"/>
+        <element xsi:type="archimate:Technology" id="tech-web-scraper" x="900" y="210"/>
+        <element xsi:type="archimate:Technology" id="tech-nix" x="900" y="290"/>
+        <element xsi:type="archimate:Technology" id="tech-telegram" x="900" y="370"/>
+      </elements>
+    </element>
+  </folder>
+
+</archimate:model>

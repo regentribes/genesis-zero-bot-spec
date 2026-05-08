@@ -1,9 +1,20 @@
-# ADR 0008 — 2C$ Meta-Synchronic Teleoethics Framework
+---
+title: 2C$ Meta-Synchronic Teleoethics Framework
+number: 0008
+status: proposed
+date: 2026-05-07
+authors: Genesis
+domain: philosophy
+level: system
+tags:
+  - toroidal-dynamics
+  - fractality
+  - timewave-zero
+  - egregore
+  - four-distinctions
+---
 
-**Status:** proposed
-**Date:** 2026-05-07
-**Authors:** Genesis (from topic 2C$, Regen Tribe Collective Network)
-**Source:** Airic Easm's 2C$.docx + Telegram thread 14296
+# ADR 0008 — 2C$ Meta-Synchronic Teleoethics Framework
 
 ---
 
@@ -128,4 +139,11 @@ Adopt toroidal dynamics and fractality as grounded design patterns. Reject Timew
 
 ---
 
-*Source: Topic 2C$, Regen Tribe Collective Network, Telegram topic 14296, April 23 – May 7 2026*
+## Source: Topic 2C$, Regen Tribe Collective Network, Telegram topic 14296, April 23 – May 7 2026
+
+---
+
+## Wiki Provenance
+
+**Wiki source:** [[sources/0016-2c-dollar-meta-synchronic-teleoethics-framework|Source 0016 — 2C$ Meta-Synchronic Teleoethics Framework]] (ingested 2026-05-07)
+**Wiki synthesis:** [[syntheses/wikivault-synthesis-2026-05-08|Wiki Vault Synthesis 2026-05-08]] — provides cross-document context including Integral Stack proposal (Thesis 12) and 5 strategic gaps including Egregore MIS algorithm undefined and Holonic governance deployment pathway
