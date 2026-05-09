@@ -163,14 +163,12 @@ def render_scenario(scenario, background_steps):
         tag_links = ' '.join([f'<span class="tag">{t}</span>' for t in scenario['tags']])
         tags_html = f'<div class="tags">{tag_links}</div>'
     
-    steps_html = []
+    rows_html = []
     for step in all_steps:
         kw_class = step['keyword'].lower()
-        steps_html.append(
-            f'<div class="step">'
-            f'<span class="step-keyword {kw_class}">{step["keyword"]}</span>'
-            f'<span class="step-text">{render_step_text(step["text"])}</span>'
-            f'</div>'
+        rows_html.append(
+            f'<tr><td class="kw kw-{kw_class}">{step["keyword"]}</td>'
+            f'<td class="txt">{render_step_text(step["text"])}</td></tr>'
         )
     
     return f'''<div class="scenario">
@@ -179,7 +177,7 @@ def render_scenario(scenario, background_steps):
     <span class="scenario-label">Scenario</span>
     <span class="scenario-title">{scenario["title"]}</span>
   </div>
-  <div class="steps">{"".join(steps_html)}</div>
+  <table class="step-table">{"".join(rows_html)}</table>
 </div>'''
 
 

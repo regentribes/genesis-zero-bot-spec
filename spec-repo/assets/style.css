@@ -171,42 +171,36 @@ main {
   color: var(--heading);
 }
 
-/* ── Steps ── */
-.steps {
-  padding: 0.5rem 0;
-}
-
-.step {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  padding: 0.3rem 1.5rem;
+/* ── Step Table ── */
+.step-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
   font-size: 0.9rem;
-  line-height: 1.6;
+  margin: 0.5rem 0;
 }
-
-.step-keyword {
-  font-weight: 600;
-  min-width: 3.5rem;
-  text-align: right;
+.step-table tr { border-bottom: 1px solid var(--border); }
+.step-table tr:last-child { border-bottom: none; }
+.step-table td { padding: 0.35rem 0; vertical-align: top; }
+.step-table td.kw {
+  min-width: 5rem;
+  width: 5rem;
   padding-right: 1.25rem;
-  flex-shrink: 0;
+  text-align: right;
+  vertical-align: top;
+  white-space: nowrap;
 }
-
-.step-text {
-  flex: 1;
+.step-table td.txt {
+  padding-left: 0.5rem;
   text-align: left;
 }
-
-.step-keyword.given { color: var(--keyword-given); }
-.step-keyword.when { color: var(--keyword-when); }
-.step-keyword.then { color: var(--keyword-then); }
-.step-keyword.and { color: var(--keyword-and); }
-.step-keyword.but { color: var(--keyword-and); }
-
-.step-text { color: var(--text); }
-
-.step-text code {
+.step-table td.kw.given { color: var(--keyword-given); font-weight: 600; }
+.step-table td.kw.when { color: var(--keyword-when); font-weight: 600; }
+.step-table td.kw.then { color: var(--keyword-then); font-weight: 600; }
+.step-table td.kw.and { color: var(--keyword-and); font-weight: 600; }
+.step-table td.kw.but { color: var(--keyword-and); font-weight: 600; }
+.step-table td.txt { color: var(--text); }
+.step-table td.txt code {
   background: var(--code-bg);
   color: var(--heading);
   padding: 1px 5px;
