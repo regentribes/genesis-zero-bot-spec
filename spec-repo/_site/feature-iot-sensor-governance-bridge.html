@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IoT Sensor Governance Bridge — Gherkin Spec</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <script>
+function toggleTheme(){
+  var b=document.body,d=b.classList.contains("dark");
+  b.classList.toggle("dark");b.classList.toggle("light");
+  var dark=d?"dark":"light";
+  var v=[["--bg",dark?"#000000":"#ffffff"],["--text",dark?"#888888":"#333333"],
+         ["--heading",dark?"#ffffff":"#000000"],["--muted",dark?"#555555":"#888888"],
+         ["--border",dark?"#222222":"#e0e0e0"],["--code-bg",dark?"#0a0a0a":"#f5f5f5"],
+         ["--pre-bg",dark?"#0a0a0a":"#f5f5f5"],["--pre-text",dark?"#888888":"#333333"],
+         ["--table-border",dark?"#222222":"#e0e0e0"],["--table-header-bg",dark?"#111111":"#f5f5f5"]];
+  for(var i=0;i<v.length;i++){b.style.setProperty(v[i][0],v[i][1]);
+    document.documentElement.style.setProperty(v[i][0],v[i][1]);}
+  localStorage.setItem("theme",b.classList.contains("dark")?"dark":"light");
+}
+document.addEventListener("DOMContentLoaded",function(){
+  var s=localStorage.getItem("theme");
+  var isDark=!s||s==="dark"||(!s&&window.matchMedia("(prefers-color-scheme:dark)").matches);
+  if(isDark){document.body.className="dark"}else{document.body.className="light"}
+  var dark=document.body.classList.contains("dark");
+  var v=[["--bg",dark?"#000000":"#ffffff"],["--text",dark?"#888888":"#333333"],
+         ["--heading",dark?"#ffffff":"#000000"],["--muted",dark?"#555555":"#888888"],
+         ["--border",dark?"#222222":"#e0e0e0"],["--code-bg",dark?"#0a0a0a":"#f5f5f5"],
+         ["--pre-bg",dark?"#0a0a0a":"#f5f5f5"],["--pre-text",dark?"#888888":"#333333"],
+         ["--table-border",dark?"#222222":"#e0e0e0"],["--table-header-bg",dark?"#111111":"#f5f5f5"]];
+  for(var i=0;i<v.length;i++){document.body.style.setProperty(v[i][0],v[i][1]);
+    document.documentElement.style.setProperty(v[i][0],v[i][1]);}
+});
+</script>
+</head>
+<body>
+<header class="site-header">
+  <div class="container">
+    <h1><a href="index.html">Gherkin Specs</a></h1>
+    <p>RegenTribes living specifications</p>
+    <button id="theme-toggle" aria-label="Toggle theme" onclick="toggleTheme()">&#9790;</button>
+  </div>
+</header>
+<main>
+  <p style="margin-bottom:1.5rem;"><a href="index.html" style="color:var(--muted);">← All Specs</a></p>
+  <article class="feature">
+  <div class="feature-header">
+    <h2>IoT Sensor Governance Bridge</h2>
+  </div>
+  <div class="feature-story">As a regenerative community
+I want sensor readings to verify and drive DAO governance decisions
+So that physical-world evidence grounds collective decisions in real conditions</div>
+  <div class="scenario">
+  
+  <div class="scenario-header">
+    <span class="scenario-label">Scenario</span>
+    <span class="scenario-title">Soil moisture drops below threshold triggers irrigation governance vote</span>
+  </div>
+  <table class="step-table"><tr><td class="kw kw-given">Given</td><td class="txt">the Farmers IoT Toolkit modules deployed: water tank sensor, soil moisture, solar powerbank, WiFi hub</td></tr><tr><td class="kw kw-and">And</td><td class="txt">DHT22 temperature/humidity sensors available as shared latent variables</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the Integral Collective Node running five-subsystem governance: OAD, ITC, CDS, COS, FRS</td></tr><tr><td class="kw kw-and">And</td><td class="txt">SurrealDB evidence store configured as state broker</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the Active Inference Bridge mediates sensor-to-governance flow</td></tr><tr><td class="kw kw-given">Given</td><td class="txt">soil moisture reading is 22% (below 25% threshold)</td></tr><tr><td class="kw kw-when">When</td><td class="txt">the Active Inference Bridge receives the sensor reading</td></tr><tr><td class="kw kw-then">Then</td><td class="txt">the bridge stores evidence with confidence_score 0.92 in SurrealDB</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the bridge emits irrigation_claim to ITC</td></tr><tr><td class="kw kw-and">And</td><td class="txt">ITC verifies correlation with recent DHT22 humidity reading (68%)</td></tr><tr><td class="kw kw-and">And</td><td class="txt">ITC resolves the claim as non-contradicted within 3 seconds</td></tr><tr><td class="kw kw-then">Then</td><td class="txt">ITC emits verified_claim to CDS</td></tr><tr><td class="kw kw-and">And</td><td class="txt">CDS proposes an irrigation resource allocation vote</td></tr><tr><td class="kw kw-when">When</td><td class="txt">CDS vote passes with weighted consensus above 0.75</td></tr><tr><td class="kw kw-then">Then</td><td class="txt">CDS updates governance state with irrigation_approved</td></tr><tr><td class="kw kw-and">And</td><td class="txt">COS executes drip irrigation via actuator command</td></tr><tr><td class="kw kw-and">And</td><td class="txt">FRS records audit trail: sensor_reading → ITC_verification → CDS_vote → COS_execution</td></tr></table>
+</div><div class="scenario">
+  
+  <div class="scenario-header">
+    <span class="scenario-label">Scenario</span>
+    <span class="scenario-title">Water tank below 20% triggers emergency resource allocation</span>
+  </div>
+  <table class="step-table"><tr><td class="kw kw-given">Given</td><td class="txt">the Farmers IoT Toolkit modules deployed: water tank sensor, soil moisture, solar powerbank, WiFi hub</td></tr><tr><td class="kw kw-and">And</td><td class="txt">DHT22 temperature/humidity sensors available as shared latent variables</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the Integral Collective Node running five-subsystem governance: OAD, ITC, CDS, COS, FRS</td></tr><tr><td class="kw kw-and">And</td><td class="txt">SurrealDB evidence store configured as state broker</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the Active Inference Bridge mediates sensor-to-governance flow</td></tr><tr><td class="kw kw-given">Given</td><td class="txt">water tank level reads 17% (below 20% emergency threshold)</td></tr><tr><td class="kw kw-when">When</td><td class="txt">the bridge receives the reading</td></tr><tr><td class="kw kw-then">Then</td><td class="txt">the bridge flags emergency_claim with priority_high</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the bridge queries ITC for contradiction check</td></tr><tr><td class="kw kw-and">And</td><td class="txt">ITC cross-validates with soil moisture sensor (dry conditions confirm low tank urgency)</td></tr><tr><td class="kw kw-and">And</td><td class="txt">ITC emits emergency_verified_claim to CDS</td></tr><tr><td class="kw kw-when">When</td><td class="txt">CDS receives emergency_verified_claim</td></tr><tr><td class="kw kw-then">Then</td><td class="txt">CDS triggers expedited governance review (skip standard deliberation delay)</td></tr><tr><td class="kw kw-and">And</td><td class="txt">CDS enacts emergency water allocation from community reserves</td></tr><tr><td class="kw kw-and">And</td><td class="txt">COS releases allocated water volume to affected plots</td></tr><tr><td class="kw kw-and">And</td><td class="txt">FRS records: emergency_trigger → ITC_validation → CDS_enactment → COS_execution</td></tr></table>
+</div><div class="scenario">
+  
+  <div class="scenario-header">
+    <span class="scenario-label">Scenario</span>
+    <span class="scenario-title">Solar powerbank SOC low triggers energy allocation governance review</span>
+  </div>
+  <table class="step-table"><tr><td class="kw kw-given">Given</td><td class="txt">the Farmers IoT Toolkit modules deployed: water tank sensor, soil moisture, solar powerbank, WiFi hub</td></tr><tr><td class="kw kw-and">And</td><td class="txt">DHT22 temperature/humidity sensors available as shared latent variables</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the Integral Collective Node running five-subsystem governance: OAD, ITC, CDS, COS, FRS</td></tr><tr><td class="kw kw-and">And</td><td class="txt">SurrealDB evidence store configured as state broker</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the Active Inference Bridge mediates sensor-to-governance flow</td></tr><tr><td class="kw kw-given">Given</td><td class="txt">solar powerbank state-of-charge reads 31% (below 40% caution threshold)</td></tr><tr><td class="kw kw-when">When</td><td class="txt">the bridge receives the reading</td></tr><tr><td class="kw kw-then">Then</td><td class="txt">the bridge emits energy_allocation_review_claim to ITC</td></tr><tr><td class="kw kw-and">And</td><td class="txt">ITC correlates with recent DHT22 temperature (high temp reduces battery efficiency)</td></tr><tr><td class="kw kw-and">And</td><td class="txt">ITC checks solar generation forecast (cloud cover predicted)</td></tr><tr><td class="kw kw-then">Then</td><td class="txt">ITC emits multi_factor_verified_claim to CDS</td></tr><tr><td class="kw kw-when">When</td><td class="txt">CDS reviews energy allocation claim</td></tr><tr><td class="kw kw-then">Then</td><td class="txt">CDS proposes non-critical loads reduction vote</td></tr><tr><td class="kw kw-when">When</td><td class="txt">vote passes</td></tr><tr><td class="kw kw-then">Then</td><td class="txt">CDS updates energy allocation policy</td></tr><tr><td class="kw kw-and">And</td><td class="txt">FRS adjusts community energy budget in next governance cycle</td></tr><tr><td class="kw kw-and">And</td><td class="txt">bridge marks evidence_record with governance_resolution: pending_next_cycle</td></tr></table>
+</div><div class="scenario">
+  
+  <div class="scenario-header">
+    <span class="scenario-label">Scenario</span>
+    <span class="scenario-title">DHT22 temperature exceeds safety range triggers system-wide pause</span>
+  </div>
+  <table class="step-table"><tr><td class="kw kw-given">Given</td><td class="txt">the Farmers IoT Toolkit modules deployed: water tank sensor, soil moisture, solar powerbank, WiFi hub</td></tr><tr><td class="kw kw-and">And</td><td class="txt">DHT22 temperature/humidity sensors available as shared latent variables</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the Integral Collective Node running five-subsystem governance: OAD, ITC, CDS, COS, FRS</td></tr><tr><td class="kw kw-and">And</td><td class="txt">SurrealDB evidence store configured as state broker</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the Active Inference Bridge mediates sensor-to-governance flow</td></tr><tr><td class="kw kw-given">Given</td><td class="txt">DHT22 temperature reads 41°C (above 40°C safety threshold)</td></tr><tr><td class="kw kw-and">And</td><td class="txt">DHT22 humidity reads 89% (high humidity加剧 heat stress)</td></tr><tr><td class="kw kw-when">When</td><td class="txt">the bridge receives the reading</td></tr><tr><td class="kw kw-then">Then</td><td class="txt">the bridge emits safety_claim to ITC with temperature_exceedance flag</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the bridge queries weather station data for outdoor temperature cross-validation</td></tr><tr><td class="kw kw-when">When</td><td class="txt">ITC confirms temperature claim (outdoor sensor reads 38°C, within validation range)</td></tr><tr><td class="kw kw-then">Then</td><td class="txt">ITC marks claim as temperature_verified</td></tr><tr><td class="kw kw-and">And</td><td class="txt">ITC emits safety_verified_claim to CDS</td></tr><tr><td class="kw kw-when">When</td><td class="txt">CDS receives safety_verified_claim</td></tr><tr><td class="kw kw-then">Then</td><td class="txt">CDS pauses all non-critical governance decisions</td></tr><tr><td class="kw kw-and">And</td><td class="txt">CDS alerts community via Telegram notification</td></tr><tr><td class="kw kw-and">And</td><td class="txt">COS suspends scheduled maintenance tasks</td></tr><tr><td class="kw kw-and">And</td><td class="txt">bridge stores safety_event with full evidence chain in SurrealDB</td></tr></table>
+</div><div class="scenario">
+  
+  <div class="scenario-header">
+    <span class="scenario-label">Scenario</span>
+    <span class="scenario-title">Sensor data contradicts DAO governance claim</span>
+  </div>
+  <table class="step-table"><tr><td class="kw kw-given">Given</td><td class="txt">the Farmers IoT Toolkit modules deployed: water tank sensor, soil moisture, solar powerbank, WiFi hub</td></tr><tr><td class="kw kw-and">And</td><td class="txt">DHT22 temperature/humidity sensors available as shared latent variables</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the Integral Collective Node running five-subsystem governance: OAD, ITC, CDS, COS, FRS</td></tr><tr><td class="kw kw-and">And</td><td class="txt">SurrealDB evidence store configured as state broker</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the Active Inference Bridge mediates sensor-to-governance flow</td></tr><tr><td class="kw kw-given">Given</td><td class="txt">DAO governance claim states: irrigation water allocation is adequate</td></tr><tr><td class="kw kw-and">And</td><td class="txt">actual soil moisture readings are 19% (critically dry)</td></tr><tr><td class="kw kw-when">When</td><td class="txt">the bridge receives soil moisture reading of 19%</td></tr><tr><td class="kw kw-then">Then</td><td class="txt">the bridge emits contradiction_alert to ITC</td></tr><tr><td class="kw kw-and">And</td><td class="txt">ITC queries SurrealDB for all recent sensor readings on water allocation</td></tr><tr><td class="kw kw-and">And</td><td class="txt">ITC identifies systematic discrepancy: claimed adequacy vs actual dryness</td></tr><tr><td class="kw kw-then">Then</td><td class="txt">ITC emits contradicted_claim_notification to CDS</td></tr><tr><td class="kw kw-when">When</td><td class="txt">CDS receives contradicted_claim_notification</td></tr><tr><td class="kw kw-then">Then</td><td class="txt">CDS initiates governance recalibration process</td></tr><tr><td class="kw kw-and">And</td><td class="txt">CDS proposes revision of water allocation policy</td></tr><tr><td class="kw kw-and">And</td><td class="txt">CDS flags prior allocation vote for retrospective audit</td></tr><tr><td class="kw kw-and">And</td><td class="txt">FRS records: contradiction_detected → ITC_resolution → CDS_recalibration → prior_vote_audit</td></tr></table>
+</div><div class="scenario">
+  
+  <div class="scenario-header">
+    <span class="scenario-label">Scenario</span>
+    <span class="scenario-title">Bridge receives offline sensor data with gap</span>
+  </div>
+  <table class="step-table"><tr><td class="kw kw-given">Given</td><td class="txt">the Farmers IoT Toolkit modules deployed: water tank sensor, soil moisture, solar powerbank, WiFi hub</td></tr><tr><td class="kw kw-and">And</td><td class="txt">DHT22 temperature/humidity sensors available as shared latent variables</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the Integral Collective Node running five-subsystem governance: OAD, ITC, CDS, COS, FRS</td></tr><tr><td class="kw kw-and">And</td><td class="txt">SurrealDB evidence store configured as state broker</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the Active Inference Bridge mediates sensor-to-governance flow</td></tr><tr><td class="kw kw-given">Given</td><td class="txt">water tank sensor last reported 4 hours ago</td></tr><tr><td class="kw kw-and">And</td><td class="txt">current time shows 31% (unchanged from last reading)</td></tr><tr><td class="kw kw-when">When</td><td class="txt">the bridge receives the stale reading</td></tr><tr><td class="kw kw-then">Then</td><td class="txt">the bridge marks evidence_record with confidence: 0.45 (degraded due to age)</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the bridge queries ITC for missing_data_estimation</td></tr><tr><td class="kw kw-when">When</td><td class="txt">ITC estimates missing data using correlated DHT22 humidity trend (rising, consistent with tank consumption)</td></tr><tr><td class="kw kw-then">Then</td><td class="txt">ITC emits estimated_claim with confidence: 0.6</td></tr><tr><td class="kw kw-and">And</td><td class="txt">ITC flags the estimate for retroactive verification when sensor comes online</td></tr><tr><td class="kw kw-and">And</td><td class="txt">bridge stores evidence with offline_estimation flag in SurrealDB</td></tr><tr><td class="kw kw-and">And</td><td class="txt">CDS governance decisions using this evidence are flagged with reduced_confidence</td></tr></table>
+</div><div class="scenario">
+  
+  <div class="scenario-header">
+    <span class="scenario-label">Scenario</span>
+    <span class="scenario-title">Cross-module inference via shared DHT22 latent generates correlated governance claim</span>
+  </div>
+  <table class="step-table"><tr><td class="kw kw-given">Given</td><td class="txt">the Farmers IoT Toolkit modules deployed: water tank sensor, soil moisture, solar powerbank, WiFi hub</td></tr><tr><td class="kw kw-and">And</td><td class="txt">DHT22 temperature/humidity sensors available as shared latent variables</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the Integral Collective Node running five-subsystem governance: OAD, ITC, CDS, COS, FRS</td></tr><tr><td class="kw kw-and">And</td><td class="txt">SurrealDB evidence store configured as state broker</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the Active Inference Bridge mediates sensor-to-governance flow</td></tr><tr><td class="kw kw-given">Given</td><td class="txt">soil moisture is 24% (borderline)</td></tr><tr><td class="kw kw-and">And</td><td class="txt">DHT22 temperature is 36°C (elevated)</td></tr><tr><td class="kw kw-and">And</td><td class="txt">DHT22 humidity is 52% (dropping)</td></tr><tr><td class="kw kw-when">When</td><td class="txt">the bridge receives all three readings within a 2-minute window</td></tr><tr><td class="kw kw-then">Then</td><td class="txt">the bridge performs cross-module inference: moisture_low ∧ temp_high ∧ humidity_drop → evaporation_stress_score: 0.87</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the bridge aggregates correlated evidence into single governance claim</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the bridge emits aggregated_irrigation_urgency claim to ITC</td></tr><tr><td class="kw kw-when">When</td><td class="txt">ITC validates the aggregated claim</td></tr><tr><td class="kw kw-then">Then</td><td class="txt">ITC confirms cross-module correlation strengthens claim confidence (0.87 vs 0.71 for single-sensor)</td></tr><tr><td class="kw kw-and">And</td><td class="txt">ITC emits high_confidence_verified_claim to CDS</td></tr><tr><td class="kw kw-and">And</td><td class="txt">CDS proposes irrigation vote with priority_elevated flag</td></tr><tr><td class="kw kw-and">And</td><td class="txt">CDS records cross_module_inference_used: true in governance state</td></tr></table>
+</div><div class="scenario">
+  
+  <div class="scenario-header">
+    <span class="scenario-label">Scenario</span>
+    <span class="scenario-title">DAO decision verified by retroactive sensor data</span>
+  </div>
+  <table class="step-table"><tr><td class="kw kw-given">Given</td><td class="txt">the Farmers IoT Toolkit modules deployed: water tank sensor, soil moisture, solar powerbank, WiFi hub</td></tr><tr><td class="kw kw-and">And</td><td class="txt">DHT22 temperature/humidity sensors available as shared latent variables</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the Integral Collective Node running five-subsystem governance: OAD, ITC, CDS, COS, FRS</td></tr><tr><td class="kw kw-and">And</td><td class="txt">SurrealDB evidence store configured as state broker</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the Active Inference Bridge mediates sensor-to-governance flow</td></tr><tr><td class="kw kw-given">Given</td><td class="txt">DAO governance decision allocated water to Plot A three days ago</td></tr><tr><td class="kw kw-when">When</td><td class="txt">soil moisture sensor reports Plot A at 41% (adequate)</td></tr><tr><td class="kw kw-and">And</td><td class="txt">water tank sensor reports consumption consistent with allocation</td></tr><tr><td class="kw kw-when">When</td><td class="txt">the bridge receives Plot A readings</td></tr><tr><td class="kw kw-then">Then</td><td class="txt">the bridge queries FRS for governance decision reference: allocation_vote_2026-05-05</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the bridge compares actual sensor data against claimed outcomes</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the bridge emits retroactive_verification_claim to ITC</td></tr><tr><td class="kw kw-when">When</td><td class="txt">ITC confirms sensor data matches governance-decided outcomes</td></tr><tr><td class="kw kw-then">Then</td><td class="txt">ITC marks governance decision as verified_retroactively</td></tr><tr><td class="kw kw-and">And</td><td class="txt">FRS updates audit trail: decision_verified → sensor_confirms_claimed_outcome</td></tr><tr><td class="kw kw-and">And</td><td class="txt">CDS governance history reflects: decision_confirmed_post_hoc via sensor_verification</td></tr></table>
+</div>
+</article>
+</main>
+<footer>
+  <p>Generated from wiki synthesis · validated with ghokin · deployed via GitHub Actions</p>
+</footer>
+</body>
+</html>

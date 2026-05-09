@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Agent Paradigm for Regenerative Communities — Gherkin Spec</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <script>
+function toggleTheme(){
+  var b=document.body,d=b.classList.contains("dark");
+  b.classList.toggle("dark");b.classList.toggle("light");
+  var dark=d?"dark":"light";
+  var v=[["--bg",dark?"#000000":"#ffffff"],["--text",dark?"#888888":"#333333"],
+         ["--heading",dark?"#ffffff":"#000000"],["--muted",dark?"#555555":"#888888"],
+         ["--border",dark?"#222222":"#e0e0e0"],["--code-bg",dark?"#0a0a0a":"#f5f5f5"],
+         ["--pre-bg",dark?"#0a0a0a":"#f5f5f5"],["--pre-text",dark?"#888888":"#333333"],
+         ["--table-border",dark?"#222222":"#e0e0e0"],["--table-header-bg",dark?"#111111":"#f5f5f5"]];
+  for(var i=0;i<v.length;i++){b.style.setProperty(v[i][0],v[i][1]);
+    document.documentElement.style.setProperty(v[i][0],v[i][1]);}
+  localStorage.setItem("theme",b.classList.contains("dark")?"dark":"light");
+}
+document.addEventListener("DOMContentLoaded",function(){
+  var s=localStorage.getItem("theme");
+  var isDark=!s||s==="dark"||(!s&&window.matchMedia("(prefers-color-scheme:dark)").matches);
+  if(isDark){document.body.className="dark"}else{document.body.className="light"}
+  var dark=document.body.classList.contains("dark");
+  var v=[["--bg",dark?"#000000":"#ffffff"],["--text",dark?"#888888":"#333333"],
+         ["--heading",dark?"#ffffff":"#000000"],["--muted",dark?"#555555":"#888888"],
+         ["--border",dark?"#222222":"#e0e0e0"],["--code-bg",dark?"#0a0a0a":"#f5f5f5"],
+         ["--pre-bg",dark?"#0a0a0a":"#f5f5f5"],["--pre-text",dark?"#888888":"#333333"],
+         ["--table-border",dark?"#222222":"#e0e0e0"],["--table-header-bg",dark?"#111111":"#f5f5f5"]];
+  for(var i=0;i<v.length;i++){document.body.style.setProperty(v[i][0],v[i][1]);
+    document.documentElement.style.setProperty(v[i][0],v[i][1]);}
+});
+</script>
+</head>
+<body>
+<header class="site-header">
+  <div class="container">
+    <h1><a href="index.html">Gherkin Specs</a></h1>
+    <p>RegenTribes living specifications</p>
+    <button id="theme-toggle" aria-label="Toggle theme" onclick="toggleTheme()">&#9790;</button>
+  </div>
+</header>
+<main>
+  <p style="margin-bottom:1.5rem;"><a href="index.html" style="color:var(--muted);">← All Specs</a></p>
+  <article class="feature">
+  <div class="feature-header">
+    <h2>AI Agent Paradigm for Regenerative Communities</h2>
+  </div>
+  <div class="feature-story">As a community building on the AI agent paradigm
+I want systems that take high-level goals and execute complex multi-step plans
+So that autonomous action delivers measurable production value</div>
+  <div class="scenario">
+  
+  <div class="scenario-header">
+    <span class="scenario-label">Scenario</span>
+    <span class="scenario-title">Terminal-based agents lead the market</span>
+  </div>
+  <table class="step-table"><tr><td class="kw kw-given">Given</td><td class="txt">18 of 30 trending GitHub projects are agent-related in May 2026</td></tr><tr><td class="kw kw-and">And</td><td class="txt">GitHub reached 4.3 million AI repositories in 2025 (178% increase from 2024)</td></tr><tr><td class="kw kw-and">And</td><td class="txt">MCP has become essential infrastructure, donated to Linux Foundation Agentic AI Foundation</td></tr><tr><td class="kw kw-and">And</td><td class="txt">terminal has re-emerged as the primary AI battleground</td></tr><tr><td class="kw kw-given">Given</td><td class="txt">Rust-based tools (DeepSeek-TUI, jcode, Warp) lead the terminal battleground</td></tr><tr><td class="kw kw-when">When</td><td class="txt">agents operate through terminal interfaces</td></tr><tr><td class="kw kw-then">Then</td><td class="txt">low-latency, high-throughput interaction occurs</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the community adopts terminal-native agent patterns</td></tr></table>
+</div><div class="scenario">
+  
+  <div class="scenario-header">
+    <span class="scenario-label">Scenario</span>
+    <span class="scenario-title">Agent skills encode institutional knowledge</span>
+  </div>
+  <table class="step-table"><tr><td class="kw kw-given">Given</td><td class="txt">18 of 30 trending GitHub projects are agent-related in May 2026</td></tr><tr><td class="kw kw-and">And</td><td class="txt">GitHub reached 4.3 million AI repositories in 2025 (178% increase from 2024)</td></tr><tr><td class="kw kw-and">And</td><td class="txt">MCP has become essential infrastructure, donated to Linux Foundation Agentic AI Foundation</td></tr><tr><td class="kw kw-and">And</td><td class="txt">terminal has re-emerged as the primary AI battleground</td></tr><tr><td class="kw kw-given">Given</td><td class="txt">SKILL.md files encode practices for AI coding assistants</td></tr><tr><td class="kw kw-when">When</td><td class="txt">a new agent joins the community</td></tr><tr><td class="kw kw-then">Then</td><td class="txt">it reads relevant SKILL.md files</td></tr><tr><td class="kw kw-and">And</td><td class="txt">executes with community-aligned behavior from first interaction</td></tr><tr><td class="kw kw-and">And</td><td class="txt">institutional knowledge remains portable across agent implementations</td></tr></table>
+</div><div class="scenario">
+  
+  <div class="scenario-header">
+    <span class="scenario-label">Scenario</span>
+    <span class="scenario-title">MCP standardizes tool integration</span>
+  </div>
+  <table class="step-table"><tr><td class="kw kw-given">Given</td><td class="txt">18 of 30 trending GitHub projects are agent-related in May 2026</td></tr><tr><td class="kw kw-and">And</td><td class="txt">GitHub reached 4.3 million AI repositories in 2025 (178% increase from 2024)</td></tr><tr><td class="kw kw-and">And</td><td class="txt">MCP has become essential infrastructure, donated to Linux Foundation Agentic AI Foundation</td></tr><tr><td class="kw kw-and">And</td><td class="txt">terminal has re-emerged as the primary AI battleground</td></tr><tr><td class="kw kw-given">Given</td><td class="txt">Model Context Protocol connects agents to external tools</td></tr><tr><td class="kw kw-when">When</td><td class="txt">a community agent needs to access external services</td></tr><tr><td class="kw kw-then">Then</td><td class="txt">MCP provides standardized connection without custom integration</td></tr><tr><td class="kw kw-and">And</td><td class="txt">tool availability expands without agent code changes</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the protocol enables agent interoperability across the community</td></tr></table>
+</div><div class="scenario">
+  
+  <div class="scenario-header">
+    <span class="scenario-label">Scenario</span>
+    <span class="scenario-title">Tight feedback loops enable proof-of-regeneration</span>
+  </div>
+  <table class="step-table"><tr><td class="kw kw-given">Given</td><td class="txt">18 of 30 trending GitHub projects are agent-related in May 2026</td></tr><tr><td class="kw kw-and">And</td><td class="txt">GitHub reached 4.3 million AI repositories in 2025 (178% increase from 2024)</td></tr><tr><td class="kw kw-and">And</td><td class="txt">MCP has become essential infrastructure, donated to Linux Foundation Agentic AI Foundation</td></tr><tr><td class="kw kw-and">And</td><td class="txt">terminal has re-emerged as the primary AI battleground</td></tr><tr><td class="kw kw-given">Given</td><td class="txt">financial AI agents (TradingAgents, dexter) represent the leading vertical</td></tr><tr><td class="kw kw-when">When</td><td class="txt">autonomous AI agents deliver production value</td></tr><tr><td class="kw kw-then">Then</td><td class="txt">measurable feedback enables continuous improvement</td></tr><tr><td class="kw kw-and">And</td><td class="txt">proof-of-regeneration creates real-world ecological verification before rewards unlock</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the same feedback pattern applies to regenerative community metrics</td></tr></table>
+</div><div class="scenario">
+  
+  <div class="scenario-header">
+    <span class="scenario-label">Scenario</span>
+    <span class="scenario-title">Compiled corpora replace manual indexing</span>
+  </div>
+  <table class="step-table"><tr><td class="kw kw-given">Given</td><td class="txt">18 of 30 trending GitHub projects are agent-related in May 2026</td></tr><tr><td class="kw kw-and">And</td><td class="txt">GitHub reached 4.3 million AI repositories in 2025 (178% increase from 2024)</td></tr><tr><td class="kw kw-and">And</td><td class="txt">MCP has become essential infrastructure, donated to Linux Foundation Agentic AI Foundation</td></tr><tr><td class="kw kw-and">And</td><td class="txt">terminal has re-emerged as the primary AI battleground</td></tr><tr><td class="kw kw-given">Given</td><td class="txt">Karpathy's LLM wiki pattern applies to community knowledge</td></tr><tr><td class="kw kw-when">When</td><td class="txt">the system builds a persistent wiki from documents</td></tr><tr><td class="kw kw-then">Then</td><td class="txt">graph relevance and vector search operate together</td></tr><tr><td class="kw kw-and">And</td><td class="txt">Louvain community detection identifies knowledge clusters</td></tr><tr><td class="kw kw-and">And</td><td class="txt">Deep Research navigates the corpus without manual structure</td></tr></table>
+</div><div class="scenario">
+  
+  <div class="scenario-header">
+    <span class="scenario-label">Scenario</span>
+    <span class="scenario-title">AI agents are as foundational to 2030s as microservices to 2010s</span>
+  </div>
+  <table class="step-table"><tr><td class="kw kw-given">Given</td><td class="txt">18 of 30 trending GitHub projects are agent-related in May 2026</td></tr><tr><td class="kw kw-and">And</td><td class="txt">GitHub reached 4.3 million AI repositories in 2025 (178% increase from 2024)</td></tr><tr><td class="kw kw-and">And</td><td class="txt">MCP has become essential infrastructure, donated to Linux Foundation Agentic AI Foundation</td></tr><tr><td class="kw kw-and">And</td><td class="txt">terminal has re-emerged as the primary AI battleground</td></tr><tr><td class="kw kw-given">Given</td><td class="txt">the infrastructure layer is being built now (MCP, agent skills, terminal agents, orchestration)</td></tr><tr><td class="kw kw-when">When</td><td class="txt">the community builds on top of this layer</td></tr><tr><td class="kw kw-then">Then</td><td class="txt">regenerative systems leverage the dominant software paradigm of the era</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the community avoids building alongside the paradigm rather than on top of it</td></tr></table>
+</div><div class="scenario">
+  
+  <div class="scenario-header">
+    <span class="scenario-label">Scenario</span>
+    <span class="scenario-title">Autonomous execution delivers measurable value</span>
+  </div>
+  <table class="step-table"><tr><td class="kw kw-given">Given</td><td class="txt">18 of 30 trending GitHub projects are agent-related in May 2026</td></tr><tr><td class="kw kw-and">And</td><td class="txt">GitHub reached 4.3 million AI repositories in 2025 (178% increase from 2024)</td></tr><tr><td class="kw kw-and">And</td><td class="txt">MCP has become essential infrastructure, donated to Linux Foundation Agentic AI Foundation</td></tr><tr><td class="kw kw-and">And</td><td class="txt">terminal has re-emerged as the primary AI battleground</td></tr><tr><td class="kw kw-given">Given</td><td class="txt">task decomposition, tool selection, context management, and outcome verification are automated</td></tr><tr><td class="kw kw-when">When</td><td class="txt">a community member sets a high-level goal</td></tr><tr><td class="kw kw-then">Then</td><td class="txt">the full loop from goal to result executes with minimal human intervention</td></tr><tr><td class="kw kw-and">And</td><td class="txt">measurable outcomes are verified automatically</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the agent paradigm solves the fundamental coordination problem previous architectures could not</td></tr></table>
+</div>
+</article>
+</main>
+<footer>
+  <p>Generated from wiki synthesis · validated with ghokin · deployed via GitHub Actions</p>
+</footer>
+</body>
+</html>

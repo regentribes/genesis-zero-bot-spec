@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Strategic Gaps — From Knowledge to Operationalization — Gherkin Spec</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <script>
+function toggleTheme(){
+  var b=document.body,d=b.classList.contains("dark");
+  b.classList.toggle("dark");b.classList.toggle("light");
+  var dark=d?"dark":"light";
+  var v=[["--bg",dark?"#000000":"#ffffff"],["--text",dark?"#888888":"#333333"],
+         ["--heading",dark?"#ffffff":"#000000"],["--muted",dark?"#555555":"#888888"],
+         ["--border",dark?"#222222":"#e0e0e0"],["--code-bg",dark?"#0a0a0a":"#f5f5f5"],
+         ["--pre-bg",dark?"#0a0a0a":"#f5f5f5"],["--pre-text",dark?"#888888":"#333333"],
+         ["--table-border",dark?"#222222":"#e0e0e0"],["--table-header-bg",dark?"#111111":"#f5f5f5"]];
+  for(var i=0;i<v.length;i++){b.style.setProperty(v[i][0],v[i][1]);
+    document.documentElement.style.setProperty(v[i][0],v[i][1]);}
+  localStorage.setItem("theme",b.classList.contains("dark")?"dark":"light");
+}
+document.addEventListener("DOMContentLoaded",function(){
+  var s=localStorage.getItem("theme");
+  var isDark=!s||s==="dark"||(!s&&window.matchMedia("(prefers-color-scheme:dark)").matches);
+  if(isDark){document.body.className="dark"}else{document.body.className="light"}
+  var dark=document.body.classList.contains("dark");
+  var v=[["--bg",dark?"#000000":"#ffffff"],["--text",dark?"#888888":"#333333"],
+         ["--heading",dark?"#ffffff":"#000000"],["--muted",dark?"#555555":"#888888"],
+         ["--border",dark?"#222222":"#e0e0e0"],["--code-bg",dark?"#0a0a0a":"#f5f5f5"],
+         ["--pre-bg",dark?"#0a0a0a":"#f5f5f5"],["--pre-text",dark?"#888888":"#333333"],
+         ["--table-border",dark?"#222222":"#e0e0e0"],["--table-header-bg",dark?"#111111":"#f5f5f5"]];
+  for(var i=0;i<v.length;i++){document.body.style.setProperty(v[i][0],v[i][1]);
+    document.documentElement.style.setProperty(v[i][0],v[i][1]);}
+});
+</script>
+</head>
+<body>
+<header class="site-header">
+  <div class="container">
+    <h1><a href="index.html">Gherkin Specs</a></h1>
+    <p>RegenTribes living specifications</p>
+    <button id="theme-toggle" aria-label="Toggle theme" onclick="toggleTheme()">&#9790;</button>
+  </div>
+</header>
+<main>
+  <p style="margin-bottom:1.5rem;"><a href="index.html" style="color:var(--muted);">← All Specs</a></p>
+  <article class="feature">
+  <div class="feature-header">
+    <h2>Strategic Gaps — From Knowledge to Operationalization</h2>
+  </div>
+  <div class="feature-story">As a community translating wiki knowledge into action
+I want to close the gaps between what's known and what's operational
+So that the knowledge graph produces measurable regenerative outcomes</div>
+  <div class="scenario">
+  
+  <div class="scenario-header">
+    <span class="scenario-label">Scenario</span>
+    <span class="scenario-title">Operationalizing proof-of-regeneration</span>
+  </div>
+  <table class="step-table"><tr><td class="kw kw-given">Given</td><td class="txt">the wiki contains 17 sources and 11 concepts defining the community knowledge base</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the synthesis identifies what the wiki knows but has not yet operationalized</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the strategic gaps represent the translation layer from knowledge to action</td></tr><tr><td class="kw kw-given">Given</td><td class="txt">proof-of-regeneration creates real-world ecological verification</td></tr><tr><td class="kw kw-when">When</td><td class="txt">rewards unlock only after ecological outcomes are verified</td></tr><tr><td class="kw kw-then">Then</td><td class="txt">regenerative practices are incentivized through measurable results</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the feedback loop connects community action to ecological state</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the system operates without centralized verification authority</td></tr></table>
+</div><div class="scenario">
+  
+  <div class="scenario-header">
+    <span class="scenario-label">Scenario</span>
+    <span class="scenario-title">Building the civilizational operating system</span>
+  </div>
+  <table class="step-table"><tr><td class="kw kw-given">Given</td><td class="txt">the wiki contains 17 sources and 11 concepts defining the community knowledge base</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the synthesis identifies what the wiki knows but has not yet operationalized</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the strategic gaps represent the translation layer from knowledge to action</td></tr><tr><td class="kw kw-given">Given</td><td class="txt">the meta-layer connects knowledge retrieval, autonomous action, governance decisions, and regenerative feedback</td></tr><tr><td class="kw kw-when">When</td><td class="txt">the community builds this meta-layer</td></tr><tr><td class="kw kw-then">Then</td><td class="txt">it operates as a civilizational OS for communities</td></tr><tr><td class="kw kw-and">And</td><td class="txt">no single existing project has named or built this layer</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the gap between components is the absence of this meta-layer</td></tr></table>
+</div><div class="scenario">
+  
+  <div class="scenario-header">
+    <span class="scenario-label">Scenario</span>
+    <span class="scenario-title">Connecting intelligence architecture to governance</span>
+  </div>
+  <table class="step-table"><tr><td class="kw kw-given">Given</td><td class="txt">the wiki contains 17 sources and 11 concepts defining the community knowledge base</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the synthesis identifies what the wiki knows but has not yet operationalized</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the strategic gaps represent the translation layer from knowledge to action</td></tr><tr><td class="kw kw-given">Given</td><td class="txt">MST-Polcompball governance spec provides the governance layer without intelligence architecture</td></tr><tr><td class="kw kw-and">And</td><td class="txt">Goertzel's seminar provides the cognitive substrate without governance layer</td></tr><tr><td class="kw kw-when">When</td><td class="txt">the community bridges these two projects</td></tr><tr><td class="kw kw-then">Then</td><td class="txt">neither lacks the other's capabilities</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the community addresses what it means to run both while developing regenerative infrastructure</td></tr></table>
+</div><div class="scenario">
+  
+  <div class="scenario-header">
+    <span class="scenario-label">Scenario</span>
+    <span class="scenario-title">Translating 12 thesis statements into testable behaviors</span>
+  </div>
+  <table class="step-table"><tr><td class="kw kw-given">Given</td><td class="txt">the wiki contains 17 sources and 11 concepts defining the community knowledge base</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the synthesis identifies what the wiki knows but has not yet operationalized</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the strategic gaps represent the translation layer from knowledge to action</td></tr><tr><td class="kw kw-given">Given</td><td class="txt">the synthesis produces 12 convergent thesis statements</td></tr><tr><td class="kw kw-when">When</td><td class="txt">each thesis is expressed as a scenario with Given/When/Then</td></tr><tr><td class="kw kw-then">Then</td><td class="txt">each behavior is testable against community outcomes</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the wiki's knowledge produces actionable specifications</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the community moves from synthesis to execution</td></tr></table>
+</div><div class="scenario">
+  
+  <div class="scenario-header">
+    <span class="scenario-label">Scenario</span>
+    <span class="scenario-title">Offline-first knowledge retrieval under total internet blackout</span>
+  </div>
+  <table class="step-table"><tr><td class="kw kw-given">Given</td><td class="txt">the wiki contains 17 sources and 11 concepts defining the community knowledge base</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the synthesis identifies what the wiki knows but has not yet operationalized</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the strategic gaps represent the translation layer from knowledge to action</td></tr><tr><td class="kw kw-given">Given</td><td class="txt">P2P/offline-resilient operation is required for total internet blackout scenario</td></tr><tr><td class="kw kw-when">When</td><td class="txt">the community builds knowledge infrastructure</td></tr><tr><td class="kw kw-then">Then</td><td class="txt">Syncthing maintains P2P sync across edge nodes</td></tr><tr><td class="kw kw-and">And</td><td class="txt">local knowledge retrieval continues without cloud dependency</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the system degrades gracefully under network partition</td></tr></table>
+</div><div class="scenario">
+  
+  <div class="scenario-header">
+    <span class="scenario-label">Scenario</span>
+    <span class="scenario-title">Connecting Ostrom's 8 principles to digital commons governance</span>
+  </div>
+  <table class="step-table"><tr><td class="kw kw-given">Given</td><td class="txt">the wiki contains 17 sources and 11 concepts defining the community knowledge base</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the synthesis identifies what the wiki knows but has not yet operationalized</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the strategic gaps represent the translation layer from knowledge to action</td></tr><tr><td class="kw kw-given">Given</td><td class="txt">Ostrom's principles are empirically grounded for physical commons</td></tr><tr><td class="kw kw-when">When</td><td class="txt">the community applies them to digital knowledge commons</td></tr><tr><td class="kw kw-then">Then</td><td class="txt">the same principles produce successful self-governance at digital scale</td></tr><tr><td class="kw kw-and">And</td><td class="txt">boundary rules, congruence, collective-choice arrangements, monitoring, graduated sanctions, conflict-resolution mechanisms, and recognized rights to organize are all implemented digitally</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the digital commons avoids the tragedy of the digital commons</td></tr></table>
+</div><div class="scenario">
+  
+  <div class="scenario-header">
+    <span class="scenario-label">Scenario</span>
+    <span class="scenario-title">Agent skills for regenerative community operations</span>
+  </div>
+  <table class="step-table"><tr><td class="kw kw-given">Given</td><td class="txt">the wiki contains 17 sources and 11 concepts defining the community knowledge base</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the synthesis identifies what the wiki knows but has not yet operationalized</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the strategic gaps represent the translation layer from knowledge to action</td></tr><tr><td class="kw kw-given">Given</td><td class="txt">agent skills package institutional knowledge for AI coding assistants</td></tr><tr><td class="kw kw-when">When</td><td class="txt">the community defines regenerative practices as skills</td></tr><tr><td class="kw kw-then">Then</td><td class="txt">agents execute with community-aligned behavior across all operations</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the knowledge layer translates directly into autonomous action</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the gap between knowing and doing is closed through skill encoding</td></tr></table>
+</div>
+</article>
+</main>
+<footer>
+  <p>Generated from wiki synthesis · validated with ghokin · deployed via GitHub Actions</p>
+</footer>
+</body>
+</html>

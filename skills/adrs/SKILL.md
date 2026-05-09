@@ -125,8 +125,8 @@ git push rad main
 **GitHub Actions (future automation):** Radicle push requires SSH key setup. Until then, manual dual-write.
 
 **Public URL on iris node:**
-- Wiki vault RID: `rad:zYhRVEu5Zh85vcwvmxkZHJNQxn6X`
-- View: https://radicle.xyz/nodes/radicle.xyz/trees/rad:zYhRVEu5Zh85vcwvmxkZHJNQxn6X
+- Wiki vault RID: `rad:zYhRVEu5Zh85vcwvmxkZHJNQqn6X`
+- View: https://radicle.xyz/nodes/radicle.xyz/trees/rad:zYhRVEu5Zh85vcwvmxkZHJNQqn6X
 
 **adrs CLI is NOT integrated with the wiki vault.** They are separate tools:
 - `adrs` CLI → ADR files in `docs/adr/` (GitHub repo)
@@ -261,7 +261,7 @@ For automated ADR creation: write the Markdown file directly to `docs/adr/`.
 
 ## References
 
-- Wiki vault RID: `rad:zYhRVEu5Zh85vcwvmxkZHJNQxn6X`
+- Wiki vault RID: `rad:zYhRVEu5Zh85vcwvmxkZHJNQqn6X`
 - MADR format: adr.github.io/madr/
 - adrs CLI: github.com/joshrotenberg/adrs
 - Original Nygard ADR article: thinkrelevance.com/blog/documenting-architecture-decisions

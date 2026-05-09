@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Regenerative Technology Bootstrap — Gherkin Spec</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <script>
+function toggleTheme(){
+  var b=document.body,d=b.classList.contains("dark");
+  b.classList.toggle("dark");b.classList.toggle("light");
+  var dark=d?"dark":"light";
+  var v=[["--bg",dark?"#000000":"#ffffff"],["--text",dark?"#888888":"#333333"],
+         ["--heading",dark?"#ffffff":"#000000"],["--muted",dark?"#555555":"#888888"],
+         ["--border",dark?"#222222":"#e0e0e0"],["--code-bg",dark?"#0a0a0a":"#f5f5f5"],
+         ["--pre-bg",dark?"#0a0a0a":"#f5f5f5"],["--pre-text",dark?"#888888":"#333333"],
+         ["--table-border",dark?"#222222":"#e0e0e0"],["--table-header-bg",dark?"#111111":"#f5f5f5"]];
+  for(var i=0;i<v.length;i++){b.style.setProperty(v[i][0],v[i][1]);
+    document.documentElement.style.setProperty(v[i][0],v[i][1]);}
+  localStorage.setItem("theme",b.classList.contains("dark")?"dark":"light");
+}
+document.addEventListener("DOMContentLoaded",function(){
+  var s=localStorage.getItem("theme");
+  var isDark=!s||s==="dark"||(!s&&window.matchMedia("(prefers-color-scheme:dark)").matches);
+  if(isDark){document.body.className="dark"}else{document.body.className="light"}
+  var dark=document.body.classList.contains("dark");
+  var v=[["--bg",dark?"#000000":"#ffffff"],["--text",dark?"#888888":"#333333"],
+         ["--heading",dark?"#ffffff":"#000000"],["--muted",dark?"#555555":"#888888"],
+         ["--border",dark?"#222222":"#e0e0e0"],["--code-bg",dark?"#0a0a0a":"#f5f5f5"],
+         ["--pre-bg",dark?"#0a0a0a":"#f5f5f5"],["--pre-text",dark?"#888888":"#333333"],
+         ["--table-border",dark?"#222222":"#e0e0e0"],["--table-header-bg",dark?"#111111":"#f5f5f5"]];
+  for(var i=0;i<v.length;i++){document.body.style.setProperty(v[i][0],v[i][1]);
+    document.documentElement.style.setProperty(v[i][0],v[i][1]);}
+});
+</script>
+</head>
+<body>
+<header class="site-header">
+  <div class="container">
+    <h1><a href="index.html">Gherkin Specs</a></h1>
+    <p>RegenTribes living specifications</p>
+    <button id="theme-toggle" aria-label="Toggle theme" onclick="toggleTheme()">&#9790;</button>
+  </div>
+</header>
+<main>
+  <p style="margin-bottom:1.5rem;"><a href="index.html" style="color:var(--muted);">← All Specs</a></p>
+  <article class="feature">
+  <div class="feature-header">
+    <h2>Regenerative Technology Bootstrap</h2>
+  </div>
+  <div class="feature-story">As a community bootstrapping regenerative capacity
+I want to invest simultaneously in physical, knowledge, and governance infrastructure
+So that each investment makes the others more possible</div>
+  <div class="scenario">
+  
+  <div class="scenario-header">
+    <span class="scenario-label">Scenario</span>
+    <span class="scenario-title">Bootstrap pathway avoids Earth's suboptimal decisions</span>
+  </div>
+  <table class="step-table"><tr><td class="kw kw-given">Given</td><td class="txt">the global manufacturing capacity produces $12.3T annual gross output</td></tr><tr><td class="kw kw-and">And</td><td class="txt">1.2 billion workers operate across 220 EJ energy consumption</td></tr><tr><td class="kw kw-and">And</td><td class="txt">90 billion tonnes of raw material extraction occurs annually</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the current industrial capacity is locked into extractive patterns</td></tr><tr><td class="kw kw-given">Given</td><td class="txt">fossil fuel lock-in, nuclear stagnation, and TSMC geographic concentration exist</td></tr><tr><td class="kw kw-and">And</td><td class="txt">pharmaceutical API dependency on China persists at scale</td></tr><tr><td class="kw kw-and">And</td><td class="txt">linear economy maintains only 9% plastic recycling</td></tr><tr><td class="kw kw-when">When</td><td class="txt">the community invests in regenerative infrastructure</td></tr><tr><td class="kw kw-then">Then</td><td class="txt">circular systems replace extractive patterns over time</td></tr><tr><td class="kw kw-and">And</td><td class="txt">bootstrap planning includes engineering and governance together</td></tr></table>
+</div><div class="scenario">
+  
+  <div class="scenario-header">
+    <span class="scenario-label">Scenario</span>
+    <span class="scenario-title">Industrial capacity serves as both problem and resource</span>
+  </div>
+  <table class="step-table"><tr><td class="kw kw-given">Given</td><td class="txt">the global manufacturing capacity produces $12.3T annual gross output</td></tr><tr><td class="kw kw-and">And</td><td class="txt">1.2 billion workers operate across 220 EJ energy consumption</td></tr><tr><td class="kw kw-and">And</td><td class="txt">90 billion tonnes of raw material extraction occurs annually</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the current industrial capacity is locked into extractive patterns</td></tr><tr><td class="kw kw-given">Given</td><td class="txt">the manufacturing base provides regenerative build potential</td></tr><tr><td class="kw kw-when">When</td><td class="txt">the community needs energy, materials, and knowledge coordination</td></tr><tr><td class="kw kw-then">Then</td><td class="txt">circular systems are built without recreating 620 EJ/year of industrial power</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the bootstrap sequence moves from survival through advanced industry</td></tr></table>
+</div><div class="scenario">
+  
+  <div class="scenario-header">
+    <span class="scenario-label">Scenario</span>
+    <span class="scenario-title">Physical, knowledge, and governance infrastructure invest together</span>
+  </div>
+  <table class="step-table"><tr><td class="kw kw-given">Given</td><td class="txt">the global manufacturing capacity produces $12.3T annual gross output</td></tr><tr><td class="kw kw-and">And</td><td class="txt">1.2 billion workers operate across 220 EJ energy consumption</td></tr><tr><td class="kw kw-and">And</td><td class="txt">90 billion tonnes of raw material extraction occurs annually</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the current industrial capacity is locked into extractive patterns</td></tr><tr><td class="kw kw-given">Given</td><td class="txt">investment in physical infrastructure includes energy, water, and materials</td></tr><tr><td class="kw kw-and">And</td><td class="txt">investment in knowledge infrastructure includes coordination systems, governance protocols, and skill repositories</td></tr><tr><td class="kw kw-and">And</td><td class="txt">investment in governance infrastructure includes Ostrom-principle commons, reputation systems, and dispute resolution</td></tr><tr><td class="kw kw-when">When</td><td class="txt">one investment area grows</td></tr><tr><td class="kw kw-then">Then</td><td class="txt">it makes the other two investment areas more possible</td></tr><tr><td class="kw kw-and">And</td><td class="txt">no single investment area can succeed alone</td></tr></table>
+</div><div class="scenario">
+  
+  <div class="scenario-header">
+    <span class="scenario-label">Scenario</span>
+    <span class="scenario-title">Knowledge layer enables community-scale coordination</span>
+  </div>
+  <table class="step-table"><tr><td class="kw kw-given">Given</td><td class="txt">the global manufacturing capacity produces $12.3T annual gross output</td></tr><tr><td class="kw kw-and">And</td><td class="txt">1.2 billion workers operate across 220 EJ energy consumption</td></tr><tr><td class="kw kw-and">And</td><td class="txt">90 billion tonnes of raw material extraction occurs annually</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the current industrial capacity is locked into extractive patterns</td></tr><tr><td class="kw kw-given">Given</td><td class="txt">supply chain software, GPS logistics, and marketplace platforms coordinate global manufacturing</td></tr><tr><td class="kw kw-when">When</td><td class="txt">the same digital infrastructure serves community-scale regenerative systems</td></tr><tr><td class="kw kw-then">Then</td><td class="txt">knowledge coordination operates without starting from scratch</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the community configures existing infrastructure for regenerative purposes</td></tr></table>
+</div><div class="scenario">
+  
+  <div class="scenario-header">
+    <span class="scenario-label">Scenario</span>
+    <span class="scenario-title">Suboptimal decisions had technical and governance roots</span>
+  </div>
+  <table class="step-table"><tr><td class="kw kw-given">Given</td><td class="txt">the global manufacturing capacity produces $12.3T annual gross output</td></tr><tr><td class="kw kw-and">And</td><td class="txt">1.2 billion workers operate across 220 EJ energy consumption</td></tr><tr><td class="kw kw-and">And</td><td class="txt">90 billion tonnes of raw material extraction occurs annually</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the current industrial capacity is locked into extractive patterns</td></tr><tr><td class="kw kw-given">Given</td><td class="txt">thorium LFTR was abandoned for weapons-program reasons</td></tr><tr><td class="kw kw-and">And</td><td class="txt">pharmaceutical API concentration was driven by IP maximalism</td></tr><tr><td class="kw kw-when">When</td><td class="txt">the community makes technical decisions</td></tr><tr><td class="kw kw-then">Then</td><td class="txt">governance implications are evaluated alongside engineering choices</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the same failure modes are prevented in the bootstrap sequence</td></tr></table>
+</div><div class="scenario">
+  
+  <div class="scenario-header">
+    <span class="scenario-label">Scenario</span>
+    <span class="scenario-title">Bootstrap success requires three simultaneous investments</span>
+  </div>
+  <table class="step-table"><tr><td class="kw kw-given">Given</td><td class="txt">the global manufacturing capacity produces $12.3T annual gross output</td></tr><tr><td class="kw kw-and">And</td><td class="txt">1.2 billion workers operate across 220 EJ energy consumption</td></tr><tr><td class="kw kw-and">And</td><td class="txt">90 billion tonnes of raw material extraction occurs annually</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the current industrial capacity is locked into extractive patterns</td></tr><tr><td class="kw kw-given">Given</td><td class="txt">investment in physical infrastructure alone</td></tr><tr><td class="kw kw-and">And</td><td class="txt">investment in knowledge infrastructure alone</td></tr><tr><td class="kw kw-and">And</td><td class="txt">investment in governance infrastructure alone</td></tr><tr><td class="kw kw-when">When</td><td class="txt">any single investment operates without the others</td></tr><tr><td class="kw kw-then">Then</td><td class="txt">the system collapses</td></tr><tr><td class="kw kw-and">And</td><td class="txt">all three must grow together to reach advanced industry phase</td></tr></table>
+</div>
+</article>
+</main>
+<footer>
+  <p>Generated from wiki synthesis · validated with ghokin · deployed via GitHub Actions</p>
+</footer>
+</body>
+</html>

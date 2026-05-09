@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ostrom's 8 Principles Compliance — Gherkin Spec</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <script>
+function toggleTheme(){
+  var b=document.body,d=b.classList.contains("dark");
+  b.classList.toggle("dark");b.classList.toggle("light");
+  var dark=d?"dark":"light";
+  var v=[["--bg",dark?"#000000":"#ffffff"],["--text",dark?"#888888":"#333333"],
+         ["--heading",dark?"#ffffff":"#000000"],["--muted",dark?"#555555":"#888888"],
+         ["--border",dark?"#222222":"#e0e0e0"],["--code-bg",dark?"#0a0a0a":"#f5f5f5"],
+         ["--pre-bg",dark?"#0a0a0a":"#f5f5f5"],["--pre-text",dark?"#888888":"#333333"],
+         ["--table-border",dark?"#222222":"#e0e0e0"],["--table-header-bg",dark?"#111111":"#f5f5f5"]];
+  for(var i=0;i<v.length;i++){b.style.setProperty(v[i][0],v[i][1]);
+    document.documentElement.style.setProperty(v[i][0],v[i][1]);}
+  localStorage.setItem("theme",b.classList.contains("dark")?"dark":"light");
+}
+document.addEventListener("DOMContentLoaded",function(){
+  var s=localStorage.getItem("theme");
+  var isDark=!s||s==="dark"||(!s&&window.matchMedia("(prefers-color-scheme:dark)").matches);
+  if(isDark){document.body.className="dark"}else{document.body.className="light"}
+  var dark=document.body.classList.contains("dark");
+  var v=[["--bg",dark?"#000000":"#ffffff"],["--text",dark?"#888888":"#333333"],
+         ["--heading",dark?"#ffffff":"#000000"],["--muted",dark?"#555555":"#888888"],
+         ["--border",dark?"#222222":"#e0e0e0"],["--code-bg",dark?"#0a0a0a":"#f5f5f5"],
+         ["--pre-bg",dark?"#0a0a0a":"#f5f5f5"],["--pre-text",dark?"#888888":"#333333"],
+         ["--table-border",dark?"#222222":"#e0e0e0"],["--table-header-bg",dark?"#111111":"#f5f5f5"]];
+  for(var i=0;i<v.length;i++){document.body.style.setProperty(v[i][0],v[i][1]);
+    document.documentElement.style.setProperty(v[i][0],v[i][1]);}
+});
+</script>
+</head>
+<body>
+<header class="site-header">
+  <div class="container">
+    <h1><a href="index.html">Gherkin Specs</a></h1>
+    <p>RegenTribes living specifications</p>
+    <button id="theme-toggle" aria-label="Toggle theme" onclick="toggleTheme()">&#9790;</button>
+  </div>
+</header>
+<main>
+  <p style="margin-bottom:1.5rem;"><a href="index.html" style="color:var(--muted);">← All Specs</a></p>
+  <article class="feature">
+  <div class="feature-header">
+    <h2>Ostrom's 8 Principles Compliance</h2>
+  </div>
+  <div class="feature-story"><strong>As a</strong> regenerative community member — The rule verifies that commons governance operations follow Ostrom's 8 principles
+for successful self-governance at any scale.</div>
+  <div class="scenario">
+  <div class="tags"><span class="tag">@regen-tribes</span> <span class="tag">@ostrom-principles</span> <span class="tag">@governance</span></div>
+  <div class="scenario-header">
+    <span class="scenario-label">Scenario</span>
+    <span class="scenario-title">Boundary rules — clear membership</span>
+  </div>
+  <table class="step-table"><tr><td class="kw kw-given">Given</td><td class="txt">a Holon Unit operating as a local biome</td></tr><tr><td class="kw kw-and">And</td><td class="txt">Ostrom's 8 principles as the governance foundation</td></tr><tr><td class="kw kw-given">Given</td><td class="txt">a community commons resource</td></tr><tr><td class="kw kw-then">Then</td><td class="txt">the boundaries of the resource must be clearly defined</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the individuals with rights to withdraw from the resource must be clearly defined</td></tr></table>
+</div><div class="scenario">
+  
+  <div class="scenario-header">
+    <span class="scenario-label">Scenario</span>
+    <span class="scenario-title">Congruence — local conditions</span>
+  </div>
+  <table class="step-table"><tr><td class="kw kw-given">Given</td><td class="txt">a Holon Unit operating as a local biome</td></tr><tr><td class="kw kw-and">And</td><td class="txt">Ostrom's 8 principles as the governance foundation</td></tr><tr><td class="kw kw-given">Given</td><td class="txt">allocation and appropriation rules</td></tr><tr><td class="kw kw-then">Then</td><td class="txt">rules should be adapted to local conditions</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the costs of rules should be borne by the appropriators</td></tr></table>
+</div><div class="scenario">
+  
+  <div class="scenario-header">
+    <span class="scenario-label">Scenario</span>
+    <span class="scenario-title">Collective-choice arrangements — participation</span>
+  </div>
+  <table class="step-table"><tr><td class="kw kw-given">Given</td><td class="txt">a Holon Unit operating as a local biome</td></tr><tr><td class="kw kw-and">And</td><td class="txt">Ostrom's 8 principles as the governance foundation</td></tr><tr><td class="kw kw-given">Given</td><td class="txt">most affected by the commons</td></tr><tr><td class="kw kw-then">Then</td><td class="txt">they should be included in collective-choice arrangements</td></tr><tr><td class="kw kw-and">And</td><td class="txt">rules can be modified by most affected participants</td></tr></table>
+</div><div class="scenario">
+  
+  <div class="scenario-header">
+    <span class="scenario-label">Scenario</span>
+    <span class="scenario-title">Monitoring — accountability</span>
+  </div>
+  <table class="step-table"><tr><td class="kw kw-given">Given</td><td class="txt">a Holon Unit operating as a local biome</td></tr><tr><td class="kw kw-and">And</td><td class="txt">Ostrom's 8 principles as the governance foundation</td></tr><tr><td class="kw kw-given">Given</td><td class="txt">monitors who are accountable to the appropriators</td></tr><tr><td class="kw kw-then">Then</td><td class="txt">the monitors should be accountable to the appropriators</td></tr><tr><td class="kw kw-and">And</td><td class="txt">if they are not directly accountable, they should be the appropriators themselves</td></tr></table>
+</div><div class="scenario">
+  
+  <div class="scenario-header">
+    <span class="scenario-label">Scenario</span>
+    <span class="scenario-title">Graduated sanctions — proportional response</span>
+  </div>
+  <table class="step-table"><tr><td class="kw kw-given">Given</td><td class="txt">a Holon Unit operating as a local biome</td></tr><tr><td class="kw kw-and">And</td><td class="txt">Ostrom's 8 principles as the governance foundation</td></tr><tr><td class="kw kw-given">Given</td><td class="txt">rule violations by appropriators</td></tr><tr><td class="kw kw-then">Then</td><td class="txt">sanctions should be graduated</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the costs of sanctions should be proportionate to the violation</td></tr></table>
+</div><div class="scenario">
+  
+  <div class="scenario-header">
+    <span class="scenario-label">Scenario</span>
+    <span class="scenario-title">Conflict-resolution — accessible mechanisms</span>
+  </div>
+  <table class="step-table"><tr><td class="kw kw-given">Given</td><td class="txt">a Holon Unit operating as a local biome</td></tr><tr><td class="kw kw-and">And</td><td class="txt">Ostrom's 8 principles as the governance foundation</td></tr><tr><td class="kw kw-given">Given</td><td class="txt">conflicts among appropriators</td></tr><tr><td class="kw kw-then">Then</td><td class="txt">low-cost conflict-resolution mechanisms should be available</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the resolution should be rapid and binding</td></tr></table>
+</div><div class="scenario">
+  
+  <div class="scenario-header">
+    <span class="scenario-label">Scenario</span>
+    <span class="scenario-title">Recognized rights — nested tiers</span>
+  </div>
+  <table class="step-table"><tr><td class="kw kw-given">Given</td><td class="txt">a Holon Unit operating as a local biome</td></tr><tr><td class="kw kw-and">And</td><td class="txt">Ostrom's 8 principles as the governance foundation</td></tr><tr><td class="kw kw-given">Given</td><td class="txt">the commons operates at multiple scales</td></tr><tr><td class="kw kw-then">Then</td><td class="txt">the rights of appropriators to devise their own rules</td></tr><tr><td class="kw kw-and">And</td><td class="txt">recognized external authorities should respect those rights</td></tr><tr><td class="kw kw-and">And</td><td class="txt">nested tiers of organization should be permitted</td></tr></table>
+</div><div class="scenario">
+  
+  <div class="scenario-header">
+    <span class="scenario-label">Scenario</span>
+    <span class="scenario-title">Polycentric governance — overlapping jurisdictions</span>
+  </div>
+  <table class="step-table"><tr><td class="kw kw-given">Given</td><td class="txt">a Holon Unit operating as a local biome</td></tr><tr><td class="kw kw-and">And</td><td class="txt">Ostrom's 8 principles as the governance foundation</td></tr><tr><td class="kw kw-given">Given</td><td class="txt">multiple governance units across village, regional, and global scales</td></tr><tr><td class="kw kw-then">Then</td><td class="txt">polycentric governance enables efficient information flow</td></tr><tr><td class="kw kw-and">And</td><td class="txt">localized decision-making for local conditions</td></tr><tr><td class="kw kw-and">And</td><td class="txt">coordination across tiers without centralization</td></tr></table>
+</div>
+</article>
+</main>
+<footer>
+  <p>Generated from wiki synthesis · validated with ghokin · deployed via GitHub Actions</p>
+</footer>
+</body>
+</html>

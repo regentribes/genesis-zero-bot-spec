@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Genesis Brain Knowledge Graph Operations — Gherkin Spec</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <script>
+function toggleTheme(){
+  var b=document.body,d=b.classList.contains("dark");
+  b.classList.toggle("dark");b.classList.toggle("light");
+  var dark=d?"dark":"light";
+  var v=[["--bg",dark?"#000000":"#ffffff"],["--text",dark?"#888888":"#333333"],
+         ["--heading",dark?"#ffffff":"#000000"],["--muted",dark?"#555555":"#888888"],
+         ["--border",dark?"#222222":"#e0e0e0"],["--code-bg",dark?"#0a0a0a":"#f5f5f5"],
+         ["--pre-bg",dark?"#0a0a0a":"#f5f5f5"],["--pre-text",dark?"#888888":"#333333"],
+         ["--table-border",dark?"#222222":"#e0e0e0"],["--table-header-bg",dark?"#111111":"#f5f5f5"]];
+  for(var i=0;i<v.length;i++){b.style.setProperty(v[i][0],v[i][1]);
+    document.documentElement.style.setProperty(v[i][0],v[i][1]);}
+  localStorage.setItem("theme",b.classList.contains("dark")?"dark":"light");
+}
+document.addEventListener("DOMContentLoaded",function(){
+  var s=localStorage.getItem("theme");
+  var isDark=!s||s==="dark"||(!s&&window.matchMedia("(prefers-color-scheme:dark)").matches);
+  if(isDark){document.body.className="dark"}else{document.body.className="light"}
+  var dark=document.body.classList.contains("dark");
+  var v=[["--bg",dark?"#000000":"#ffffff"],["--text",dark?"#888888":"#333333"],
+         ["--heading",dark?"#ffffff":"#000000"],["--muted",dark?"#555555":"#888888"],
+         ["--border",dark?"#222222":"#e0e0e0"],["--code-bg",dark?"#0a0a0a":"#f5f5f5"],
+         ["--pre-bg",dark?"#0a0a0a":"#f5f5f5"],["--pre-text",dark?"#888888":"#333333"],
+         ["--table-border",dark?"#222222":"#e0e0e0"],["--table-header-bg",dark?"#111111":"#f5f5f5"]];
+  for(var i=0;i<v.length;i++){document.body.style.setProperty(v[i][0],v[i][1]);
+    document.documentElement.style.setProperty(v[i][0],v[i][1]);}
+});
+</script>
+</head>
+<body>
+<header class="site-header">
+  <div class="container">
+    <h1><a href="index.html">Gherkin Specs</a></h1>
+    <p>RegenTribes living specifications</p>
+    <button id="theme-toggle" aria-label="Toggle theme" onclick="toggleTheme()">&#9790;</button>
+  </div>
+</header>
+<main>
+  <p style="margin-bottom:1.5rem;"><a href="index.html" style="color:var(--muted);">← All Specs</a></p>
+  <article class="feature">
+  <div class="feature-header">
+    <h2>Genesis Brain Knowledge Graph Operations</h2>
+  </div>
+  <div class="feature-story"><strong>As a</strong> regenerative community member — The rule verifies that knowledge infrastructure operations function correctly
+for regenerative community knowledge management.</div>
+  <div class="scenario">
+  <div class="tags"><span class="tag">@regen-tribes</span> <span class="tag">@knowledge-infrastructure</span> <span class="tag">@genesis-brain</span></div>
+  <div class="scenario-header">
+    <span class="scenario-label">Scenario</span>
+    <span class="scenario-title">Knowledge ingestion from document</span>
+  </div>
+  <table class="step-table"><tr><td class="kw kw-given">Given</td><td class="txt">SurrealDB running at ws://127.0.0.1:8000</td></tr><tr><td class="kw kw-and">And</td><td class="txt">5,000+ concepts with vector embeddings</td></tr><tr><td class="kw kw-and">And</td><td class="txt">NARS epistemic truth values for each concept</td></tr><tr><td class="kw kw-given">Given</td><td class="txt">a query <code>"<query>"</code></td></tr><tr><td class="kw kw-when">When</td><td class="txt">the system performs sparse BM25 and dense HNSW search</td></tr><tr><td class="kw kw-and">And</td><td class="txt">combines results using Reciprocal Rank Fusion</td></tr><tr><td class="kw kw-then">Then</td><td class="txt">results show 20-49% improvement over single-method retrieval</td></tr><tr><td class="kw kw-given">Given</td><td class="txt">a source document ingested via Kreuzberg</td></tr><tr><td class="kw kw-when">When</td><td class="txt">the document is processed by the pipeline</td></tr><tr><td class="kw kw-then">Then</td><td class="txt">concepts are extracted and stored with embeddings</td></tr><tr><td class="kw kw-and">And</td><td class="txt">relationships are mapped between concepts</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the doc is linked to the source in sources/</td></tr></table>
+</div><div class="scenario">
+  
+  <div class="scenario-header">
+    <span class="scenario-label">Scenario</span>
+    <span class="scenario-title">Spatial addressing lookup</span>
+  </div>
+  <table class="step-table"><tr><td class="kw kw-given">Given</td><td class="txt">SurrealDB running at ws://127.0.0.1:8000</td></tr><tr><td class="kw kw-and">And</td><td class="txt">5,000+ concepts with vector embeddings</td></tr><tr><td class="kw kw-and">And</td><td class="txt">NARS epistemic truth values for each concept</td></tr><tr><td class="kw kw-given">Given</td><td class="txt">a query <code>"<query>"</code></td></tr><tr><td class="kw kw-when">When</td><td class="txt">the system performs sparse BM25 and dense HNSW search</td></tr><tr><td class="kw kw-and">And</td><td class="txt">combines results using Reciprocal Rank Fusion</td></tr><tr><td class="kw kw-then">Then</td><td class="txt">results show 20-49% improvement over single-method retrieval</td></tr><tr><td class="kw kw-given">Given</td><td class="txt">a location expressed as graph traversal</td></tr><tr><td class="kw kw-when">When</td><td class="txt">the system resolves the spatial address</td></tr><tr><td class="kw kw-then">Then</td><td class="txt">no GPS coordinates are required</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the address is resolved through relationship graph traversal</td></tr></table>
+</div><div class="scenario">
+  
+  <div class="scenario-header">
+    <span class="scenario-label">Scenario</span>
+    <span class="scenario-title">Cross-module correlation via shared latent variables</span>
+  </div>
+  <table class="step-table"><tr><td class="kw kw-given">Given</td><td class="txt">SurrealDB running at ws://127.0.0.1:8000</td></tr><tr><td class="kw kw-and">And</td><td class="txt">5,000+ concepts with vector embeddings</td></tr><tr><td class="kw kw-and">And</td><td class="txt">NARS epistemic truth values for each concept</td></tr><tr><td class="kw kw-given">Given</td><td class="txt">a query <code>"<query>"</code></td></tr><tr><td class="kw kw-when">When</td><td class="txt">the system performs sparse BM25 and dense HNSW search</td></tr><tr><td class="kw kw-and">And</td><td class="txt">combines results using Reciprocal Rank Fusion</td></tr><tr><td class="kw kw-then">Then</td><td class="txt">results show 20-49% improvement over single-method retrieval</td></tr><tr><td class="kw kw-given">Given</td><td class="txt">DHT22 temperature/humidity sensor readings</td></tr><tr><td class="kw kw-and">And</td><td class="txt">soil moisture sensor readings</td></tr><tr><td class="kw kw-and">And</td><td class="txt">water tank level readings</td></tr><tr><td class="kw kw-when">When</td><td class="txt">correlated inference runs across all three modules</td></tr><tr><td class="kw kw-then">Then</td><td class="txt">shared weather_state is computed as latent variable</td></tr><tr><td class="kw kw-and">And</td><td class="txt">each module updates its Bayesian beliefs accordingly</td></tr></table>
+</div><div class="scenario">
+  
+  <div class="scenario-header">
+    <span class="scenario-label">Scenario</span>
+    <span class="scenario-title">Delta-consensus CRDT propagation</span>
+  </div>
+  <table class="step-table"><tr><td class="kw kw-given">Given</td><td class="txt">SurrealDB running at ws://127.0.0.1:8000</td></tr><tr><td class="kw kw-and">And</td><td class="txt">5,000+ concepts with vector embeddings</td></tr><tr><td class="kw kw-and">And</td><td class="txt">NARS epistemic truth values for each concept</td></tr><tr><td class="kw kw-given">Given</td><td class="txt">a query <code>"<query>"</code></td></tr><tr><td class="kw kw-when">When</td><td class="txt">the system performs sparse BM25 and dense HNSW search</td></tr><tr><td class="kw kw-and">And</td><td class="txt">combines results using Reciprocal Rank Fusion</td></tr><tr><td class="kw kw-then">Then</td><td class="txt">results show 20-49% improvement over single-method retrieval</td></tr><tr><td class="kw kw-given">Given</td><td class="txt">schema change propagated via delta-consensus</td></tr><tr><td class="kw kw-when">When</td><td class="txt">nodes are mesh-connected with 80-400ms latency</td></tr><tr><td class="kw kw-then">Then</td><td class="txt">each node merges changes without global coordination</td></tr><tr><td class="kw kw-and">And</td><td class="txt">split-brain does not occur over mesh radio network</td></tr></table>
+</div><div class="scenario">
+  
+  <div class="scenario-header">
+    <span class="scenario-label">Scenario</span>
+    <span class="scenario-title">Proof-of-regeneration verification</span>
+  </div>
+  <table class="step-table"><tr><td class="kw kw-given">Given</td><td class="txt">SurrealDB running at ws://127.0.0.1:8000</td></tr><tr><td class="kw kw-and">And</td><td class="txt">5,000+ concepts with vector embeddings</td></tr><tr><td class="kw kw-and">And</td><td class="txt">NARS epistemic truth values for each concept</td></tr><tr><td class="kw kw-given">Given</td><td class="txt">a query <code>"<query>"</code></td></tr><tr><td class="kw kw-when">When</td><td class="txt">the system performs sparse BM25 and dense HNSW search</td></tr><tr><td class="kw kw-and">And</td><td class="txt">combines results using Reciprocal Rank Fusion</td></tr><tr><td class="kw kw-then">Then</td><td class="txt">results show 20-49% improvement over single-method retrieval</td></tr><tr><td class="kw kw-given">Given</td><td class="txt">an agent claims regenerative practice</td></tr><tr><td class="kw kw-when">When</td><td class="txt">ecological metrics are verified as improved</td></tr><tr><td class="kw kw-then">Then</td><td class="txt">rewards are unlocked only after verification</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the feedback loop connects action to outcome</td></tr></table>
+</div><div class="scenario">
+  
+  <div class="scenario-header">
+    <span class="scenario-label">Scenario</span>
+    <span class="scenario-title">Offline knowledge retrieval</span>
+  </div>
+  <table class="step-table"><tr><td class="kw kw-given">Given</td><td class="txt">SurrealDB running at ws://127.0.0.1:8000</td></tr><tr><td class="kw kw-and">And</td><td class="txt">5,000+ concepts with vector embeddings</td></tr><tr><td class="kw kw-and">And</td><td class="txt">NARS epistemic truth values for each concept</td></tr><tr><td class="kw kw-given">Given</td><td class="txt">a query <code>"<query>"</code></td></tr><tr><td class="kw kw-when">When</td><td class="txt">the system performs sparse BM25 and dense HNSW search</td></tr><tr><td class="kw kw-and">And</td><td class="txt">combines results using Reciprocal Rank Fusion</td></tr><tr><td class="kw kw-then">Then</td><td class="txt">results show 20-49% improvement over single-method retrieval</td></tr><tr><td class="kw kw-given">Given</td><td class="txt">total internet blackout</td></tr><tr><td class="kw kw-and">And</td><td class="txt">edge nodes operating on mesh radio</td></tr><tr><td class="kw kw-when">When</td><td class="txt">a member queries the knowledge graph</td></tr><tr><td class="kw kw-then">Then</td><td class="txt">retrieval continues without cloud dependency</td></tr><tr><td class="kw kw-and">And</td><td class="txt">P2P sync maintains consistency across mesh</td></tr></table>
+</div>
+</article>
+</main>
+<footer>
+  <p>Generated from wiki synthesis · validated with ghokin · deployed via GitHub Actions</p>
+</footer>
+</body>
+</html>

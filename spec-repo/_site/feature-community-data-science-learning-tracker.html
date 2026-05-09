@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Community Data Science Learning Tracker — Gherkin Spec</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <script>
+function toggleTheme(){
+  var b=document.body,d=b.classList.contains("dark");
+  b.classList.toggle("dark");b.classList.toggle("light");
+  var dark=d?"dark":"light";
+  var v=[["--bg",dark?"#000000":"#ffffff"],["--text",dark?"#888888":"#333333"],
+         ["--heading",dark?"#ffffff":"#000000"],["--muted",dark?"#555555":"#888888"],
+         ["--border",dark?"#222222":"#e0e0e0"],["--code-bg",dark?"#0a0a0a":"#f5f5f5"],
+         ["--pre-bg",dark?"#0a0a0a":"#f5f5f5"],["--pre-text",dark?"#888888":"#333333"],
+         ["--table-border",dark?"#222222":"#e0e0e0"],["--table-header-bg",dark?"#111111":"#f5f5f5"]];
+  for(var i=0;i<v.length;i++){b.style.setProperty(v[i][0],v[i][1]);
+    document.documentElement.style.setProperty(v[i][0],v[i][1]);}
+  localStorage.setItem("theme",b.classList.contains("dark")?"dark":"light");
+}
+document.addEventListener("DOMContentLoaded",function(){
+  var s=localStorage.getItem("theme");
+  var isDark=!s||s==="dark"||(!s&&window.matchMedia("(prefers-color-scheme:dark)").matches);
+  if(isDark){document.body.className="dark"}else{document.body.className="light"}
+  var dark=document.body.classList.contains("dark");
+  var v=[["--bg",dark?"#000000":"#ffffff"],["--text",dark?"#888888":"#333333"],
+         ["--heading",dark?"#ffffff":"#000000"],["--muted",dark?"#555555":"#888888"],
+         ["--border",dark?"#222222":"#e0e0e0"],["--code-bg",dark?"#0a0a0a":"#f5f5f5"],
+         ["--pre-bg",dark?"#0a0a0a":"#f5f5f5"],["--pre-text",dark?"#888888":"#333333"],
+         ["--table-border",dark?"#222222":"#e0e0e0"],["--table-header-bg",dark?"#111111":"#f5f5f5"]];
+  for(var i=0;i<v.length;i++){document.body.style.setProperty(v[i][0],v[i][1]);
+    document.documentElement.style.setProperty(v[i][0],v[i][1]);}
+});
+</script>
+</head>
+<body>
+<header class="site-header">
+  <div class="container">
+    <h1><a href="index.html">Gherkin Specs</a></h1>
+    <p>RegenTribes living specifications</p>
+    <button id="theme-toggle" aria-label="Toggle theme" onclick="toggleTheme()">&#9790;</button>
+  </div>
+</header>
+<main>
+  <p style="margin-bottom:1.5rem;"><a href="index.html" style="color:var(--muted);">← All Specs</a></p>
+  <article class="feature">
+  <div class="feature-header">
+    <h2>Community Data Science Learning Tracker</h2>
+  </div>
+  <div class="feature-story">As a community member learning data science,
+I want to track my cheat sheet completion and assessment progress,
+so that I can build competency systematically and get mentorship support.</div>
+  <div class="scenario">
+  <div class="tags"><span class="tag">@progress-tracking</span> <span class="tag">@quiz-assessment</span></div>
+  <div class="scenario-header">
+    <span class="scenario-label">Scenario</span>
+    <span class="scenario-title">Member tracks cheat sheet completion for SQL category</span>
+  </div>
+  <table class="step-table"><tr><td class="kw kw-given">Given</td><td class="txt">the [[sources/0019-kdnuggets-data-science-cheatsheets|KDnuggets <code>"Complete Collection of Data Science Cheat Sheets"</code>]] is adopted as community reference</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the collection covers 12 categories</td></tr><tr><td class="kw kw-and">And</td><td class="txt">[[sources/0018-nvidia-learning-paths-2026|NVIDIA certification]] is the primary curriculum framework</td></tr><tr><td class="kw kw-given">Given</td><td class="txt">I am a community member with access to the learning tracker</td></tr><tr><td class="kw kw-and">And</td><td class="txt">I am working through the <code>"SQL"</code> category cheat sheets</td></tr><tr><td class="kw kw-when">When</td><td class="txt">I mark all SQL cheat sheets as reviewed</td></tr><tr><td class="kw kw-then">Then</td><td class="txt">my <code>"SQL"</code> category status is updated to <code>"cheat-sheets-complete"</code></td></tr><tr><td class="kw kw-and">And</td><td class="txt">the system records the completion date for each cheat sheet</td></tr></table>
+</div><div class="scenario">
+  <div class="tags"><span class="tag">@quiz-assessment</span></div>
+  <div class="scenario-header">
+    <span class="scenario-label">Scenario</span>
+    <span class="scenario-title">Member completes a quiz assessment for Machine Learning category</span>
+  </div>
+  <table class="step-table"><tr><td class="kw kw-given">Given</td><td class="txt">the [[sources/0019-kdnuggets-data-science-cheatsheets|KDnuggets <code>"Complete Collection of Data Science Cheat Sheets"</code>]] is adopted as community reference</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the collection covers 12 categories</td></tr><tr><td class="kw kw-and">And</td><td class="txt">[[sources/0018-nvidia-learning-paths-2026|NVIDIA certification]] is the primary curriculum framework</td></tr><tr><td class="kw kw-given">Given</td><td class="txt">I have completed the <code>"Machine Learning"</code> cheat sheets</td></tr><tr><td class="kw kw-when">When</td><td class="txt">I score 70% or higher on the ML assessment quiz</td></tr><tr><td class="kw kw-then">Then</td><td class="txt">my <code>"Machine Learning"</code> category status is updated to <code>"assessed"</code></td></tr><tr><td class="kw kw-and">And</td><td class="txt">the system records my score and assessment date</td></tr></table>
+</div><div class="scenario">
+  <div class="tags"><span class="tag">@mentorship-pairing</span></div>
+  <div class="scenario-header">
+    <span class="scenario-label">Scenario</span>
+    <span class="scenario-title">Member fails quiz and requests reassessment</span>
+  </div>
+  <table class="step-table"><tr><td class="kw kw-given">Given</td><td class="txt">the [[sources/0019-kdnuggets-data-science-cheatsheets|KDnuggets <code>"Complete Collection of Data Science Cheat Sheets"</code>]] is adopted as community reference</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the collection covers 12 categories</td></tr><tr><td class="kw kw-and">And</td><td class="txt">[[sources/0018-nvidia-learning-paths-2026|NVIDIA certification]] is the primary curriculum framework</td></tr><tr><td class="kw kw-given">Given</td><td class="txt">I have completed the ML cheat sheets</td></tr><tr><td class="kw kw-and">And</td><td class="txt">I scored below 70% on the ML assessment quiz</td></tr><tr><td class="kw kw-when">When</td><td class="txt">I request a reassessment attempt</td></tr><tr><td class="kw kw-then">Then</td><td class="txt">the system creates a <code>"reassessment-pending"</code> status for my ML category</td></tr><tr><td class="kw kw-and">And</td><td class="txt">I receive a list of recommended review topics before retrying</td></tr></table>
+</div><div class="scenario">
+  <div class="tags"><span class="tag">@mentorship-pairing</span></div>
+  <div class="scenario-header">
+    <span class="scenario-label">Scenario</span>
+    <span class="scenario-title">Member requests mentorship pairing for Deep Learning</span>
+  </div>
+  <table class="step-table"><tr><td class="kw kw-given">Given</td><td class="txt">the [[sources/0019-kdnuggets-data-science-cheatsheets|KDnuggets <code>"Complete Collection of Data Science Cheat Sheets"</code>]] is adopted as community reference</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the collection covers 12 categories</td></tr><tr><td class="kw kw-and">And</td><td class="txt">[[sources/0018-nvidia-learning-paths-2026|NVIDIA certification]] is the primary curriculum framework</td></tr><tr><td class="kw kw-given">Given</td><td class="txt">I am a community member working through the <code>"Deep Learning"</code> category</td></tr><tr><td class="kw kw-and">And</td><td class="txt">I need guidance on PyTorch, Keras, and TensorFlow workflows</td></tr><tr><td class="kw kw-when">When</td><td class="txt">I submit a mentorship request specifying <code>"Deep Learning"</code> category</td></tr><tr><td class="kw kw-then">Then</td><td class="txt">the system matches me with a mentor who has <code>"Deep Learning"</code> expertise</td></tr><tr><td class="kw kw-and">And</td><td class="txt">both I and the mentor receive a pairing notification</td></tr></table>
+</div><div class="scenario">
+  <div class="tags"><span class="tag">@project-based-assessment</span></div>
+  <div class="scenario-header">
+    <span class="scenario-label">Scenario</span>
+    <span class="scenario-title">Mentor and mentee schedule structured learning sessions</span>
+  </div>
+  <table class="step-table"><tr><td class="kw kw-given">Given</td><td class="txt">the [[sources/0019-kdnuggets-data-science-cheatsheets|KDnuggets <code>"Complete Collection of Data Science Cheat Sheets"</code>]] is adopted as community reference</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the collection covers 12 categories</td></tr><tr><td class="kw kw-and">And</td><td class="txt">[[sources/0018-nvidia-learning-paths-2026|NVIDIA certification]] is the primary curriculum framework</td></tr><tr><td class="kw kw-given">Given</td><td class="txt">I am matched with a mentor for the <code>"NLP"</code> category</td></tr><tr><td class="kw kw-when">When</td><td class="txt">my mentor and I agree on a session schedule of biweekly 1-hour calls</td></tr><tr><td class="kw kw-then">Then</td><td class="txt">the system creates a <code>"mentorship-active"</code> record for our NLP pairing</td></tr><tr><td class="kw kw-and">And</td><td class="txt">each session is logged with topic covered and next steps</td></tr></table>
+</div><div class="scenario">
+  <div class="tags"><span class="tag">@project-based-assessment</span></div>
+  <div class="scenario-header">
+    <span class="scenario-label">Scenario</span>
+    <span class="scenario-title">Member applies Data Engineering skills to IoT Toolkit pipeline</span>
+  </div>
+  <table class="step-table"><tr><td class="kw kw-given">Given</td><td class="txt">the [[sources/0019-kdnuggets-data-science-cheatsheets|KDnuggets <code>"Complete Collection of Data Science Cheat Sheets"</code>]] is adopted as community reference</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the collection covers 12 categories</td></tr><tr><td class="kw kw-and">And</td><td class="txt">[[sources/0018-nvidia-learning-paths-2026|NVIDIA certification]] is the primary curriculum framework</td></tr><tr><td class="kw kw-given">Given</td><td class="txt">I am a community member working on the Farmers IoT Toolkit</td></tr><tr><td class="kw kw-and">And</td><td class="txt">I have been working through the <code>"Data Engineering"</code> cheat sheets</td></tr><tr><td class="kw kw-when">When</td><td class="txt">I complete a working data pipeline prototype using at least 3 of the covered tools</td></tr><tr><td class="kw kw-then">Then</td><td class="txt">my <code>"Data Engineering"</code> category status is updated to <code>"project-assessed"</code></td></tr><tr><td class="kw kw-and">And</td><td class="txt">the prototype is logged as evidence of applied competency</td></tr></table>
+</div><div class="scenario">
+  <div class="tags"><span class="tag">@curriculum-overview</span></div>
+  <div class="scenario-header">
+    <span class="scenario-label">Scenario</span>
+    <span class="scenario-title">Member builds a community dashboard applying BI and Data Analytics skills</span>
+  </div>
+  <table class="step-table"><tr><td class="kw kw-given">Given</td><td class="txt">the [[sources/0019-kdnuggets-data-science-cheatsheets|KDnuggets <code>"Complete Collection of Data Science Cheat Sheets"</code>]] is adopted as community reference</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the collection covers 12 categories</td></tr><tr><td class="kw kw-and">And</td><td class="txt">[[sources/0018-nvidia-learning-paths-2026|NVIDIA certification]] is the primary curriculum framework</td></tr><tr><td class="kw kw-given">Given</td><td class="txt">I have completed the <code>"Business Intelligence"</code> and <code>"Data Analytics"</code> cheat sheets</td></tr><tr><td class="kw kw-and">And</td><td class="txt">I have access to community metrics data</td></tr><tr><td class="kw kw-when">When</td><td class="txt">I build a dashboard visualization using a BI tool</td></tr><tr><td class="kw kw-then">Then</td><td class="txt">my <code>"Business Intelligence"</code> category is marked complete</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the dashboard is linked as the project-based assessment artifact</td></tr></table>
+</div><div class="scenario">
+  <div class="tags"><span class="tag">@curriculum-overview</span></div>
+  <div class="scenario-header">
+    <span class="scenario-label">Scenario</span>
+    <span class="scenario-title">Curriculum owner views community-wide learning progress</span>
+  </div>
+  <table class="step-table"><tr><td class="kw kw-given">Given</td><td class="txt">the [[sources/0019-kdnuggets-data-science-cheatsheets|KDnuggets <code>"Complete Collection of Data Science Cheat Sheets"</code>]] is adopted as community reference</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the collection covers 12 categories</td></tr><tr><td class="kw kw-and">And</td><td class="txt">[[sources/0018-nvidia-learning-paths-2026|NVIDIA certification]] is the primary curriculum framework</td></tr><tr><td class="kw kw-given">Given</td><td class="txt">I am a curriculum owner or community coordinator</td></tr><tr><td class="kw kw-and">And</td><td class="txt">community members have logged progress across categories</td></tr><tr><td class="kw kw-when">When</td><td class="txt">I view the learning dashboard</td></tr><tr><td class="kw kw-then">Then</td><td class="txt">I see aggregated completion rates per category</td></tr><tr><td class="kw kw-and">And</td><td class="txt">I see which categories have the most mentorship requests</td></tr><tr><td class="kw kw-and">And</td><td class="txt">I see which members are ready for peer teaching or mentorship roles</td></tr></table>
+</div><div class="scenario">
+  <div class="tags"><span class="tag">@assessment-recording</span></div>
+  <div class="scenario-header">
+    <span class="scenario-label">Scenario</span>
+    <span class="scenario-title">New member starts learning pathway from zero</span>
+  </div>
+  <table class="step-table"><tr><td class="kw kw-given">Given</td><td class="txt">the [[sources/0019-kdnuggets-data-science-cheatsheets|KDnuggets <code>"Complete Collection of Data Science Cheat Sheets"</code>]] is adopted as community reference</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the collection covers 12 categories</td></tr><tr><td class="kw kw-and">And</td><td class="txt">[[sources/0018-nvidia-learning-paths-2026|NVIDIA certification]] is the primary curriculum framework</td></tr><tr><td class="kw kw-given">Given</td><td class="txt">I am a new community member with no data science background</td></tr><tr><td class="kw kw-when">When</td><td class="txt">I join the learning program</td></tr><tr><td class="kw kw-then">Then</td><td class="txt">I am assigned the recommended starting category order</td></tr><tr><td class="kw kw-and">And</td><td class="txt">I am offered an optional mentorship pairing for my first category</td></tr></table>
+</div><div class="scenario">
+  
+  <div class="scenario-header">
+    <span class="scenario-label">Scenario</span>
+    <span class="scenario-title">Learning progress is recorded in community knowledge graph</span>
+  </div>
+  <table class="step-table"><tr><td class="kw kw-given">Given</td><td class="txt">the [[sources/0019-kdnuggets-data-science-cheatsheets|KDnuggets <code>"Complete Collection of Data Science Cheat Sheets"</code>]] is adopted as community reference</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the collection covers 12 categories</td></tr><tr><td class="kw kw-and">And</td><td class="txt">[[sources/0018-nvidia-learning-paths-2026|NVIDIA certification]] is the primary curriculum framework</td></tr><tr><td class="kw kw-given">Given</td><td class="txt">I complete a category assessment or project</td></tr><tr><td class="kw kw-when">When</td><td class="txt">the system records my completion</td></tr><tr><td class="kw kw-then">Then</td><td class="txt">the knowledge graph is updated with my member identity and category completed</td></tr><tr><td class="kw kw-and">And</td><td class="txt">the assessment type and competency score or project link</td></tr><tr><td class="kw kw-and">And</td><td class="txt">this record is available for curriculum review and peer recognition</td></tr></table>
+</div>
+</article>
+</main>
+<footer>
+  <p>Generated from wiki synthesis · validated with ghokin · deployed via GitHub Actions</p>
+</footer>
+</body>
+</html>

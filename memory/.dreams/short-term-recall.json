@@ -1,0 +1,130 @@
+{
+  "version": 1,
+  "updatedAt": "2026-05-07T06:24:45.716Z",
+  "entries": {
+    "memory:memory/2026-03-08.md:40:80": {
+      "key": "memory:memory/2026-03-08.md:40:80",
+      "path": "memory/2026-03-08.md",
+      "startLine": 40,
+      "endLine": 80,
+      "source": "memory",
+      "snippet": "1. Establishing Group Intention (chaotic) → Principles 2. Building a Value Network (chaordic) → Practices 3. Experiencing Community of Practice (ordered) → Policy **Concentrix Management:** - Identify domain experts - Form cross-pollinating teams - Learn from each other - Apply new knowledge ### Synthesis Framework Created ``` NARRATIVE COLLAPSE → TECHNOLOGY EMERGENCE → SOCIAL ARCHITECTURE → MICRO-COMMUNITY ``` ### Strategic Implications for RegenTribes - Use 22 domains as vocabulary for community design - 8-gates as grammar for community formation - Concentrix as conversation method - Regeneration = new mythology to replace failed secular narratives ### 2030 Projection - Micro-communi",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.38475160896778104,
+      "maxScore": 0.38475160896778104,
+      "firstRecalledAt": "2026-05-06T11:55:47.905Z",
+      "lastRecalledAt": "2026-05-06T11:55:47.905Z",
+      "queryHashes": [
+        "efb1ff60dbd8"
+      ],
+      "recallDays": [
+        "2026-05-06"
+      ],
+      "conceptTags": [
+        "network",
+        "cross-pollinating",
+        "micro-community",
+        "8-gates",
+        "micro-communi",
+        "establishing",
+        "group",
+        "intention"
+      ]
+    },
+    "memory:memory/2026-03-08.md:1:51": {
+      "key": "memory:memory/2026-03-08.md:1:51",
+      "path": "memory/2026-03-08.md",
+      "startLine": 1,
+      "endLine": 51,
+      "source": "memory",
+      "snippet": "# Social Architecture Synthesis — RegenTribes *Source: RegenTribes Telegram — 2026-03-08* *Topic: 22 Archetypal Domains of Community Design, Social Architecture frameworks* --- ## Session: Social Architecture Synthesis for RegenTribes ### Context Vitali (zbwvz) requested aggregation of all conversation threads from the day (video analyses of George Hotz, Gonka/Lieberman, Professor Tang, Ben Girtzil) overlaid with comprehensive Social Architecture document from Vic Desotelle. ### Key Frameworks Documented **22 Archetypal Domains of Community Design (Vic Desotelle):** 1. Spirituality and Religion 2. Arts and Ritual 3. Science and Physics 4. Resources and Nature 5. Energy and Power 6. F",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.36993134319782256,
+      "maxScore": 0.36993134319782256,
+      "firstRecalledAt": "2026-05-06T11:55:47.905Z",
+      "lastRecalledAt": "2026-05-06T11:55:47.905Z",
+      "queryHashes": [
+        "efb1ff60dbd8"
+      ],
+      "recallDays": [
+        "2026-05-06"
+      ],
+      "conceptTags": [
+        "gonka/lieberman",
+        "social",
+        "architecture",
+        "synthesis",
+        "regentribes",
+        "source",
+        "telegram",
+        "topic"
+      ]
+    },
+    "memory:memory/2026-04-22.md:70:116": {
+      "key": "memory:memory/2026-04-22.md:70:116",
+      "path": "memory/2026-04-22.md",
+      "startLine": 70,
+      "endLine": 116,
+      "source": "memory",
+      "snippet": "## Vitali's Communication Style - Wants compact, aggressive, unapologetic content - Plain text, zero formatting - No Chinese / no verbose - Wants \"total clarity\" - Will say \"continue\" or \"next\" to advance - Massive information density required - Practical over academic - \"What do we do with this?\" always ## Vitali's Long-Term Interests - Post-collapse regeneration infrastructure - Community-owned, non-extractive systems - Self-replicating manufacturing - Alternative to corporate/state power - Anti-fragile system design - Living Book / knowledge commons - Humanoid + industrial robot integration - Social sensing (affinity, trust) ## Open Loops - Digital twin implementation (partial — deta",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.36757623255252836,
+      "maxScore": 0.36757623255252836,
+      "firstRecalledAt": "2026-05-07T06:24:45.716Z",
+      "lastRecalledAt": "2026-05-07T06:24:45.716Z",
+      "queryHashes": [
+        "3cc84e08d9ec"
+      ],
+      "recallDays": [
+        "2026-05-07"
+      ],
+      "conceptTags": [
+        "long-term",
+        "post-collapse",
+        "community-owned",
+        "non-extractive",
+        "self-replicating",
+        "corporate/state",
+        "anti-fragile",
+        "vitali's"
+      ]
+    },
+    "memory:memory/2026-04-22.md:1:22": {
+      "key": "memory:memory/2026-04-22.md:1:22",
+      "path": "memory/2026-04-22.md",
+      "startLine": 1,
+      "endLine": 22,
+      "source": "memory",
+      "snippet": "# Daily Memory — 2026-04-22 ## Session Overview Massive synthesis session with Vitali. Covered complete Integral architecture from first principles through social layer extension. Multiple long-form documents produced. ## Vitali's Research Vectors (Session) 1. **ECS (OOPSLA 2025 paper)** — Entity Component System, Core ECS formal semantics, concurrency determinism, disjoint writes rule, framework leakage (Bevy/specs/Flecs serialize structure changes) 2. **Hyperon Atomspace** — Meta-representational fabric, MeTTa language, knowledge graph, multi-scale representation (semantic + neural) 3. **Industrial AI tools** — Intrinsic AI (Alphabet robotics), Nominal (industrial data), Metabuild (bui",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.3594827145338058,
+      "maxScore": 0.3594827145338058,
+      "firstRecalledAt": "2026-05-07T06:24:45.716Z",
+      "lastRecalledAt": "2026-05-07T06:24:45.716Z",
+      "queryHashes": [
+        "3cc84e08d9ec"
+      ],
+      "recallDays": [
+        "2026-05-07"
+      ],
+      "conceptTags": [
+        "long-form",
+        "bevy/specs/flecs",
+        "meta-representational",
+        "multi-scale",
+        "overview",
+        "massive",
+        "synthesis",
+        "vitali"
+      ]
+    }
+  }
+}
